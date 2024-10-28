@@ -32,6 +32,7 @@ class CCastRedirector {
 		if (proj.Source?.Name == "npc_dota_hero_vengefulspirit") {
 			if (this.illusionIsTarget(proj)) {
 				console.log("illusion")
+				console.log(this.units)
 			}
 			
 			console.log(proj)
