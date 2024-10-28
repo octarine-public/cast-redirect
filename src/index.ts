@@ -60,4 +60,5 @@ EventsSDK.on("GameStarted", () => {
 EventsSDK.on("TrackingProjectileCreated", (proj) => {
 	console.log("create proj")
 	console.log(proj)
+	console.log(proj.Source)
 })
