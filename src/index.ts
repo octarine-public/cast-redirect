@@ -2,7 +2,8 @@ import {
 	Entity,
 	EventsSDK,
 	Hero,
-	Unit
+	Unit,
+	ProjectileManager
 } from "github.com/octarine-public/wrapper/index"
 
 class CCastRedirector {
@@ -30,6 +31,8 @@ class CCastRedirector {
 
 				console.log("updated projectile")
 				console.log(proj)
+
+				ProjectileManager.DestroyTrackingProjectile(proj)
 			} else {
 				console.log(":(")
 			}
@@ -57,6 +60,25 @@ class CCastRedirector {
 			newTarget.NetworkedPosition
 		)
 	}
+
+	private redirectProjectile2(proj: TrackingProjectile, newTarget: Unit) {
+		// Удаляем текущий прожектайл
+		DestroyTrackingProjectile(proj);
+	
+		// Создаем новый прожектайл с измененной целью
+		const newProjectile = {
+			Source: proj.Source,
+			Target: newTarget,
+			Speed: proj.Speed,
+			LaunchTick: GameState.CurrentGameTick,
+			ParticlePath: proj.ParticlePath,
+			dodgeable: proj.dodgeable,
+			isAttack: proj.isAttack,
+			expireTime: proj.expireTime,
+		};
+		TrackingProjectileCreated(newProjectile as TrackingProjectile);
+	}
+	
 }
 
 const castRedirector: CCastRedirector = new CCastRedirector()
