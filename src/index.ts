@@ -32,12 +32,18 @@ class CCastRedirector {
 				console.log("updated projectile")
 				console.log(proj)
 
-				ProjectileManager.DestroyTrackingProjectile(proj)
+				this.destroyProjectile(proj)
 			} else {
 				console.log(":(")
 			}
 		}
 	}	
+
+	private destroyProjectile(proj: TrackingProjectile) {
+		ProjectileManager.AllTrackingProjectiles.remove(proj)
+		ProjectileManager.AllTrackingProjectilesMap.delete(proj.ID)
+		proj.IsValid = false
+	}
 
 	private illusionIsTarget(proj: TrackingProjectile) {
 		return proj.Target.IsIllusion_
