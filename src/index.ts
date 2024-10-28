@@ -16,7 +16,10 @@ class CCastRedirector {
 			const originalHero = this.getOriginalHero(proj.Target as Unit)
 			if (originalHero) {
 				this.redirectProjectile(proj, originalHero)
-				console.log(originalHero.Index)
+				console.log("original hero")
+				console.log(originalHero)
+				console.log("illusion")
+				console.log(proj.Target)
 			} else {
 				console.log(":(")
 			}
@@ -25,10 +28,6 @@ class CCastRedirector {
 
 	private illusionIsTarget(proj: TrackingProjectile) {
 		return proj.Target.IsIllusion_
-	}
-
-	private isIllusion(entity: Entity): entity is Unit {
-		return entity instanceof Unit && entity.IsIllusion
 	}
 
 	private getOriginalHero(illusion: Unit): Hero | null {
