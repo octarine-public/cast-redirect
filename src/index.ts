@@ -29,26 +29,16 @@ class CCastRedirector {
 	}
 
 	protected onTrackProjectile(proj: TrackingProjectile) {
-		if (proj.Source?.Name == "npc_dota_hero_vengefulspirit") {
-			if (this.illusionIsTarget(proj)) {
-				console.log("illusion")
-				console.log(this.units)
+		if (proj.Source?.Name === "npc_dota_hero_vengefulspirit" && this.illusionIsTarget(proj)) {
+			const originalHero = this.getOriginalHero(proj.Target as Unit)
+			if (originalHero) {
+				this.redirectProjectile(proj, originalHero)
+				console.log("Redirecting to hero", originalHero.Index)
+			} else {
+				console.log(":(")
 			}
-			
-			console.log(proj)
-		}	
+		}
 	}	
-
-	protected onAbilityUsed(unit: Unit, abilityID: number) {
-		if (!this.isIllusion(unit)) {
-			return
-		}
-
-		const originalHero = this.getOriginalHero(unit)
-		if (originalHero) {
-
-		}
-	}
 
 	private illusionIsTarget(proj: TrackingProjectile) {
 		return proj.Target.IsIllusion_
@@ -59,12 +49,12 @@ class CCastRedirector {
 	}
 
 	private getOriginalHero(illusion: Unit): Hero | null {
-		return LocalPlayer?.Hero || null
+		return illusion.ReplicatingOtherHeroModel as Hero || null;
 	}
-
-	// private redirectAbility() {
-		
-	// }
+	private redirectProjectile(proj: TrackingProjectile, newTarget: Hero) {
+		proj.Target = newTarget
+		console.log(newTarget.Name)
+	}
 }
 
 const castRedirector: CCastRedirector = new CCastRedirector()
