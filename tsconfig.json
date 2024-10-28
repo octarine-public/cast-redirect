@@ -1,0 +1,28 @@
+{
+	"compilerOptions": {
+		"target": "esnext",
+		"module": "ES2022",
+		"moduleResolution": "Node",
+		"rootDir": "../../../",
+		"baseUrl": "../../../",
+		"noEmit": true,
+		"noUnusedLocals": true,
+		"strict": true,
+		"alwaysStrict": true,
+		"experimentalDecorators": true,
+		"forceConsistentCasingInFileNames": true,
+		"lib": [
+			"ESNext"
+		],
+	},
+	"include": [
+		"./**/*.ts",
+		"../../**/*.d.ts"
+	],
+	"exclude": [
+		"node_modules/**/*",
+		"scripts_files/**/*",
+		"../deadlock-sdk/**/*",
+	],
+	"compileOnSave": true
+}
