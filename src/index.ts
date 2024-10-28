@@ -9,8 +9,9 @@ import {
 class CCastRedirector {
 	constructor() {
 		EventsSDK.on("TrackingProjectileCreated", this.onTrackProjectile.bind(this))
-		EventsSDK.on("TrackingProjectileUpdated", () => {
-
+		EventsSDK.on("TrackingProjectileUpdated", (proj: TrackingProjectile) => {
+			console.log("projectile update")
+			console.log(proj)
 		})
 	}
 
