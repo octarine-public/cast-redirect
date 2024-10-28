@@ -37,7 +37,7 @@ class CCastRedirector {
 	}
 
 	private redirectProjectile(proj: TrackingProjectile, newTarget: Hero) {
-		
+		proj.Target = newTarget
 	}
 }
 
