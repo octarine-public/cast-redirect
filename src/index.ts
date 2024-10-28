@@ -51,6 +51,8 @@ class CAbilityRedirector {
 	// }
 }
 
+console.log("console.log")
+
 EventsSDK.on("GameStarted", () => {
 	console.log("check")
 })
