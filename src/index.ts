@@ -16,6 +16,8 @@ class CCastRedirector {
 			const originalHero = this.getOriginalHero(proj.Target as Unit)
 			if (originalHero) {
 				this.redirectProjectile(proj, originalHero)
+				console.log("projectile")
+				console.log(proj)
 				console.log("original hero")
 				console.log(originalHero)
 				console.log("illusion")
