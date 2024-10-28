@@ -60,7 +60,9 @@ EventsSDK.on("GameStarted", () => {
 
 EventsSDK.on("TrackingProjectileCreated", (proj) => {
 	if (proj.Source?.Name == "npc_dota_hero_vengefulspirit") {
-		// console.log(proj)
-		console.log(proj.Target.IsIllusion_)
+		console.log(proj)
+		if (proj.Target.IsIllusion_) {
+			console.log("illusion")
+		}
 	}
 })
