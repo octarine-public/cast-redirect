@@ -25,6 +25,9 @@ class CCastRedirector {
 				console.log(originalHero)
 				console.log("illusion")
 				console.log(proj.Target)
+
+				console.log("updated projectile")
+				console.log(proj)
 			} else {
 				console.log(":(")
 			}
