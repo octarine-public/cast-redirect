@@ -30,12 +30,11 @@ class CCastRedirector {
 
 	protected onTrackProjectile(proj: TrackingProjectile) {
 		if (proj.Source?.Name == "npc_dota_hero_vengefulspirit") {
-			if (proj.Target.IsIllusion_) {
+			if (this.illusionIsTarget(proj)) {
 				console.log("illusion")
-				console.log(proj)
 			}
 			
-			console.log(this.units)
+			console.log(proj)
 		}	
 	}	
 
@@ -48,6 +47,10 @@ class CCastRedirector {
 		if (originalHero) {
 
 		}
+	}
+
+	private illusionIsTarget(proj: TrackingProjectile) {
+		return proj.Target.IsIllusion_
 	}
 
 	private isIllusion(entity: Entity): entity is Unit {
@@ -68,13 +71,3 @@ const castRedirector: CCastRedirector = new CCastRedirector()
 EventsSDK.on("GameStarted", () => {
 	console.log("check")
 })
-
-// EventsSDK.on("TrackingProjectileCreated", (proj) => {
-// 	if (proj.Source?.Name == "npc_dota_hero_vengefulspirit") {
-// 		console.log(proj)
-// 		castRedirector
-// 		if (proj.Target.IsIllusion_) {
-// 			console.log("illusion")
-// 		}
-// 	}
-// })
