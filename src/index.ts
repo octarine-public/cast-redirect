@@ -18,13 +18,16 @@ class CCastRedirector {
 		if (proj.Source?.Name === "npc_dota_hero_vengefulspirit" && this.illusionIsTarget(proj)) {
 			const originalHero = this.getOriginalHero(proj.Target as Unit)
 			if (originalHero) {
-				this.redirectProjectile(proj, originalHero)
 				console.log("projectile")
 				console.log(proj)
+
 				console.log("original hero")
 				console.log(originalHero)
+
 				console.log("illusion")
 				console.log(proj.Target)
+
+				this.redirectProjectile(proj, originalHero)
 
 				console.log("updated projectile")
 				console.log(proj)
