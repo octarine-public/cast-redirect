@@ -60,6 +60,7 @@ EventsSDK.on("GameStarted", () => {
 
 EventsSDK.on("TrackingProjectileCreated", (proj) => {
 	if (proj.Source?.Name == "npc_dota_hero_vengefulspirit") {
-		console.log(proj)
+		// console.log(proj)
+		console.log(proj.Target)
 	}
 })
