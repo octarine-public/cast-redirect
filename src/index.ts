@@ -2,7 +2,6 @@ import {
 	Entity,
 	EventsSDK,
 	Hero,
-	LocalPlayer,
 	Unit
 } from "github.com/octarine-public/wrapper/index"
 
@@ -55,7 +54,7 @@ class CCastRedirector {
 			proj.isAttack, 
 			proj.expireTime, 
 			proj.LaunchTick,
-			proj.TargetLoc
+			newTarget.NetworkedPosition
 		)
 	}
 }
