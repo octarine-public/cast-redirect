@@ -3,16 +3,16 @@ import {
 	EventsSDK,
 	Hero,
 	LocalPlayer,
-	Tower,
 	Unit
 } from "github.com/octarine-public/wrapper/index"
 
-class CAbilityRedirector {
+class CCastRedirector {
 	private readonly units: Unit[] = []
 
 	constructor() {
 		EventsSDK.on("EntityCreated", this.onEntityCreated.bind(this))
 		EventsSDK.on("EntityDestroyed", this.onEntityDestroyed.bind(this))
+		EventsSDK.on("TrackingProjectileCreated", this.onTracProjectile.bind(this))
 	}
 
 	protected onEntityCreated(entity: Entity) {
@@ -26,6 +26,10 @@ class CAbilityRedirector {
 		if (index > -1) {
 			this.units.splice(index, 1)
 		}
+	}
+
+	protected onTracProjectile() {
+		console.log(this.units)
 	}
 
 	protected onAbilityUsed(unit: Unit, abilityID: number) {
@@ -52,17 +56,18 @@ class CAbilityRedirector {
 	// }
 }
 
-console.log("console.log")
+const castRedirector: CCastRedirector = new CCastRedirector()
 
 EventsSDK.on("GameStarted", () => {
 	console.log("check")
 })
 
-EventsSDK.on("TrackingProjectileCreated", (proj) => {
-	if (proj.Source?.Name == "npc_dota_hero_vengefulspirit") {
-		console.log(proj)
-		if (proj.Target.IsIllusion_) {
-			console.log("illusion")
-		}
-	}
-})
+// EventsSDK.on("TrackingProjectileCreated", (proj) => {
+// 	if (proj.Source?.Name == "npc_dota_hero_vengefulspirit") {
+// 		console.log(proj)
+// 		castRedirector
+// 		if (proj.Target.IsIllusion_) {
+// 			console.log("illusion")
+// 		}
+// 	}
+// })
