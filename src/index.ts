@@ -9,6 +9,9 @@ import {
 class CCastRedirector {
 	constructor() {
 		EventsSDK.on("TrackingProjectileCreated", this.onTrackProjectile.bind(this))
+		EventsSDK.on("TrackingProjectileUpdated", () => {
+
+		})
 	}
 
 	protected onTrackProjectile(proj: TrackingProjectile) {
@@ -37,7 +40,17 @@ class CCastRedirector {
 	}
 
 	private redirectProjectile(proj: TrackingProjectile, newTarget: Hero) {
-		proj.Target = newTarget
+		proj.Update(
+			newTarget, 
+			proj.Speed, 
+			proj.ParticlePath, 
+			proj.ParticleSystemHandle, 
+			proj.dodgeable, 
+			proj.isAttack, 
+			proj.expireTime, 
+			proj.LaunchTick,
+			proj.TargetLoc
+		)
 	}
 }
 
