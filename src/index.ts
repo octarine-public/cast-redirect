@@ -3,6 +3,7 @@ import {
 	EventsSDK,
 	Hero,
 	LocalPlayer,
+	Tower,
 	Unit
 } from "github.com/octarine-public/wrapper/index"
 
@@ -58,7 +59,6 @@ EventsSDK.on("GameStarted", () => {
 })
 
 EventsSDK.on("TrackingProjectileCreated", (proj) => {
-	console.log("create proj")
-	console.log(proj)
-	console.log(proj.Source)
+	//CDOTA_Unit_Hero_VengefulSpirit
+	console.log(proj.Source?.Name);
 })
