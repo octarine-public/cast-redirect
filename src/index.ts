@@ -18,10 +18,10 @@ class CCastRedirector {
 			if (order.Target?.IsIllusion) {
 				const newTarget = this.GetOriginalHero(order.Target)
 				const caster = order.Issuers[0]
-				
+
 				caster.CastTarget(order.Ability_, newTarget)
 	
-				console.log(this.getNearHero())
+				console.log(this.GetNearliestOtherHero(newTarget, caster))
 				return false
 			}
 		} else {
@@ -33,16 +33,24 @@ class CCastRedirector {
 		return order.Ability_ instanceof Ability
 	}
 
-	protected IsToTarget(target: Nullable<Entity | number>): boolean {
+	protected IsToTarget(target: Entity): boolean {
 		return target instanceof Unit
 	}
 
-	protected GetOriginalHero(target: Nullable<Entity | number>): Nullable<Entity | undefined> {
+	protected GetOriginalHero(target: Entity): Entity {
 		return target?.ReplicatingOtherHeroModel		
 	}
 
-	protected getNearHero() {
-		return EntityManager.GetEntitiesByClass(Hero)
+	protected GetNearliestOtherHero(target: Entity, caster: Unit) {
+		return EntityManager.GetEntitiesByClass(Hero).find(
+        	x =>
+				x !== target &&
+				x !== caster &&
+				x.IsAlive &&
+				!x.IsIllusion &&
+				!x.IsInvulnerable &&
+				x.Distance2D(target) < 600
+    		)
 	}
 }
 
