@@ -8,18 +8,28 @@ import {
 
 class CCastRedirector {
 	constructor() {
-		EventsSDK.on("PrepareUnitOrders", this.PrepareUnitOrders.bind(this))
+		EventsSDK.on("PrepareUnitOrders", this.RedirectSpell.bind(this))
 	}
 
-	protected PrepareUnitOrders(order: ExecuteOrder) {
-		if (this.IsPlayerInput(order) && this.IsAbility(order) && this.IsIllusion(order.Target)) {
-			// console.log(order)
-			console.log(this.GetOriginalHero(order.Target))
+	protected RedirectSpell(order: ExecuteOrder) {
+		if (order.IsPlayerInput && this.IsAbility(order) && order.Target?.IsIllusion) {
+			console.log(order)
+
+			const newTarget = this.GetOriginalHero(order.Target)
+
+			const executeOrder = new ExecuteOrder(
+				order.OrderType,
+				newTarget,
+				order.Position,
+				order.Ability_,
+				order.Issuers ?? [],
+				order.Queue,
+				order.ShowEffects,
+				order.IsPlayerInput
+			)
+
+			EventsSDK.emit("PrepareUnitOrders", true, executeOrder)
 		}
-	}
-
-	protected IsPlayerInput(order: ExecuteOrder): boolean {
-		return order.IsPlayerInput
 	}
 
 	protected IsAbility(order: ExecuteOrder): boolean {
@@ -27,10 +37,6 @@ class CCastRedirector {
 			return false
 		}
 		return true
-	}
-
-	protected IsIllusion(target: Nullable<Entity | number>): Nullable<boolean | undefined> {
-		return target?.IsIllusion
 	}
 
 	protected GetOriginalHero(target: Nullable<Entity | number>): Nullable<Entity | undefined> {
