@@ -46,7 +46,7 @@ class CCastRedirector {
 
 	protected GetNearliestOtherHero(target: Entity, caster: Unit) {
 		return EntityManager.GetEntitiesByClass(Hero)
-		.sort((a, b) => b.Distance2D(caster) - a.Distance2D(caster))
+		.sort((a, b) => a.Distance2D(caster) - b.Distance2D(caster))
 		.find( x =>
 			x !== target &&
 			x !== caster &&
