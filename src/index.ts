@@ -41,7 +41,7 @@ class CCastRedirector {
 	}
 
 	protected IsAbility(order: ExecuteOrder): boolean {
-		return order.Ability_ instanceof Ability
+		return order.Ability_ instanceof Nullable<Ability>
 	}
 
 	protected IsToTarget(target: Nullable<Entity | number>): boolean {
