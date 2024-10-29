@@ -19,12 +19,14 @@ class CCastRedirector {
 				const newTarget = this.GetOriginalHero(order.Target)
 				const caster = order.Issuers[0]
 
-				caster.CastTarget(order.Ability_, newTarget)
+				if (this.IsAvaibleOriginalHero(newTarget, caster)) {
+					caster.CastTarget(order.Ability_, newTarget)
+				} else {
+					const nearliestHero = this.GetNearliestOtherHero(newTarget, caster)
 
-				const nearliestHero = this.GetNearliestOtherHero(newTarget, caster);
-				console.log(newTarget)
-				console.log(newTarget.IsVisible)
-				//if (!nearliestHero) return
+					if (!nearliestHero) return
+					caster.CastTarget(order.Ability_, nearliestHero)
+				}
 
 				return false
 			}
@@ -42,11 +44,7 @@ class CCastRedirector {
 	}
 
 	protected GetOriginalHero(target: Entity): Entity {
-		return target?.ReplicatingOtherHeroModel		
-	}
-
-	protected IsOtherTeam(target: Entity, caster: Unit): boolean {
-		return target.Team !== caster.Team
+		return target.ReplicatingOtherHeroModel		
 	}
 
 	protected GetNearliestOtherHero(target: Entity, caster: Unit) {
@@ -58,15 +56,16 @@ class CCastRedirector {
 			!x.IsIllusion &&
 			!x.IsInvulnerable &&
 			x.Distance2D(caster) < 1800 &&
-			this.IsOtherTeam(x, caster)
+			x.IsEnemy(caster)
 		)
 	}
 
-	protected IsAvaibleOriginalHero() {
-		// to do
+	protected IsAvaibleOriginalHero(hero: Entity, caster: Unit): boolean {
+		const distance = hero.Distance2D(caster)
+		return hero.IsVisible && hero.IsAlive && distance < 1800
 	}
 
-	// to do redirect from creeps (what about roshan???)
+	// to do redirect from creeps
 }
 
 const castRedirector: CCastRedirector = new CCastRedirector()
