@@ -19,11 +19,15 @@ class CCastRedirector {
 				const newTarget = this.GetOriginalHero(order.Target)
 				const caster = order.Issuers[0]
 
+				console.log(order.Target)
+				console.log(order.Target.Distance2D(caster))
+
 				caster.CastTarget(order.Ability_, newTarget)
 
 				const nearliestHero = this.GetNearliestOtherHero(newTarget, caster);
-	
-				console.log(nearliestHero)
+				if (!nearliestHero) return
+
+				return false
 			}
 		} else {
 			return
@@ -42,9 +46,7 @@ class CCastRedirector {
 		return target?.ReplicatingOtherHeroModel		
 	}
 
-	protected GetNearliestOtherHero(target: Entity, caster: Unit) {
-		console.log( EntityManager.GetEntitiesByClass(Hero).filter(x => !x.IsIllusion) )
-		console.log( EntityManager.GetEntitiesByClass(Hero).map(x => !x.IsIllusion ? x.Distance2D(target) : '') )
+	protected GetNearliestOtherHero(target: Entity, caster: Unit) { // not work correct ?
 		return EntityManager.GetEntitiesByClass(Hero).find( x =>
 			x !== target &&
 			x !== caster &&
@@ -52,6 +54,10 @@ class CCastRedirector {
 			!x.IsInvulnerable &&
 			x.Distance2D(target) < 1800
 		)
+	}
+
+	protected IsAvaibleOriginalHero() {
+
 	}
 }
 
