@@ -13,26 +13,25 @@ class CCastRedirector {
 		EventsSDK.on("PrepareUnitOrders", this.PrepareUnitOrders.bind(this))
 	}
 
-	protected PrepareUnitOrders(order: ExecuteOrder) {
+	protected PrepareUnitOrders(order: ExecuteOrder): boolean {
 		if (order.IsPlayerInput && this.IsAbility(order) && this.IsToTarget(order.Target)) {
-			if (order.Target?.IsIllusion) {
+			if (order?.Target?.IsIllusion) {
 				const newTarget = this.GetOriginalHero(order.Target)
 				const caster = order.Issuers[0]
 
-				if (this.IsAvaibleOriginalHero(newTarget, caster)) {
+				if (this.IsAvailableOriginalHero(newTarget, caster)) {
 					caster.CastTarget(order.Ability_, newTarget)
 				} else {
-					const nearliestHero = this.GetNearliestOtherHero(newTarget, caster)
+					const nearliestHero = this.GetNearestOtherHero(newTarget, caster)
 
-					if (!nearliestHero) return
+					if (!nearliestHero) return true
 					caster.CastTarget(order.Ability_, nearliestHero)
 				}
 
 				return false
 			}
-		} else {
-			return
 		}
+		return true
 	}
 
 	protected IsAbility(order: ExecuteOrder): boolean {
@@ -47,7 +46,7 @@ class CCastRedirector {
 		return target.ReplicatingOtherHeroModel		
 	}
 
-	protected GetNearliestOtherHero(target: Entity, caster: Unit) {
+	protected GetNearestOtherHero(target: Entity, caster: Unit): Nullable<Entity | undefined> {
 		return EntityManager.GetEntitiesByClass(Hero)
 		.sort((a, b) => a.Distance2D(caster) - b.Distance2D(caster))
 		.find( x =>
@@ -60,9 +59,8 @@ class CCastRedirector {
 		)
 	}
 
-	protected IsAvaibleOriginalHero(hero: Entity, caster: Unit): boolean {
-		const distance = hero.Distance2D(caster)
-		return hero.IsVisible && hero.IsAlive && distance < 1800
+	protected IsAvailableOriginalHero(hero: Entity, caster: Unit): boolean {
+		return hero.IsVisible && hero.IsAlive && hero.Distance2D(caster) < 1800;
 	}
 
 	// to do redirect from creeps
