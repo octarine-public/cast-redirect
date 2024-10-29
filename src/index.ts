@@ -44,7 +44,7 @@ class CCastRedirector {
 
 	protected GetNearliestOtherHero(target: Entity, caster: Unit) {
 		console.log( EntityManager.GetEntitiesByClass(Hero).filter(x => !x.IsIllusion) )
-		console.log( EntityManager.GetEntitiesByClass(Hero).map(x => x.Distance2D(target)) )
+		console.log( EntityManager.GetEntitiesByClass(Hero).map(x => !x.IsIllusion ? x.Distance2D(target) : '') )
 		return EntityManager.GetEntitiesByClass(Hero).find( x =>
 			x !== target &&
 			x !== caster &&
