@@ -44,8 +44,10 @@ class CCastRedirector {
 		return target?.ReplicatingOtherHeroModel		
 	}
 
-	protected GetNearliestOtherHero(target: Entity, caster: Unit) { // not work correct ?
-		return EntityManager.GetEntitiesByClass(Hero).find( x =>
+	protected GetNearliestOtherHero(target: Entity, caster: Unit) {
+		return EntityManager.GetEntitiesByClass(Hero)
+		.sort((a, b) => b.Distance2D(caster) - a.Distance2D(caster))
+		.find( x =>
 			x !== target &&
 			x !== caster &&
 			!x.IsIllusion &&
