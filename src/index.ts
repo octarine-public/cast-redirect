@@ -19,28 +19,29 @@ class CCastRedirector {
 				// console.log(order)
 
 				const newTarget = this.GetOriginalHero(order.Target)
+
+				const caster = order.Issuers[0]
+				caster.CastTarget(order.Ability_, newTarget)
 	
-				const executeOrder = new ExecuteOrder(
-					order.OrderType,
-					newTarget,
-					order.Position,
-					order.Ability_,
-					order.Issuers ?? [],
-					order.Queue,
-					order.ShowEffects,
-					order.IsPlayerInput
-				)
+				// const executeOrder = new ExecuteOrder(
+				// 	order.OrderType,
+				// 	newTarget,
+				// 	order.Position,
+				// 	order.Ability_,
+				// 	order.Issuers ?? [],
+				// 	order.Queue,
+				// 	order.ShowEffects,
+				// 	order.IsPlayerInput
+				// )
+
+				// order.Execute()
 	
-				this.castTarget(executeOrder) // todo nearliest enemy
+				// this.castTarget(executeOrder) // todo nearliest enemy
 				console.log(this.getNearHero())
 			}
 		} else {
 			return
 		}
-	}
-
-	protected castTarget(order: ExecuteOrder) {
-		order.Execute()
 	}
 
 	protected IsAbility(order: ExecuteOrder): boolean {
