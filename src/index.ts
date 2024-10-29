@@ -16,28 +16,13 @@ class CCastRedirector {
 	protected PrepareUnitOrders(order: ExecuteOrder) {
 		if (order.IsPlayerInput && this.IsAbility(order) && this.IsToTarget(order.Target)) {
 			if (order.Target?.IsIllusion) {
-				// console.log(order)
-
 				const newTarget = this.GetOriginalHero(order.Target)
-
 				const caster = order.Issuers[0]
+				
 				caster.CastTarget(order.Ability_, newTarget)
 	
-				// const executeOrder = new ExecuteOrder(
-				// 	order.OrderType,
-				// 	newTarget,
-				// 	order.Position,
-				// 	order.Ability_,
-				// 	order.Issuers ?? [],
-				// 	order.Queue,
-				// 	order.ShowEffects,
-				// 	order.IsPlayerInput
-				// )
-
-				// order.Execute()
-	
-				// this.castTarget(executeOrder) // todo nearliest enemy
 				console.log(this.getNearHero())
+				return false
 			}
 		} else {
 			return
