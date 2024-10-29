@@ -20,9 +20,11 @@ class CCastRedirector {
 				const caster = order.Issuers[0]
 
 				caster.CastTarget(order.Ability_, newTarget)
+
+				const enttities = this.GetNearliestOtherHero(newTarget, caster);
 	
-				console.log(this.GetNearliestOtherHero(newTarget, caster))
-				return false
+				console.log(enttities)
+				console.log(enttities.map(x => x.Distance2D(order.Target)))
 			}
 		} else {
 			return
