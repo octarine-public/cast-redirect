@@ -42,15 +42,7 @@ class CCastRedirector {
 	}
 
 	protected GetNearliestOtherHero(target: Entity, caster: Unit) {
-		return EntityManager.GetEntitiesByClass(Hero).find(
-        	x =>
-				x !== target &&
-				x !== caster &&
-				x.IsAlive &&
-				!x.IsIllusion &&
-				!x.IsInvulnerable &&
-				x.Distance2D(target) < 600
-    		)
+		return EntityManager.GetEntitiesByClass(Hero)
 	}
 }
 
