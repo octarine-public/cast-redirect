@@ -2,9 +2,10 @@ import {
 	Entity,
 	EventsSDK,
 	ExecuteOrder,
-	Hero,
+	EntityManager,
 	Unit,
-	Ability
+	Ability,
+	Hero
 } from "github.com/octarine-public/wrapper/index"
 
 class CCastRedirector {
@@ -15,7 +16,7 @@ class CCastRedirector {
 	protected PrepareUnitOrders(order: ExecuteOrder) {
 		if (order.IsPlayerInput && this.IsAbility(order) && this.IsToTarget(order.Target)) {
 			if (order.Target?.IsIllusion) {
-				console.log(order)
+				// console.log(order)
 
 				const newTarget = this.GetOriginalHero(order.Target)
 	
@@ -31,6 +32,7 @@ class CCastRedirector {
 				)
 	
 				this.castTarget(executeOrder) // todo nearliest enemy
+				console.log(this.getNearHero())
 			}
 		} else {
 			return
@@ -51,6 +53,10 @@ class CCastRedirector {
 
 	protected GetOriginalHero(target: Nullable<Entity | number>): Nullable<Entity | undefined> {
 		return target?.ReplicatingOtherHeroModel		
+	}
+
+	protected getNearHero() {
+		return EntityManager.GetEntitiesByClass(Hero)
 	}
 }
 
