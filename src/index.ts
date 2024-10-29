@@ -22,7 +22,8 @@ class CCastRedirector {
 				caster.CastTarget(order.Ability_, newTarget)
 
 				const nearliestHero = this.GetNearliestOtherHero(newTarget, caster);
-				console.log(newTarget.isVisible)
+				console.log(newTarget)
+				console.log(newTarget.IsVisible)
 				//if (!nearliestHero) return
 
 				return false
