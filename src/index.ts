@@ -46,7 +46,7 @@ class CCastRedirector {
 		return EntityManager.GetEntitiesByClass(Hero).find( x =>
 			x !== target &&
 			x !== caster &&
-			x.IsIllusion &&
+			!x.IsIllusion &&
 			!x.IsInvulnerable &&
 			x.Distance2D(target) < 800
 		)
