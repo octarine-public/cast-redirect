@@ -52,12 +52,12 @@ class CCastRedirector {
 			x !== caster &&
 			!x.IsIllusion &&
 			!x.IsInvulnerable &&
-			x.Distance2D(target) < 1800
+			x.Distance2D(caster) < 1800
 		)
 	}
 
 	protected IsAvaibleOriginalHero() {
-
+		// to do
 	}
 }
 
