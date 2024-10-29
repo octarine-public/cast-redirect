@@ -13,7 +13,8 @@ class CCastRedirector {
 
 	protected PrepareUnitOrders(order: ExecuteOrder) {
 		if (this.IsPlayerInput(order) && this.IsAbility(order) && this.IsIllusion(order.Target)) {
-			console.log(order)
+			// console.log(order)
+			console.log(this.GetOriginalHero(order.Target))
 		}
 	}
 
@@ -30,6 +31,10 @@ class CCastRedirector {
 
 	protected IsIllusion(target: Nullable<Entity | number>): Nullable<boolean | undefined> {
 		return target?.IsIllusion
+	}
+
+	protected GetOriginalHero(target: Nullable<Entity | number>): Nullable<Entity | undefined> {
+		return target?.ReplicatingOtherHeroModel		
 	}
 }
 
