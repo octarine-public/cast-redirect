@@ -43,6 +43,7 @@ class CCastRedirector {
 	}
 
 	protected GetNearliestOtherHero(target: Entity, caster: Unit) {
+		console.log( EntityManager.GetEntitiesByClass(Hero).filter(x => !x.IsIllusion) )
 		return EntityManager.GetEntitiesByClass(Hero).find( x =>
 			x !== target &&
 			x !== caster &&
