@@ -21,10 +21,9 @@ class CCastRedirector {
 
 				caster.CastTarget(order.Ability_, newTarget)
 
-				const enttities = this.GetNearliestOtherHero(newTarget, caster);
+				const nearliestHero = this.GetNearliestOtherHero(newTarget, caster);
 	
-				console.log(enttities)
-				console.log(enttities.map(x => x.Distance2D(order.Target)))
+				console.log(nearliestHero)
 			}
 		} else {
 			return
@@ -44,7 +43,13 @@ class CCastRedirector {
 	}
 
 	protected GetNearliestOtherHero(target: Entity, caster: Unit) {
-		return EntityManager.GetEntitiesByClass(Hero)
+		return EntityManager.GetEntitiesByClass(Hero).find( x =>
+			x !== target &&
+			x !== caster &&
+			x.IsIllusion &&
+			!x.IsInvulnerable &&
+			x.Distance2D(target) < 800
+		)
 	}
 }
 
