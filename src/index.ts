@@ -5,6 +5,7 @@ import {
 	Hero,
 	Unit
 } from "github.com/octarine-public/wrapper/index"
+import { type } from "node:os"
 
 class CCastRedirector {
 	constructor() {
@@ -14,10 +15,11 @@ class CCastRedirector {
 	protected PrepareUnitOrders(order: ExecuteOrder) {
 		console.log(order)
 		console.log(this.IsIllusion(order))
+		console.log(typeof order.Target)
 	}
 
 	protected IsIllusion(order: ExecuteOrder): boolean {
-		return order.Target?.IsIllusion
+		return order.Target.IsIllusion
 	}
 }
 
