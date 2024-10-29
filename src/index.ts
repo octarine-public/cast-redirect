@@ -20,7 +20,7 @@ class CCastRedirector {
 				const caster = order.Issuers[0]
 
 				console.log(order.Target)
-				console.log(order.Target.Distance2D(caster))
+				console.log(order.Target.ReplicatingOtherHeroModel.Distance2D(caster))
 
 				caster.CastTarget(order.Ability_, newTarget)
 
