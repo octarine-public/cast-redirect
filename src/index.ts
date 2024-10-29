@@ -50,7 +50,7 @@ class CCastRedirector {
 			x !== caster &&
 			!x.IsIllusion &&
 			!x.IsInvulnerable &&
-			x.Distance2D(target) < 800
+			x.Distance2D(target) < 1800
 		)
 	}
 }
