@@ -3,7 +3,8 @@ import {
 	EventsSDK,
 	ExecuteOrder,
 	Hero,
-	Unit
+	Unit,
+	Ability
 } from "github.com/octarine-public/wrapper/index"
 
 class CCastRedirector {
@@ -41,7 +42,7 @@ class CCastRedirector {
 	}
 
 	protected IsAbility(order: ExecuteOrder): boolean {
-		return order.Ability_ instanceof Nullable<Ability>
+		return order.Ability_ instanceof Ability
 	}
 
 	protected IsToTarget(target: Nullable<Entity | number>): boolean {
