@@ -8,10 +8,10 @@ import {
 
 class CCastRedirector {
 	constructor() {
-		EventsSDK.on("PrepareUnitOrders", this.RedirectSpell.bind(this))
+		EventsSDK.on("PrepareUnitOrders", this.PrepareUnitOrders.bind(this))
 	}
 
-	protected RedirectSpell(order: ExecuteOrder) {
+	protected PrepareUnitOrders(order: ExecuteOrder) {
 		if (order.IsPlayerInput && this.IsAbility(order) && order.Target?.IsIllusion) {
 			console.log(order)
 
@@ -28,7 +28,8 @@ class CCastRedirector {
 				order.IsPlayerInput
 			)
 
-			EventsSDK.emit("PrepareUnitOrders", true, executeOrder)
+			executeOrder.Execute()
+			//EventsSDK.emit("PrepareUnitOrders", true, executeOrder)
 		}
 	}
 
