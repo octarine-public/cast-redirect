@@ -25,17 +25,14 @@ export class MenuManager {
 
 		this.RedirectFromIllusions = this.tree.AddToggle(
 			"Redirect from Illusions",
-			true,
 		)
 
 		this.RedirectFromCreeps = this.tree.AddToggle(
 			"Redirect from Creeps",
-			true,
 		)
 
 		this.RedirectFromClones = this.tree.AddToggle(
 			"Redirect from Clones",
-			true,
 		)
 
 
