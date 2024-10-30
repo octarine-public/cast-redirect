@@ -23,16 +23,16 @@ export class MenuManager {
 
 		this.State = this.tree.AddToggle("State")
 
-		this.RedirectFromIllusions = this.tree.AddToggle(
-			"Redirect from Illusions",
+		this.RedirectFromClones = this.tree.AddToggle(
+			"Redirect from Clones",
 		)
 
 		this.RedirectFromCreeps = this.tree.AddToggle(
 			"Redirect from Creeps",
 		)
 
-		this.RedirectFromClones = this.tree.AddToggle(
-			"Redirect from Clones",
+		this.RedirectFromIllusions = this.tree.AddToggle(
+			"Redirect from Illusions",
 		)
 
 
