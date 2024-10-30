@@ -110,13 +110,13 @@ new (class CCastRedirector {
 			!x.IsIllusion &&
 			!x.IsClone &&
 			!x.IsInvulnerable &&
-			x.Distance2D(caster) < this.menu.searchRange.value &&
+			x.Distance2D(caster) < 400 &&
 			x.IsEnemy(caster)
 		)
 	}
 
 	protected IsAvailableOriginalHero(hero: Nullable<Unit | FakeUnit>, caster: Unit): boolean {
-		if (hero instanceof Unit) return hero.IsVisible && hero.IsAlive && hero.Distance2D(caster) < 400;
+		if (hero instanceof Unit) return hero.IsVisible && hero.IsAlive && hero.Distance2D(caster) < this.menu.searchRange.value;
 		return false
 	}
 })()
