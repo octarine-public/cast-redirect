@@ -50,7 +50,7 @@ new (class CCastRedirector {
 				caster.CastTarget(ability, nearliestHero)
 				return false
 
-			} else if (this.IsClone(order.Target) && !this.menu.dontRedirectToClones) {
+			} else if (this.IsClone(order.Target) && !this.menu.dontRedirectFromClones) {
 				const newTarget = this.GetOriginalHero(order.Target) as Unit
 
 				if (this.IsAvailableOriginalHero(newTarget, caster)) {
@@ -100,6 +100,7 @@ new (class CCastRedirector {
 	}
 
 	protected GetNearestOtherHero(target: Entity, caster: Unit): Nullable<Unit> {
+		console.log(this.menu.searchRange.value)
 		return EntityManager.GetEntitiesByClass(Hero)
 		.filter(x => x)
 		.sort((a, b) => a.Distance2D(caster) - b.Distance2D(caster))

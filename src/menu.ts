@@ -6,7 +6,7 @@ import {
 export class MenuManager {
 	public HeroNames: string[] = []
 	public readonly State: Menu.Toggle
-	public readonly dontRedirectToClones: Menu.Toggle
+	public readonly dontRedirectFromClones: Menu.Toggle
 	public readonly searchRange: Menu.Slider
 	private readonly tree: Menu.Node
 
@@ -20,10 +20,10 @@ export class MenuManager {
 
 		this.State = this.tree.AddToggle("State")
 
-		this.dontRedirectToClones = this.tree.AddToggle(
-			"Don't redirect to clones",
+		this.dontRedirectFromClones = this.tree.AddToggle(
+			"Don't redirect from clones",
 			false,
-			"Don't redirect to clones (for example meepo, arc warden, etc.)"
+			"Don't redirect cast from clones (for example meepo, arc warden, etc.)"
 		)
 
 		this.searchRange = this.tree.AddSlider("search range", 400, 100, 1200, 0, "Range of search heroes")
