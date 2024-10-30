@@ -40,13 +40,20 @@ class CCastRedirector {
 				if (!nearliestHero) return true
 				caster.CastTarget(ability, nearliestHero)
 
-				// console.log(order.Target)
 			} else if (this.IsClone(order.Target)) {
-				console.log(order.Target)
-			}
+				const newTarget = this.GetOriginalHero(order.Target) as Unit
 
-			// to do for clones
+				if (this.IsAvailableOriginalHero(newTarget, caster) && this.IsAbility(order.Ability_)) {
+					caster.CastTarget(ability, newTarget)
+				} else {
+					const nearliestHero = this.GetNearestOtherHero(newTarget, caster)
+
+					if (!nearliestHero) return true
+					caster.CastTarget(ability, nearliestHero)
+				}
+			}
 		}
+
 		return true
 	}
 
@@ -97,8 +104,6 @@ class CCastRedirector {
 		if (hero instanceof Unit) return hero.IsVisible && hero.IsAlive && hero.Distance2D(caster) < 1800;
 		return false
 	}
-
-	// to do redirect from creeps
 }
 
 const castRedirector: CCastRedirector = new CCastRedirector()
