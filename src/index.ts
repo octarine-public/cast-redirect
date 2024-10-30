@@ -94,6 +94,7 @@ new (class CCastRedirector {
 	}
 
 	protected GetNearestOtherHero(target: Entity, caster: Unit): Nullable<Unit> {
+		console.log(EntityManager.GetEntitiesByClass(Hero))
 		return EntityManager.GetEntitiesByClass(Hero)
 		.sort((a, b) => a.Distance2D(caster) - b.Distance2D(caster))
 		.find( x =>
