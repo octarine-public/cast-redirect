@@ -99,7 +99,7 @@ new (class CCastRedirector {
 			x !== caster &&
 			!x.IsIllusion &&
 			!x.IsInvulnerable &&
-			x.Distance2D(target) < 300 &&
+			x.Distance2D(caster) < 400 &&
 			x.IsEnemy(caster)
 		)
 	}
