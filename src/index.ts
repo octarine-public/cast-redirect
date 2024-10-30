@@ -29,6 +29,8 @@ class CCastRedirector {
 				}
 
 				return false
+			} else {
+				console.log(order.Target)
 			}
 		}
 		return true
