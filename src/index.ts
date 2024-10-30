@@ -22,7 +22,6 @@ new (class CCastRedirector {
 
 	protected PrepareUnitOrders(order: ExecuteOrder) {
 		if (!this.menu.State.value) {
-			console.log(0)
 			return
 		}
 
@@ -100,7 +99,7 @@ new (class CCastRedirector {
 			x !== caster &&
 			!x.IsIllusion &&
 			!x.IsInvulnerable &&
-			x.Distance2D(caster) < 300 &&
+			x.Distance2D(target) < 300 &&
 			x.IsEnemy(caster)
 		)
 	}
