@@ -43,19 +43,21 @@ new (class CCastRedirector {
 
 				return false
 			} else if (this.IsCreep(order.Target)){
-				const newTarget = this.GetOriginalHero(order.Target) as Unit
-				const nearliestHero = this.GetNearestOtherHero(newTarget, caster)
+				const nearliestHero = this.GetNearestOtherHero(caster, caster)
 
 				if (!nearliestHero) return true
 				caster.CastTarget(ability, nearliestHero)
 				return false
 
 			} else if (this.IsClone(order.Target) && !this.menu.dontRedirectFromClones) {
+				console.log(1)
 				const newTarget = this.GetOriginalHero(order.Target) as Unit
 
 				if (this.IsAvailableOriginalHero(newTarget, caster)) {
+					console.log(2)
 					caster.CastTarget(ability, newTarget)
 				} else {
+					console.log(3)
 					const nearliestHero = this.GetNearestOtherHero(newTarget, caster)
 
 					if (!nearliestHero) return true
