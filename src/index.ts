@@ -25,8 +25,6 @@ new (class CCastRedirector {
 			return
 		}
 
-		console.log(this.menu.dontRedirectFromClones)
-
 		if (order.IsPlayerInput && this.IsAbility(order.Ability_) && this.IsToTarget(order.Target)) {
 			const caster = order.Issuers[0]
 			const ability = order.Ability_ as Ability
@@ -51,7 +49,7 @@ new (class CCastRedirector {
 				caster.CastTarget(ability, nearliestHero)
 				return false
 
-			} else if (this.IsClone(order.Target) && !this.menu.dontRedirectFromClones) {
+			} else if (this.IsClone(order.Target) && !this.menu.dontRedirectFromClones.value) {
 				console.log(1)
 				const newTarget = this.GetOriginalHero(order.Target) as Unit
 
