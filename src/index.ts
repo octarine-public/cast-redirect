@@ -10,9 +10,14 @@ import {
 	FakeUnit
 } from "github.com/octarine-public/wrapper/index"
 
+import { MenuManager } from "./menu"
+
 new (class CCastRedirector {
+	private readonly menu!: MenuManager
+
 	constructor() {
 		EventsSDK.on("PrepareUnitOrders", this.PrepareUnitOrders.bind(this))
+		this.menu = new MenuManager()
 	}
 
 	protected PrepareUnitOrders(order: ExecuteOrder): boolean {
