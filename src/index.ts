@@ -41,6 +41,8 @@ class CCastRedirector {
 				caster.CastTarget(ability, nearliestHero)
 
 				// console.log(order.Target)
+			} else if (this.IsClone(order.Target)) {
+				console.log(order.Target)
 			}
 
 			// to do for clones
@@ -48,7 +50,14 @@ class CCastRedirector {
 		return true
 	}
 
-	private IsIllusion(target: Nullable<Entity  | number>): boolean {
+	protected IsClone(target: Nullable<Entity  | number>): boolean {
+		if (target instanceof Unit) {
+			return target.IsClone
+		}
+		return false
+	}
+
+	protected IsIllusion(target: Nullable<Entity  | number>): boolean {
 		if (target instanceof Unit) {
 			return (target.IsIllusion || target.IsHiddenIllusion) && !target.IsStrongIllusion
 		}
@@ -79,7 +88,7 @@ class CCastRedirector {
 			x !== caster &&
 			!x.IsIllusion &&
 			!x.IsInvulnerable &&
-			x.Distance2D(caster) < 1200 &&
+			x.Distance2D(caster) < 300 &&
 			x.IsEnemy(caster)
 		)
 	}
