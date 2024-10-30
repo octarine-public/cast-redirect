@@ -10,7 +10,7 @@ import {
 	FakeUnit
 } from "github.com/octarine-public/wrapper/index"
 
-class CCastRedirector {
+new (class CCastRedirector {
 	constructor() {
 		EventsSDK.on("PrepareUnitOrders", this.PrepareUnitOrders.bind(this))
 	}
@@ -99,9 +99,7 @@ class CCastRedirector {
 		if (hero instanceof Unit) return hero.IsVisible && hero.IsAlive && hero.Distance2D(caster) < 1800;
 		return false
 	}
-}
-
-const castRedirector: CCastRedirector = new CCastRedirector()
+})()
 
 EventsSDK.on("GameStarted", () => {
 	console.log("check")
