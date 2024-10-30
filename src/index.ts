@@ -22,6 +22,7 @@ new (class CCastRedirector {
 
 	protected PrepareUnitOrders(order: ExecuteOrder) {
 		if (!this.menu.State.value) {
+			console.log(0)
 			return
 		}
 
