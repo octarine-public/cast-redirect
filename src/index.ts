@@ -25,6 +25,8 @@ new (class CCastRedirector {
 			return
 		}
 
+		console.log(this.menu.dontRedirectFromClones)
+
 		if (order.IsPlayerInput && this.IsAbility(order.Ability_) && this.IsToTarget(order.Target)) {
 			const caster = order.Issuers[0]
 			const ability = order.Ability_ as Ability
