@@ -46,6 +46,8 @@ new (class CCastRedirector {
 				const newTarget = this.GetOriginalHero(order.Target) as Unit
 				const nearliestHero = this.GetNearestOtherHero(newTarget, caster)
 
+				console.log(nearliestHero)
+
 				if (!nearliestHero) return true
 				caster.CastTarget(ability, nearliestHero)
 
