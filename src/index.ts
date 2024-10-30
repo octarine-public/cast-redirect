@@ -57,7 +57,6 @@ new (class CCastRedirector {
 					caster.CastTarget(ability, newTarget)
 				} else {
 					const nearliestHero = this.GetNearestOtherHero(newTarget, caster)
-					console.log(nearliestHero)
 
 					if (!nearliestHero) return true
 					caster.CastTarget(ability, newTarget)
@@ -108,6 +107,7 @@ new (class CCastRedirector {
 			x !== target &&
 			x !== caster &&
 			!x.IsIllusion &&
+			!x.IsClone &&
 			!x.IsInvulnerable &&
 			x.Distance2D(caster) < 400 &&
 			x.IsEnemy(caster)
