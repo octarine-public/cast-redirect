@@ -23,18 +23,17 @@ export class MenuManager {
 
 		this.State = this.tree.AddToggle("State")
 
-		this.RedirectFromClones = this.tree.AddToggle(
-			"Redirect from Clones",
+		this.RedirectFromIllusions = this.tree.AddToggle(
+			"Redirect from Illusions",
 		)
 
 		this.RedirectFromCreeps = this.tree.AddToggle(
 			"Redirect from Creeps",
 		)
 
-		this.RedirectFromIllusions = this.tree.AddToggle(
-			"Redirect from Illusions",
+		this.RedirectFromClones = this.tree.AddToggle(
+			"Redirect from Clones",
 		)
-
 
 		this.searchRange = this.tree.AddSlider("search range", 400, 100, 1200, 0, "Range of search heroes")
 	}
