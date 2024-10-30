@@ -12,7 +12,7 @@ export class MenuManager {
 
 	constructor() {
 		this.tree = this.baseNode.AddNode(
-			"test123",
+			"Cast Redirect",
 			ImageData.Paths.Icons.magic_resist
 		)
 		this.State = this.tree.AddToggle("State")

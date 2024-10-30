@@ -20,7 +20,11 @@ new (class CCastRedirector {
 		this.menu = new MenuManager()
 	}
 
-	protected PrepareUnitOrders(order: ExecuteOrder): boolean {
+	protected PrepareUnitOrders(order: ExecuteOrder) {
+		if (!this.menu.State.value) {
+			return
+		}
+
 		if (order.IsPlayerInput && this.IsAbility(order.Ability_) && this.IsToTarget(order.Target)) {
 			const caster = order.Issuers[0]
 			const ability = order.Ability_ as Ability
