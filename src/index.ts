@@ -59,7 +59,7 @@ new (class CCastRedirector {
 					const nearliestHero = this.GetNearestOtherHero(newTarget, caster)
 
 					if (!nearliestHero) return true
-					caster.CastTarget(ability, newTarget)
+					caster.CastTarget(ability, nearliestHero)
 				}
 
 				return false
