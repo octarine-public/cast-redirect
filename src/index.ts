@@ -32,7 +32,7 @@ new (class CCastRedirector {
 			if (this.IsIllusion(order.Target)) {
 				const newTarget = this.GetOriginalHero(order.Target) as Unit
 
-				if (this.IsAvailableOriginalHero(newTarget, caster)) {
+				if (this.IsAvailableOriginalHero(newTarget, caster) && this.menu.RedirectFromIllusions.value) {
 					caster.CastTarget(ability, newTarget)
 				} else {
 					const nearliestHero = this.GetNearestOtherHero(newTarget, caster)
@@ -42,22 +42,19 @@ new (class CCastRedirector {
 				}
 
 				return false
-			} else if (this.IsCreep(order.Target)){
+			} else if (this.IsCreep(order.Target) && this.menu.RedirectFromCreeps.value){
 				const nearliestHero = this.GetNearestOtherHero(caster, caster)
 
 				if (!nearliestHero) return true
 				caster.CastTarget(ability, nearliestHero)
 				return false
 
-			} else if (this.IsClone(order.Target) && !this.menu.dontRedirectFromClones.value) {
-				console.log(1)
+			} else if (this.IsClone(order.Target) && this.menu.RedirectFromClones.value) {
 				const newTarget = this.GetOriginalHero(order.Target) as Unit
 
 				if (this.IsAvailableOriginalHero(newTarget, caster)) {
-					console.log(2)
 					caster.CastTarget(ability, newTarget)
 				} else {
-					console.log(3)
 					const nearliestHero = this.GetNearestOtherHero(newTarget, caster)
 
 					if (!nearliestHero) return true
@@ -102,7 +99,6 @@ new (class CCastRedirector {
 	}
 
 	protected GetNearestOtherHero(target: Entity, caster: Unit): Nullable<Unit> {
-		console.log(this.menu.searchRange.value)
 		return EntityManager.GetEntitiesByClass(Hero)
 		.filter(x => x)
 		.sort((a, b) => a.Distance2D(caster) - b.Distance2D(caster))
