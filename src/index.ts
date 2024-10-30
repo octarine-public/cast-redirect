@@ -57,7 +57,6 @@ new (class CCastRedirector {
 					caster.CastTarget(ability, newTarget)
 				} else {
 					const nearliestHero = this.GetNearestOtherHero(newTarget, caster)
-					console.log(nearliestHero?.Distance2D(caster))
 
 					if (!nearliestHero) return true
 					caster.CastTarget(ability, newTarget)
@@ -116,7 +115,7 @@ new (class CCastRedirector {
 	}
 
 	protected IsAvailableOriginalHero(hero: Nullable<Unit | FakeUnit>, caster: Unit): boolean {
-		if (hero instanceof Unit) return hero.IsVisible && hero.IsAlive && hero.Distance2D(caster) < 1800;
+		if (hero instanceof Unit) return hero.IsVisible && hero.IsAlive && hero.Distance2D(caster) < 800;
 		return false
 	}
 })()
