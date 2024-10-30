@@ -50,7 +50,7 @@ new (class CCastRedirector {
 				caster.CastTarget(ability, nearliestHero)
 				return false
 
-			} else if (this.IsClone(order.Target)) {
+			} else if (this.IsClone(order.Target) && !this.menu.dontRedirectToClones) {
 				const newTarget = this.GetOriginalHero(order.Target) as Unit
 
 				if (this.IsAvailableOriginalHero(newTarget, caster)) {
@@ -115,7 +115,7 @@ new (class CCastRedirector {
 	}
 
 	protected IsAvailableOriginalHero(hero: Nullable<Unit | FakeUnit>, caster: Unit): boolean {
-		if (hero instanceof Unit) return hero.IsVisible && hero.IsAlive && hero.Distance2D(caster) < 800;
+		if (hero instanceof Unit) return hero.IsVisible && hero.IsAlive && hero.Distance2D(caster) < 400;
 		return false
 	}
 })()
