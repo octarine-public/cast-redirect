@@ -21,15 +21,18 @@ new (class CCastRedirector {
 	}
 
 	protected PrepareUnitOrders(order: ExecuteOrder) {
+		const ability = order.Ability_ as Ability
+		const caster = order.Issuers[0]
+
 		if (!this.menu.State.value) {
 			return
 		}
 
-		if (order.IsPlayerInput && this.IsToTarget(order.Target)) {
-			console.log(order)
-			const caster = order.Issuers[0]
-			const ability = order.Ability_ as Ability
+		if (this.IsItemFilter() && !ability.IsItem) {
+			return true
+		}
 
+		if (order.IsPlayerInput && this.IsToTarget(order.Target) && this.IsAbility(ability)) {
 			if (this.IsIllusion(order.Target)) {
 				const newTarget = this.GetOriginalHero(order.Target) as Unit
 
@@ -69,10 +72,10 @@ new (class CCastRedirector {
 		return true
 	}
 
-	protected IsItem() {
-
+	protected IsItemFilter(): boolean {
+		return this.menu.RedirectItems.value
 	}
- 
+
 	protected IsClone(target: Nullable<Entity  | number>): boolean {
 		if (target instanceof Unit) {
 			return target.IsClone
