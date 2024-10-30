@@ -25,7 +25,8 @@ new (class CCastRedirector {
 			return
 		}
 
-		if (order.IsPlayerInput && this.IsAbility(order.Ability_) && this.IsToTarget(order.Target)) {
+		if (order.IsPlayerInput && this.IsToTarget(order.Target)) {
+			console.log(order)
 			const caster = order.Issuers[0]
 			const ability = order.Ability_ as Ability
 
@@ -68,6 +69,10 @@ new (class CCastRedirector {
 		return true
 	}
 
+	protected IsItem() {
+
+	}
+ 
 	protected IsClone(target: Nullable<Entity  | number>): boolean {
 		if (target instanceof Unit) {
 			return target.IsClone

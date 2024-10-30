@@ -10,6 +10,8 @@ export class MenuManager {
 	public readonly RedirectFromCreeps: Menu.Toggle
 	public readonly RedirectFromClones: Menu.Toggle
 
+	public readonly RedirectItems: Menu.Toggle
+
 	public readonly searchRange: Menu.Slider
 	private readonly tree: Menu.Node
 
@@ -36,6 +38,9 @@ export class MenuManager {
 		)
 
 		this.searchRange = this.tree.AddSlider("search range", 400, 100, 1200, 0, "Range of search heroes")
-	}
 
+		this.RedirectItems = this.tree.AddToggle(
+			"Redirect item's casts",
+		)
+	}
 }
