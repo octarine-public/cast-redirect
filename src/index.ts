@@ -28,7 +28,7 @@ new (class CCastRedirector {
 			return
 		}
 
-		if (this.IsItemFilter() && !ability.IsItem) {
+		if (!this.IsItemFilter() && ability.IsItem) {
 			return true
 		}
 
