@@ -42,15 +42,10 @@ class CCastRedirector {
 
 			} else if (this.IsClone(order.Target)) {
 				const newTarget = this.GetOriginalHero(order.Target) as Unit
+				const nearliestHero = this.GetNearestOtherHero(newTarget, caster)
 
-				if (this.IsAvailableOriginalHero(newTarget, caster) && this.IsAbility(order.Ability_)) {
-					caster.CastTarget(ability, newTarget)
-				} else {
-					const nearliestHero = this.GetNearestOtherHero(newTarget, caster)
-
-					if (!nearliestHero) return true
-					caster.CastTarget(ability, nearliestHero)
-				}
+				if (!nearliestHero) return true
+				caster.CastTarget(ability, nearliestHero)
 			}
 		}
 
