@@ -17,17 +17,16 @@ class CCastRedirector {
 
 	protected PrepareUnitOrders(order: ExecuteOrder): boolean {
 		if (order.IsPlayerInput && this.IsAbility(order.Ability_) && this.IsToTarget(order.Target)) {
+			const caster = order.Issuers[0]
+			const ability = order.Ability_ as Ability
+
 			if (this.IsIllusion(order.Target)) {
 				const newTarget = this.GetOriginalHero(order.Target) as Unit
-				const caster = order.Issuers[0]
-				const ability = order.Ability_ as Ability
 
 				if (this.IsAvailableOriginalHero(newTarget, caster) && this.IsAbility(order.Ability_)) {
 					caster.CastTarget(ability, newTarget)
 				} else {
 					const nearliestHero = this.GetNearestOtherHero(newTarget, caster)
-
-					console.log(nearliestHero)
 
 					if (!nearliestHero) return true
 					caster.CastTarget(ability, nearliestHero)
@@ -35,8 +34,16 @@ class CCastRedirector {
 
 				return false
 			} else if (this.IsCreep(order.Target)){
-				console.log(order.Target)
+				const newTarget = this.GetOriginalHero(order.Target) as Unit
+				const nearliestHero = this.GetNearestOtherHero(newTarget, caster)
+
+				if (!nearliestHero) return true
+				caster.CastTarget(ability, nearliestHero)
+
+				// console.log(order.Target)
 			}
+
+			// to do for clones
 		}
 		return true
 	}
