@@ -32,7 +32,7 @@ new (class CCastRedirector {
 			if (this.IsIllusion(order.Target)) {
 				const newTarget = this.GetOriginalHero(order.Target) as Unit
 
-				if (this.IsAvailableOriginalHero(newTarget, caster) && this.IsAbility(order.Ability_)) {
+				if (this.IsAvailableOriginalHero(newTarget, caster)) {
 					caster.CastTarget(ability, newTarget)
 				} else {
 					const nearliestHero = this.GetNearestOtherHero(newTarget, caster)
@@ -54,8 +54,13 @@ new (class CCastRedirector {
 				const newTarget = this.GetOriginalHero(order.Target) as Unit
 				const nearliestHero = this.GetNearestOtherHero(newTarget, caster)
 
-				if (!nearliestHero) return true
-				caster.CastTarget(ability, nearliestHero)
+				if (this.IsAvailableOriginalHero(newTarget, caster)) {
+					caster.CastTarget(ability, newTarget)
+				} else {
+					if (!nearliestHero) return true
+					caster.CastTarget(ability, newTarget)
+				}
+
 				return false
 			}
 		}
@@ -114,5 +119,5 @@ new (class CCastRedirector {
 })()
 
 EventsSDK.on("GameStarted", () => {
-	console.log("check")
+	console.log("start")
 })
