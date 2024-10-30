@@ -21,11 +21,12 @@ export class MenuManager {
 		this.State = this.tree.AddToggle("State")
 
 		this.dontRedirectToClones = this.tree.AddToggle(
-			"Dont redirect to clones",
-			true,
+			"Don't redirect to clones",
+			false,
+			"Don't redirect to clones (for example meepo, arc warden, etc.)"
 		)
 
-		this.searchRange = this.tree.AddSlider("search range", 2, 0, 9, 0, "Range of search heroes")
+		this.searchRange = this.tree.AddSlider("search range", 400, 100, 1200, 0, "Range of search heroes")
 	}
 
 }
