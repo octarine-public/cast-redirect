@@ -26,11 +26,7 @@ new (class CCastRedirector {
 		const ability = order.Ability_ as Ability
 		const caster = order.Issuers[0]
 
-		if (!this.menu.State.value) {
-			return
-		}
-
-		if (!this.IsItemFilter() && ability.IsItem) {
+		if (!this.menu.State.value || !this.IsItemFilter() && ability.IsItem) {
 			return true
 		}
 
