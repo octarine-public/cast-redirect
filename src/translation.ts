@@ -6,5 +6,5 @@ function Load(name: string) {
 	)
 }
 Menu.Localization.AddLocalizationUnit("russian", Load("ru"))
-Menu.Localization.AddLocalizationUnit("english", Load("en"))
+// Menu.Localization.AddLocalizationUnit("english", Load("en"))
 // Menu.Localization.AddLocalizationUnit("chinese", Load("cn"))
