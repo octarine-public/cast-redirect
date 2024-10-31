@@ -15,7 +15,7 @@ import {
 import { MenuManager } from "./menu"
 
 new (class CCastRedirector {
-	private readonly menu!: MenuManager
+	private readonly menu: MenuManager
 
 	constructor() {
 		EventsSDK.on("PrepareUnitOrders", this.PrepareUnitOrders.bind(this))
@@ -31,21 +31,21 @@ new (class CCastRedirector {
 		}
 
 		if (order.IsPlayerInput && this.IsToTarget(order.Target) && this.IsAbility(ability)) {
-			if (this.IsIllusion(order.Target)) {
+			if (this.IsIllusion(order.Target) && this.menu.RedirectFromIllusions.value) {
 				const newTarget = this.GetOriginalHero(order.Target) as Unit
 
 				if (this.IsAvailableOriginalHero(newTarget, caster) && this.menu.RedirectFromIllusions.value) {
 					caster.CastTarget(ability, newTarget)
 				} else {
-					const nearliestHero = this.GetNearestOtherHero(newTarget, caster)
+					const nearliestHero = this.GetOtherHero(newTarget, caster)
 
 					if (!nearliestHero) return true
 					caster.CastTarget(ability, nearliestHero)
 				}
-
 				return false
+
 			} else if (this.IsCreep(order.Target) && this.menu.RedirectFromCreeps.value){
-				const nearliestHero = this.GetNearestOtherHero(caster, caster)
+				const nearliestHero = this.GetOtherHero(caster, caster)
 
 				if (!nearliestHero) return true
 				caster.CastTarget(ability, nearliestHero)
@@ -57,7 +57,7 @@ new (class CCastRedirector {
 				if (this.IsAvailableOriginalHero(newTarget, caster)) {
 					caster.CastTarget(ability, newTarget)
 				} else {
-					const nearliestHero = this.GetNearestOtherHero(newTarget, caster)
+					const nearliestHero = this.GetOtherHero(newTarget, caster)
 
 					if (!nearliestHero) return true
 					caster.CastTarget(ability, nearliestHero)
@@ -104,10 +104,16 @@ new (class CCastRedirector {
 		if (target instanceof Hero) return target.ReplicatingOtherHeroModel;
 	}
 
-	protected GetNearestOtherHero(target: Entity, caster: Unit): Nullable<Unit> {
-		return EntityManager.GetEntitiesByClass(Hero)
-		.filter(x => x)
-		.sort((a, b) => a.Distance2D(caster) - b.Distance2D(caster))
+	protected GetOtherHero(target: Entity, caster: Unit): Nullable<Unit> {
+		const heroes = EntityManager.GetEntitiesByClass(Hero)
+
+		if (this.menu.SelectMode.SelectedID == 0) {
+			heroes.sort((a, b) => a.HPPercent - b.HPPercent)
+		} else if (this.menu.SelectMode.SelectedID == 1) {
+			heroes.sort((a, b) => a.Distance2D(caster) - b.Distance2D(caster))
+		}
+
+		return heroes
 		.find( x =>
 			x !== target &&
 			x !== caster &&
@@ -123,8 +129,8 @@ new (class CCastRedirector {
 		if (hero instanceof Unit) return hero.IsVisible && hero.IsAlive && hero.Distance2D(caster) < this.menu.searchRange.value;
 		return false
 	}
-})()
 
-EventsSDK.on("GameStarted", () => {
-	console.log("start")
-})
+	protected dontRedirectDagon() {
+		// to do
+	}
+})()
