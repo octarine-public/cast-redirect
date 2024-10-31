@@ -139,7 +139,7 @@ new (class CCastRedirector {
 	}
 
 	protected IsAvailableOriginalHero(hero: Nullable<Unit | FakeUnit>, caster: Unit): boolean {
-		if (hero instanceof Unit && !this.menu.RedirectToLowHP) {
+		if (hero instanceof Unit && !this.menu.RedirectToLowHP.value) {
 			return hero.IsVisible && hero.IsAlive && hero.Distance2D(caster) < this.menu.searchRange.value
 		}
 		return false
