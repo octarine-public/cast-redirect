@@ -16,6 +16,8 @@ export class MenuManager {
 
 	public readonly searchRange: Menu.Slider
 	private readonly tree: Menu.Node
+	
+	protected readonly RedirectFrom: Menu.Node
 
 	private readonly baseNode = Menu.AddEntry("Utility")
 
@@ -27,15 +29,17 @@ export class MenuManager {
 
 		this.State = this.tree.AddToggle("State")
 
-		this.RedirectFromIllusions = this.tree.AddToggle(
+		this.RedirectFrom = this.tree.AddNode("Redirect from options")
+
+		this.RedirectFromIllusions = this.RedirectFrom.AddToggle(
 			"Redirect from Illusions",
 		)
 
-		this.RedirectFromCreeps = this.tree.AddToggle(
+		this.RedirectFromCreeps = this.RedirectFrom.AddToggle(
 			"Redirect from Creeps",
 		)
 
-		this.RedirectFromClones = this.tree.AddToggle(
+		this.RedirectFromClones = this.RedirectFrom.AddToggle(
 			"Redirect from Clones",
 			true,
 			"Redirect from Clones (e.x Meepo, Vengeful spirit)"
