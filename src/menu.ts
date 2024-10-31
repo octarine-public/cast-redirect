@@ -52,7 +52,7 @@ export class MenuManager {
 		)
 
 		this.RedirectItemsState = this.tree.AddImageSelector(
-			"Item redirect",
+			"Redirect item",
 			["item_dagon"],
 			new Map([
 				["item_dagon", true],

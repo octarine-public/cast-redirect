@@ -9,7 +9,8 @@ import {
 	Ability,
 	Hero,
 	Creep,
-	FakeUnit
+	FakeUnit,
+	item_dagon
 } from "github.com/octarine-public/wrapper/index"
 
 import { MenuManager } from "./menu"
@@ -22,7 +23,7 @@ new (class CCastRedirector {
 		this.menu = new MenuManager()
 	}
 
-	protected PrepareUnitOrders(order: ExecuteOrder) {
+	protected PrepareUnitOrders(order: ExecuteOrder): boolean {
 		const ability = order.Ability_ as Ability
 		const caster = order.Issuers[0]
 
@@ -31,7 +32,9 @@ new (class CCastRedirector {
 		}
 
 		if (order.IsPlayerInput && this.IsToTarget(order.Target) && this.IsAbility(ability)) {
-			console.log(this.RedirectDagon())
+			if (!this.RedirectDagon() && ability instanceof item_dagon) {
+				return true
+			}
 
 			if (this.IsIllusion(order.Target) && this.menu.RedirectFromIllusions.value) {
 				const newTarget = this.GetOriginalHero(order.Target) as Unit
@@ -145,7 +148,7 @@ new (class CCastRedirector {
 	protected RedirectDagon() {
 		// change code if more than 1 item
 		return this.menu.RedirectItemsState.values.some(value => {
-			if (!this.menu.RedirectItemsState.IsEnabled(value)) {
+			if (this.menu.RedirectItemsState.IsEnabled(value)) {
 				return true
 			}
 			return false
