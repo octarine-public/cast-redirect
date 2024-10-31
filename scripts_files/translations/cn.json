@@ -9,5 +9,7 @@
 	"Range of search heroes": "搜索英雄的范围",
 	"Redirect item casts": "物品施法重定向",
 	"Redirect to low HP hero": "重定向至低血量英雄",
-	"Items redirect": "物品重定向"
+	"Items redirect": "物品重定向",
+	"Disable redirection for items that do not require it": "禁用不需要重定向的物品"
+
 }

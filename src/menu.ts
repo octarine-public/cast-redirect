@@ -56,7 +56,8 @@ export class MenuManager {
 			["item_dagon"],
 			new Map([
 				["item_dagon", true],
-			])
+			]),
+			"Disable redirection for items that do not require it"
 		)
 	}
 }

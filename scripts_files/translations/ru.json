@@ -9,5 +9,6 @@
 	"Range of search heroes": "Дистанция поиска героев",
 	"Redirect item casts": "Перенаправление каста предметов",
 	"Redirect to low HP hero": "Перенаправление на лоу хп героя",
-	"Items redirect": "Перенаправление предметов"
+	"Items redirect": "Перенаправление предметов",
+	"Disable redirection for items that do not require it": "Отключите перенаправление для предметов которые не нуждаются в этом"
 }
