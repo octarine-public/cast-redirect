@@ -17,12 +17,12 @@
 	},
 	"include": [
 		"./**/*.ts",
-		"../../**/*.d.ts"
+		"../../../**/*.d.ts"
 	],
 	"exclude": [
+		"wrapper_autogen/**/*",
 		"node_modules/**/*",
-		"scripts_files/**/*",
-		"../deadlock-sdk/**/*",
+		"scripts_files/**/*"
 	],
 	"compileOnSave": true
 }
