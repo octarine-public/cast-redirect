@@ -49,5 +49,13 @@ export class MenuManager {
 		this.RedirectToLowHP = this.tree.AddToggle(
 			"Redirect to low HP hero",
 		)
+
+		const RedirectItemsState = this.tree.AddImageSelector(
+			"Item redirect",
+			["item_dagon"],
+			new Map([
+				["item_dagon", true],
+			])
+		)
 	}
 }
