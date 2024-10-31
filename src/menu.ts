@@ -39,7 +39,7 @@ export class MenuManager {
 			"Redirect from Clones (e.x Meepo, Vengeful spirit)"
 		)
 
-		this.searchRange = this.tree.AddSlider("Search range", 400, 100, 1200, 0, "Range of search heroes")
+		this.searchRange = this.tree.AddSlider("Range of search heroes", 400, 100, 1200, 0)
 
 		this.RedirectItems = this.tree.AddToggle(
 			"Redirect item casts",
