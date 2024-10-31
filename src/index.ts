@@ -10,7 +10,8 @@ import {
 	Hero,
 	Creep,
 	FakeUnit,
-	item_dagon
+	item_dagon,
+	LocalPlayer
 } from "github.com/octarine-public/wrapper/index"
 
 import { MenuManager } from "./menu"
@@ -20,7 +21,7 @@ new (class CCastRedirector {
 
 	constructor() {
 		EventsSDK.on("PrepareUnitOrders", this.PrepareUnitOrders.bind(this))
-		this.menu = new MenuManager()
+		this.menu = new MenuManager(LocalPlayer?.Hero)
 	}
 
 	protected PrepareUnitOrders(order: ExecuteOrder): boolean {

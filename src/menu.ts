@@ -1,10 +1,11 @@
 import {
 	ImageData,
 	Menu,
+	Hero,
+	Ability
 } from "github.com/octarine-public/wrapper/index"
 
 export class MenuManager {
-	public HeroNames: string[] = []
 	public readonly State: Menu.Toggle
 	public readonly RedirectFromIllusions: Menu.Toggle
 	public readonly RedirectFromCreeps: Menu.Toggle
@@ -17,11 +18,22 @@ export class MenuManager {
 	public readonly searchRange: Menu.Slider
 	private readonly tree: Menu.Node
 	
-	protected readonly RedirectFrom: Menu.Node
+	private readonly RedirectFrom: Menu.Node
+
+	private readonly RedirectItemsTree: Menu.Node
+
+	private readonly RedirectAbilities: Menu.Node
+	//public readonly RedirectAbilitiesState: Menu.ImageSelector
+
+	private readonly hero: Nullable<Hero>
+	private readonly spells: Nullable<Ability>[]
 
 	private readonly baseNode = Menu.AddEntry("Utility")
 
-	constructor() {
+	constructor(hero: Nullable<Hero>) {
+		this.hero = hero
+		this.spells = this.getHeroAbilities(this.hero)
+
 		this.tree = this.baseNode.AddNode(
 			"Cast Redirect",
 			ImageData.Paths.Icons.magic_resist
@@ -47,21 +59,48 @@ export class MenuManager {
 
 		this.searchRange = this.tree.AddSlider("Search range", 800, 100, 1400, 0, "Range of search heroes")
 
-		this.RedirectItems = this.tree.AddToggle(
+		this.RedirectItemsTree = this.tree.AddNode("Redirect items options")
+
+		this.RedirectItems = this.RedirectItemsTree.AddToggle(
 			"Redirect item casts",
 		)
 
-		this.RedirectToLowHP = this.tree.AddToggle(
-			"Redirect to low HP hero",
-		)
-
-		this.RedirectItemsState = this.tree.AddImageSelector(
+		this.RedirectItemsState = this.RedirectItemsTree.AddImageSelector(
 			"Items redirect",
-			["item_dagon"],
+			[
+				"item_dagon",
+				"item_rod_of_atos", 
+				"item_orchid", 
+				"item_force_staff", 
+				"item_ethereal_blade",
+			 	"item_diffusal_blade",
+				"item_abyssal_blade",
+				"item_heavens_halberd",
+				"item_urn_of_shadows",
+				"item_spirit_vessel"
+			],
 			new Map([
 				["item_dagon", true],
 			]),
 			"Disable redirection for items that do not require it"
 		)
+
+		this.RedirectAbilities = this.tree.AddNode("Redirect abilities options")
+
+		console.log(this.spells)
+
+		// this.RedirectAbilitiesState = this.RedirectAbilities.AddImageSelector(
+		// 	"Abilities",
+		// 	[this.spells.keys()],
+		// )
+
+		this.RedirectToLowHP = this.tree.AddToggle(
+			"Redirect to low HP hero",
+		)
+	}
+
+	private getHeroAbilities(hero: Nullable<Hero>) {
+		if (hero) return hero.Spells
+		return []
 	}
 }
