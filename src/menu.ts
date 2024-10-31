@@ -34,13 +34,13 @@ export class MenuManager {
 		)
 
 		this.RedirectFromClones = this.tree.AddToggle(
-			"Redirect from Clones",
+			"Redirect from Clones (e.x Meepo, Vengeful spirit)",
 		)
 
-		this.searchRange = this.tree.AddSlider("search range", 400, 100, 1200, 0, "Range of search heroes")
+		this.searchRange = this.tree.AddSlider("Search range", 400, 100, 1200, 0, "Range of search heroes")
 
 		this.RedirectItems = this.tree.AddToggle(
-			"Redirect item's casts",
+			"Redirect item casts",
 		)
 	}
 }
