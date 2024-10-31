@@ -4,8 +4,10 @@
 	"Redirect from Illusions": "从幻象重定向",
 	"Redirect from Creeps": "从小兵重定向",
 	"Redirect from Clones": "从克隆体重定向",
-	"Redirect from Clones (e.x Meepo, Vengeful spirit)": "从克隆体重定向（例如米波、复仇之魂）",
+	"Redirect from Clones (e.x Meepo, Vengeful spirit)": "从克隆体重定向（例如Meepo，复仇之魂）",
 	"Search range": "搜索范围",
-	"Range of search heroes": "英雄搜索范围",
-	"Redirect item casts": "道具施法重定向"
+	"Range of search heroes": "搜索英雄的范围",
+	"Redirect item casts": "物品施法重定向",
+	"Redirect to low HP hero": "重定向至低血量英雄",
+	"Items redirect": "物品重定向"
 }

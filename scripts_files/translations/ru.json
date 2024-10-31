@@ -7,5 +7,7 @@
 	"Redirect from Clones (e.x Meepo, Vengeful spirit)": "Перенаправление с клонов (например, Meepo, Vengeful Spirit)",
 	"Search range": "Дистанция поиска",
 	"Range of search heroes": "Дистанция поиска героев",
-	"Redirect item casts": "Перенаправление каста предметов"
+	"Redirect item casts": "Перенаправление каста предметов",
+	"Redirect to low HP hero": "Перенаправление на лоу хп героя",
+	"Items redirect": "Перенаправление предметов"
 }
