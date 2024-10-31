@@ -87,7 +87,7 @@ export class MenuManager {
 
 		this.RedirectAbilities = this.tree.AddNode("Redirect abilities options")
 
-		console.log(this.spells)
+		console.log(this.hero)
 
 		// this.RedirectAbilitiesState = this.RedirectAbilities.AddImageSelector(
 		// 	"Abilities",
