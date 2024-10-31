@@ -118,7 +118,7 @@ new (class CCastRedirector {
 			!x.IsIllusion &&
 			!x.IsClone &&
 			!x.IsInvulnerable &&
-			x.Distance2D(caster) < 400 &&
+			x.Distance2D(caster) < this.menu.searchRange.value &&
 			x.IsEnemy(caster)
 		)
 	}
