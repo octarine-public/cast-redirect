@@ -21,6 +21,7 @@ new (class CCastRedirector {
 
 	constructor() {
 		EventsSDK.on("PrepareUnitOrders", this.PrepareUnitOrders.bind(this))
+		console.log(LocalPlayer)
 		this.menu = new MenuManager(LocalPlayer?.Hero)
 	}
 
