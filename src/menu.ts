@@ -9,17 +9,12 @@ export class MenuManager {
 	public readonly RedirectFromIllusions: Menu.Toggle
 	public readonly RedirectFromCreeps: Menu.Toggle
 	public readonly RedirectFromClones: Menu.Toggle
-	public readonly SelectMode: Menu.Dropdown
+	public readonly RedirectToLowHP: Menu.Toggle
 
 	public readonly RedirectItems: Menu.Toggle
 
 	public readonly searchRange: Menu.Slider
 	private readonly tree: Menu.Node
-
-	private readonly mods = [
-		"Redirect to nearest hero",
-		"Redirect to low HP hero",
-	]
 
 	private readonly baseNode = Menu.AddEntry("Utility")
 
@@ -45,15 +40,14 @@ export class MenuManager {
 			"Redirect from Clones (e.x Meepo, Vengeful spirit)"
 		)
 
-		this.searchRange = this.tree.AddSlider("Range of search heroes", 400, 100, 1200, 0, "R")
+		this.searchRange = this.tree.AddSlider("Search range", 400, 100, 1200, 0, "Range of search heroes")
 
 		this.RedirectItems = this.tree.AddToggle(
 			"Redirect item casts",
 		)
 
-		this.SelectMode = this.tree.AddDropdown(
-			"Select mode",
-			this.mods
+		this.RedirectToLowHP = this.tree.AddToggle(
+			"Redirect to low HP hero",
 		)
 	}
 }

@@ -107,9 +107,9 @@ new (class CCastRedirector {
 	protected GetOtherHero(target: Entity, caster: Unit): Nullable<Unit> {
 		const heroes = EntityManager.GetEntitiesByClass(Hero)
 
-		if (this.menu.SelectMode.SelectedID == 0) {
+		if (this.menu.RedirectToLowHP.value) {
 			heroes.sort((a, b) => a.HPPercent - b.HPPercent)
-		} else if (this.menu.SelectMode.SelectedID == 1) {
+		} else {
 			heroes.sort((a, b) => a.Distance2D(caster) - b.Distance2D(caster))
 		}
 
