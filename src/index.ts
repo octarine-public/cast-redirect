@@ -109,24 +109,34 @@ new (class CCastRedirector {
 
 		if (this.menu.RedirectToLowHP.value) {
 			heroes.sort((a, b) => a.HPPercent - b.HPPercent)
+			return heroes
+			.find( x =>
+				x !== caster &&
+				!x.IsIllusion &&
+				!x.IsClone &&
+				!x.IsInvulnerable &&
+				x.Distance2D(caster) < this.menu.searchRange.value &&
+				x.IsEnemy(caster)
+			)
 		} else {
 			heroes.sort((a, b) => a.Distance2D(caster) - b.Distance2D(caster))
+			return heroes
+			.find( x =>
+				x !== target &&
+				x !== caster &&
+				!x.IsIllusion &&
+				!x.IsClone &&
+				!x.IsInvulnerable &&
+				x.Distance2D(caster) < this.menu.searchRange.value &&
+				x.IsEnemy(caster)
+			)
 		}
-
-		return heroes
-		.find( x =>
-			x !== target &&
-			x !== caster &&
-			!x.IsIllusion &&
-			!x.IsClone &&
-			!x.IsInvulnerable &&
-			x.Distance2D(caster) < this.menu.searchRange.value &&
-			x.IsEnemy(caster)
-		)
 	}
 
 	protected IsAvailableOriginalHero(hero: Nullable<Unit | FakeUnit>, caster: Unit): boolean {
-		if (hero instanceof Unit) return hero.IsVisible && hero.IsAlive && hero.Distance2D(caster) < this.menu.searchRange.value;
+		if (hero instanceof Unit && !this.menu.RedirectToLowHP) {
+			return hero.IsVisible && hero.IsAlive && hero.Distance2D(caster) < this.menu.searchRange.value
+		}
 		return false
 	}
 
