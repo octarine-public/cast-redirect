@@ -31,7 +31,7 @@ new (class CCastRedirector {
 		}
 
 		if (order.IsPlayerInput && this.IsToTarget(order.Target) && this.IsAbility(ability)) {
-			console.log(this.dontRedirectDagon())
+			console.log(this.RedirectDagon())
 
 			if (this.IsIllusion(order.Target) && this.menu.RedirectFromIllusions.value) {
 				const newTarget = this.GetOriginalHero(order.Target) as Unit
@@ -142,7 +142,13 @@ new (class CCastRedirector {
 		return false
 	}
 
-	protected dontRedirectDagon() {
-		return this.menu.RedirectItems.value
+	protected RedirectDagon() {
+		// change code if more than 1 item
+		return this.menu.RedirectItemsState.values.some(value => {
+			if (!this.menu.RedirectItemsState.IsEnabled(value)) {
+				return true
+			}
+			return false
+		})
 	}
 })()

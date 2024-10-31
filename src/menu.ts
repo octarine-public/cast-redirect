@@ -12,6 +12,7 @@ export class MenuManager {
 	public readonly RedirectToLowHP: Menu.Toggle
 
 	public readonly RedirectItems: Menu.Toggle
+	public readonly RedirectItemsState: Menu.ImageSelector
 
 	public readonly searchRange: Menu.Slider
 	private readonly tree: Menu.Node
@@ -50,7 +51,7 @@ export class MenuManager {
 			"Redirect to low HP hero",
 		)
 
-		const RedirectItemsState = this.tree.AddImageSelector(
+		this.RedirectItemsState = this.tree.AddImageSelector(
 			"Item redirect",
 			["item_dagon"],
 			new Map([
