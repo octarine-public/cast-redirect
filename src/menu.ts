@@ -34,7 +34,9 @@ export class MenuManager {
 		)
 
 		this.RedirectFromClones = this.tree.AddToggle(
-			"Redirect from Clones (e.x Meepo, Vengeful spirit)",
+			"Redirect from Clones",
+			true,
+			"Redirect from Clones (e.x Meepo, Vengeful spirit)"
 		)
 
 		this.searchRange = this.tree.AddSlider("Search range", 400, 100, 1200, 0, "Range of search heroes")
