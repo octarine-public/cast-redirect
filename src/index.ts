@@ -12,6 +12,7 @@ import {
 	FakeUnit,
 	item_dagon,
 	LocalPlayer,
+	DOTA_ABILITY_BEHAVIOR
 } from "github.com/octarine-public/wrapper/index"
 
 import { MenuManager } from "./menu"
@@ -27,8 +28,31 @@ new (class CCastRedirector {
 
 	protected SetSpells(entity: Entity) {
 		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
+			let spells = LocalPlayer.Hero.Spells;
+				for (let i = 0; i < spells.length; i++) {
+					if (
+						spells[i].NetworkedManaCost > 0 || 
+						spells[i].IsPassive || 
+						spells[i].CooldownRestoreTime > 0
+					) {
 
-			console.log(entity.Spells)
+						if (!spells[i].Name_.startsWith("special_bonus_")) {
+							let isTargeted = spells[i].HasBehavior(DOTA_ABILITY_BEHAVIOR.DOTA_ABILITY_BEHAVIOR_UNIT_TARGET) ||
+											spells[i].HasBehavior(DOTA_ABILITY_BEHAVIOR.DOTA_ABILITY_BEHAVIOR_POINT);
+
+							let targetTypes = spells[i].TargetTypeMask;
+							let isUnitTarget = targetTypes.hasMask(DOTA_UNIT_TARGET_TYPE.DOTA_UNIT_TARGET_HERO) ||
+											targetTypes.hasMask(DOTA_UNIT_TARGET_TYPE.DOTA_UNIT_TARGET_CREEP);
+
+							console.log(
+								spells[i].Name_, 
+								spells[i].NetworkedManaCost, 
+								spells[i].IsPassive, 
+								spells[i].CooldownRestoreTime > 0,
+								isTargeted || isUnitTarget
+							);
+						}
+					}
 		}
 	}
 
