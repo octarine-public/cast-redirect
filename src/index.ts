@@ -28,7 +28,9 @@ new (class CCastRedirector {
 	protected SetSpells(entity: Entity) {
 		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
 
-			console.log(entity.Spells)
+			entity.Spells.forEach(spell => {
+				console.log(spell?.Name_)
+			})
 		}
 	}
 
