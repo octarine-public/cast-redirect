@@ -2,7 +2,8 @@ import {
 	ImageData,
 	Menu,
 	Hero,
-	Ability
+	Ability,
+	LocalPlayer
 } from "github.com/octarine-public/wrapper/index"
 
 export class MenuManager {
@@ -87,7 +88,7 @@ export class MenuManager {
 
 		this.RedirectAbilities = this.tree.AddNode("Redirect abilities options")
 
-		console.log(this.hero)
+		console.log(LocalPlayer, 3)
 
 		// this.RedirectAbilitiesState = this.RedirectAbilities.AddImageSelector(
 		// 	"Abilities",
