@@ -21,14 +21,19 @@ new (class CCastRedirector {
 
 	constructor() {
 		EventsSDK.on("PrepareUnitOrders", this.PrepareUnitOrders.bind(this))
+		EventsSDK.on("Tick", this.SetSpells.bind(this))
 		this.menu = new MenuManager()
+	}
+
+	protected SetSpells() {
+		console.log(LocalPlayer?.Hero)
 	}
 
 	protected PrepareUnitOrders(order: ExecuteOrder): boolean {
 		const ability = order.Ability_ as Ability
 		const caster = order.Issuers[0]
 
-		this.menu.updateLocalHero(LocalPlayer?.Hero)
+		// this.menu.updateLocalHero(LocalPlayer?.Hero)
 
 		if (!this.menu.State.value || !this.IsItemFilter() && ability.IsItem) {
 			return true

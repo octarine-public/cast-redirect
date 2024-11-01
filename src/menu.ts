@@ -88,8 +88,6 @@ export class MenuManager {
 
 		this.RedirectAbilities = this.tree.AddNode("Redirect abilities options")
 
-		console.log(this.localHero, 3)
-
 		this.RedirectToLowHP = this.tree.AddToggle(
 			"Redirect to low HP hero",
 		)
