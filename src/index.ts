@@ -22,7 +22,7 @@ new (class CCastRedirector {
 	constructor() {
 		EventsSDK.on("PrepareUnitOrders", this.PrepareUnitOrders.bind(this))
 		// EventsSDK.on("UnitAbilitiesChanged", this.SetSpells.bind(this))
-		EventsSDK.on("GameStarted", this.SetSpells.bind(this))
+		EventsSDK.on("MapDataLoaded", this.SetSpells.bind(this))
 		this.menu = new MenuManager()
 	}
 
