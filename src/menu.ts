@@ -91,14 +91,15 @@ export class MenuManager {
 	}
 
 	public updateRedirectSpellsMenu(spells: Nullable<Ability>[]) {
-		console.log(1)
 		const spellNames: string[] = spells
 			.filter((spell): spell is Ability => spell != null)
 			.map(spell => spell.Name);
 	
+		console.log(spellNames)
+
 		this.RedirectAbilitiesState = this.RedirectAbilities.AddImageSelector(
 			"Abilities",
-			["lion_impale"],
+			spellNames,
 		);
 	}
 	
