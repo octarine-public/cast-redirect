@@ -26,9 +26,6 @@ export class MenuManager {
 	private readonly RedirectAbilities: Menu.Node
 	public RedirectAbilitiesState?: Menu.ImageSelector
 
-	private readonly hero: Nullable<Hero>
-	//private readonly spells: Nullable<Ability>[]
-
 	private readonly baseNode = Menu.AddEntry("Utility")
 
 	constructor() {
@@ -93,13 +90,15 @@ export class MenuManager {
 		)
 	}
 
-	public updateLocalHero(hero: Nullable<Hero>) {
-		this.localHero = hero
-
-		this.RedirectAbilities.ResetToDefault()
+	public updateRedirectSpellsMenu(spells: Nullable<Ability>[]) {
+		const spellNames: string[] = spells
+			.filter((spell): spell is Ability => spell != null)
+			.map(spell => spell.Name);
+	
 		this.RedirectAbilitiesState = this.RedirectAbilities.AddImageSelector(
-			"Abilities222",
-			[],
-		)
+			"Abilities",
+			[...spellNames],
+		);
 	}
+	
 }

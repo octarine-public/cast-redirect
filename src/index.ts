@@ -27,48 +27,6 @@ new (class CCastRedirector {
 		this.menu = new MenuManager()
 	}
 
-	protected SetSpells(entity: Entity) {
-		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
-			let spells = LocalPlayer.Hero.Spells;
-
-			if (spells) {
-				for (let i = 0; i < spells.length; i++) {
-					const spell = spells[i];
-
-					if (spell) {
-						if (
-							spell.NetworkedManaCost > 0 || 
-							spell.IsPassive || 
-							(spell.CooldownRestoreTime > 0)
-						) {
-	
-							if (spell.Name_ && !spell.Name_.startsWith("special_bonus_")) {
-								const isTargeted = spell.HasBehavior(DOTA_ABILITY_BEHAVIOR.DOTA_ABILITY_BEHAVIOR_UNIT_TARGET) ||
-												   spell.HasBehavior(DOTA_ABILITY_BEHAVIOR.DOTA_ABILITY_BEHAVIOR_POINT);
-				
-								const targetTypes = spell.TargetTypeMask;
-								const isUnitTarget = targetTypes && (
-									targetTypes.hasMask(DOTA_UNIT_TARGET_TYPE.DOTA_UNIT_TARGET_HERO) ||
-									targetTypes.hasMask(DOTA_UNIT_TARGET_TYPE.DOTA_UNIT_TARGET_CREEP)
-								);
-				
-								console.log(
-									spell.Name_, 
-									spell.NetworkedManaCost, 
-									spell.IsPassive, 
-									spell.CooldownRestoreTime > 0,
-									isTargeted || isUnitTarget // Выводим, является ли способность таргетной
-								);
-							}
-						}
-					}
-					
-				}
-			}
-			
-		}
-	}
-
 	protected PrepareUnitOrders(order: ExecuteOrder): boolean {
 		const ability = order.Ability_ as Ability
 		const caster = order.Issuers[0]
@@ -202,5 +160,25 @@ new (class CCastRedirector {
 			}
 			return false
 		})
+	}
+
+	protected SetSpells(entity: Entity) {
+		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
+			const spells = LocalPlayer.Hero.Spells
+			const targetSpells = []
+			
+			for (let i = 0; i < spells.length; i++) {
+				if (this.IsTargetSpell(spells[i])) {
+					targetSpells.push(spells[i])
+				}
+			}
+
+			this.menu.updateRedirectSpellsMenu(targetSpells)
+		}
+	}
+
+	protected IsTargetSpell(spell: Nullable<Ability>): boolean {
+		if (spell) return spell.AbilityData.TargetType > 0
+		return false
 	}
 })()
