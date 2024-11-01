@@ -161,11 +161,12 @@ new (class CCastRedirector {
 	}
 
 	protected SetSpells(entity: Entity) {
-		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
+		if (LocalPlayer === undefined) return
+		if (entity instanceof Hero && entity == LocalPlayer.Hero) {
 			const spells = LocalPlayer.Hero.Spells
 			const targetSpells = []
 
-			console.log( LocalPlayer.Hero.Spells )
+			console.log( spells )
 			
 			for (let i = 0; i < spells.length; i++) {
 				if (this.IsTargetSpell(spells[i])) {
