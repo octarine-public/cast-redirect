@@ -11,7 +11,8 @@ import {
 	Creep,
 	FakeUnit,
 	item_dagon,
-	LocalPlayer
+	LocalPlayer,
+	Player
 } from "github.com/octarine-public/wrapper/index"
 
 import { MenuManager } from "./menu"
@@ -21,12 +22,14 @@ new (class CCastRedirector {
 
 	constructor() {
 		EventsSDK.on("PrepareUnitOrders", this.PrepareUnitOrders.bind(this))
-		EventsSDK.on("UnitAbilitiesChanged", this.SetSpells.bind(this))
+		EventsSDK.on("EntityCreated", this.SetSpells.bind(this))
 		this.menu = new MenuManager()
 	}
 
-	protected SetSpells(entity: Unit) {
-		console.log(1)
+	protected SetSpells(entity: Entity) {
+		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
+			console.log(entity)
+		}
 	}
 
 	protected PrepareUnitOrders(order: ExecuteOrder): boolean {
