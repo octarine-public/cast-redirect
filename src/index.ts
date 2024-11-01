@@ -12,7 +12,8 @@ import {
 	FakeUnit,
 	item_dagon,
 	LocalPlayer,
-	DOTA_ABILITY_BEHAVIOR
+	DOTA_ABILITY_BEHAVIOR,
+	DOTA_UNIT_TARGET_TYPE
 } from "github.com/octarine-public/wrapper/index"
 
 import { MenuManager } from "./menu"
@@ -53,6 +54,7 @@ new (class CCastRedirector {
 							);
 						}
 					}
+			}
 		}
 	}
 
