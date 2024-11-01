@@ -21,13 +21,12 @@ new (class CCastRedirector {
 
 	constructor() {
 		EventsSDK.on("PrepareUnitOrders", this.PrepareUnitOrders.bind(this))
-		// EventsSDK.on("UnitAbilitiesChanged", this.SetSpells.bind(this))
-		EventsSDK.on("MapDataLoaded", this.SetSpells.bind(this))
+		EventsSDK.on("UnitAbilitiesChanged", this.SetSpells.bind(this))
 		this.menu = new MenuManager()
 	}
 
-	protected SetSpells() {
-		console.log(LocalPlayer?.Hero)
+	protected SetSpells(entity: Unit) {
+		console.log(1)
 	}
 
 	protected PrepareUnitOrders(order: ExecuteOrder): boolean {
