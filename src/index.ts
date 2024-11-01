@@ -164,6 +164,8 @@ new (class CCastRedirector {
 		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
 			const spells = LocalPlayer.Hero.Spells
 			const targetSpells = []
+
+			console.log( LocalPlayer.Hero.Spells )
 			
 			for (let i = 0; i < spells.length; i++) {
 				if (this.IsTargetSpell(spells[i])) {
