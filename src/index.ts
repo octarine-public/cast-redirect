@@ -22,7 +22,7 @@ new (class CCastRedirector {
 
 	constructor() {
 		EventsSDK.on("PrepareUnitOrders", this.PrepareUnitOrders.bind(this))
-		EventsSDK.on("GameStarted", this.SetLocalHero.bind(this))
+		EventsSDK.on("PreEntityCreated", this.SetLocalHero.bind(this))
 		this.menu = new MenuManager()
 
 		console.log(this.localHero)
