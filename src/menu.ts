@@ -30,8 +30,8 @@ export class MenuManager {
 
 	private readonly baseNode = Menu.AddEntry("Utility")
 
-	constructor(hero: Nullable<Hero>) {
-		this.hero = hero
+	constructor() {
+		// this.hero = hero
 		this.spells = this.getHeroAbilities(this.hero)
 
 		this.tree = this.baseNode.AddNode(
