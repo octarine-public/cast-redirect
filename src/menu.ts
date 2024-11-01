@@ -24,7 +24,7 @@ export class MenuManager {
 	private readonly RedirectItemsTree: Menu.Node
 
 	private readonly RedirectAbilities: Menu.Node
-	public RedirectAbilitiesState: Menu.ImageSelector
+	public RedirectAbilitiesState?: Menu.ImageSelector
 
 	private readonly hero: Nullable<Hero>
 	//private readonly spells: Nullable<Ability>[]
@@ -92,11 +92,6 @@ export class MenuManager {
 
 		this.RedirectToLowHP = this.tree.AddToggle(
 			"Redirect to low HP hero",
-		)
-
-		this.RedirectAbilitiesState = this.RedirectAbilities.AddImageSelector(
-			"Abilities",
-			[],
 		)
 	}
 
