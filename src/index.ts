@@ -18,12 +18,14 @@ import { MenuManager } from "./menu"
 
 new (class CCastRedirector {
 	private readonly menu: MenuManager
+	private localHero: Nullable<Hero>
 
 	constructor() {
 		EventsSDK.on("PrepareUnitOrders", this.PrepareUnitOrders.bind(this))
+		EventsSDK.on("GameStarted", this.SetLocalHero.bind(this))
 		this.menu = new MenuManager()
 
-		console.log(this.GetLocalHero())
+		console.log(this.localHero)
 	}
 
 	protected PrepareUnitOrders(order: ExecuteOrder): boolean {
@@ -159,7 +161,7 @@ new (class CCastRedirector {
 		})
 	}
 
-	private GetLocalHero(): Nullable<Hero> {
-		return LocalPlayer?.Hero
+	private SetLocalHero() {
+		this.localHero = LocalPlayer?.Hero
 	}
 })()
