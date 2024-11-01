@@ -169,6 +169,8 @@ new (class CCastRedirector {
 			console.log( spells )
 			
 			for (let i = 0; spells.length > i; i++) {
+				console.log(spells[i], 123) 
+				
 				if (this.IsTargetSpell(spells[i])) {
 					console.log(spells[i])
 					targetSpells.push(spells[i])
