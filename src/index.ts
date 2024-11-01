@@ -12,7 +12,6 @@ import {
 	FakeUnit,
 	item_dagon,
 	LocalPlayer,
-	Player
 } from "github.com/octarine-public/wrapper/index"
 
 import { MenuManager } from "./menu"
@@ -29,9 +28,9 @@ new (class CCastRedirector {
 	protected SetSpells(entity: Entity) {
 		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
 			let validAbilities = entity.Spells.map(ability => {
-				if (ability) return entity.GetAbilityByName(ability.Name_)
+				if (ability) return return ability
 			})
-		
+
 			console.log(validAbilities)
 		}
 	}
