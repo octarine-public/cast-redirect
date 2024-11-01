@@ -170,6 +170,7 @@ new (class CCastRedirector {
 			
 			for (let i = 0; i < spells.length; i++) {
 				if (this.IsTargetSpell(spells[i])) {
+					console.log(spells[i])
 					targetSpells.push(spells[i])
 				}
 			}
