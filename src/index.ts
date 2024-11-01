@@ -29,7 +29,7 @@ new (class CCastRedirector {
 		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
 
 			entity.Spells.forEach(spell => {
-				console.log(spell?.Name_)
+				console.log(spell)
 			})
 		}
 	}
