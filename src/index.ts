@@ -171,6 +171,7 @@ new (class CCastRedirector {
 				}
 			}
 
+			console.log(targetSpells)
 			this.menu.updateRedirectSpellsMenu(targetSpells)
 		}
 	}
