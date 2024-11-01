@@ -98,7 +98,7 @@ export class MenuManager {
 	
 		this.RedirectAbilitiesState = this.RedirectAbilities.AddImageSelector(
 			"Abilities",
-			[...spellNames],
+			["lion_impale"],
 		);
 	}
 	
