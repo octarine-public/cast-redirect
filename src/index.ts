@@ -161,24 +161,19 @@ new (class CCastRedirector {
 	}
 
 	protected SetSpells(entity: Entity) {
-		if (LocalPlayer === undefined) return
-		if (entity instanceof Hero && entity == LocalPlayer.Hero) {
+		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
 			const spells = LocalPlayer.Hero.Spells
 			const targetSpells = []
 
-			console.log( spells )
-			
-			for (let i = 0; spells.length > i; i++) {
-				console.log(spells[i], 123) 
-				
+			for (let i = 0; i < spells.length; i++) {
 				if (this.IsTargetSpell(spells[i])) {
-					console.log(spells[i])
-					targetSpells.push(spells[i])
+					targetSpells.push(spells[i]?.Name)
 				}
 			}
 
 			console.log(targetSpells)
-			this.menu.updateRedirectSpellsMenu(targetSpells)
+			
+			// this.menu.updateRedirectSpellsMenu(targetSpells)
 		}
 	}
 
