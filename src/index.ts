@@ -10,14 +10,14 @@ import {
 	Hero,
 	Creep,
 	FakeUnit,
-	item_dagon
+	item_dagon,
+	LocalPlayer
 } from "github.com/octarine-public/wrapper/index"
 
 import { MenuManager } from "./menu"
 
 new (class CCastRedirector {
 	private readonly menu: MenuManager
-	private localHero: Nullable<Hero>
 
 	constructor() {
 		EventsSDK.on("PrepareUnitOrders", this.PrepareUnitOrders.bind(this))
@@ -27,6 +27,8 @@ new (class CCastRedirector {
 	protected PrepareUnitOrders(order: ExecuteOrder): boolean {
 		const ability = order.Ability_ as Ability
 		const caster = order.Issuers[0]
+
+		this.menu.updateLocalHero(LocalPlayer?.Hero)
 
 		if (!this.menu.State.value || !this.IsItemFilter() && ability.IsItem) {
 			return true

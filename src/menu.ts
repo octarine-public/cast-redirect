@@ -3,10 +3,10 @@ import {
 	Menu,
 	Hero,
 	Ability,
-	LocalPlayer
 } from "github.com/octarine-public/wrapper/index"
 
 export class MenuManager {
+	public localHero: Nullable<Hero>
 	public readonly State: Menu.Toggle
 	public readonly RedirectFromIllusions: Menu.Toggle
 	public readonly RedirectFromCreeps: Menu.Toggle
@@ -24,16 +24,16 @@ export class MenuManager {
 	private readonly RedirectItemsTree: Menu.Node
 
 	private readonly RedirectAbilities: Menu.Node
-	//public readonly RedirectAbilitiesState: Menu.ImageSelector
+	public RedirectAbilitiesState: Menu.ImageSelector
 
 	private readonly hero: Nullable<Hero>
-	private readonly spells: Nullable<Ability>[]
+	//private readonly spells: Nullable<Ability>[]
 
 	private readonly baseNode = Menu.AddEntry("Utility")
 
 	constructor() {
 		// this.hero = hero
-		this.spells = this.getHeroAbilities(this.hero)
+		//this.spells = this.getHeroAbilities(this.hero)
 
 		this.tree = this.baseNode.AddNode(
 			"Cast Redirect",
@@ -88,20 +88,24 @@ export class MenuManager {
 
 		this.RedirectAbilities = this.tree.AddNode("Redirect abilities options")
 
-		console.log(LocalPlayer, 3)
-
-		// this.RedirectAbilitiesState = this.RedirectAbilities.AddImageSelector(
-		// 	"Abilities",
-		// 	[this.spells.keys()],
-		// )
+		console.log(this.localHero, 3)
 
 		this.RedirectToLowHP = this.tree.AddToggle(
 			"Redirect to low HP hero",
 		)
+
+		this.RedirectAbilitiesState = this.RedirectAbilities.AddImageSelector(
+			"Abilities",
+			[],
+		)
 	}
 
-	private getHeroAbilities(hero: Nullable<Hero>) {
-		if (hero) return hero.Spells
-		return []
+	public updateLocalHero(hero: Nullable<Hero>) {
+		this.localHero = hero
+
+		this.RedirectAbilitiesState = this.RedirectAbilities.AddImageSelector(
+			"Abilities222",
+			[],
+		)
 	}
 }
