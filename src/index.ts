@@ -22,6 +22,8 @@ new (class CCastRedirector {
 	constructor() {
 		EventsSDK.on("PrepareUnitOrders", this.PrepareUnitOrders.bind(this))
 		this.menu = new MenuManager()
+
+		console.log(this.GetLocalHero())
 	}
 
 	protected PrepareUnitOrders(order: ExecuteOrder): boolean {
@@ -36,8 +38,6 @@ new (class CCastRedirector {
 			if (!this.RedirectDagon() && ability instanceof item_dagon) {
 				return true
 			}
-
-			console.log(this.GetLocalHero())
 
 			if (this.IsIllusion(order.Target) && this.menu.RedirectFromIllusions.value) {
 				const newTarget = this.GetOriginalHero(order.Target) as Unit
