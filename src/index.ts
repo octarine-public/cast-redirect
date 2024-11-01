@@ -30,31 +30,42 @@ new (class CCastRedirector {
 	protected SetSpells(entity: Entity) {
 		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
 			let spells = LocalPlayer.Hero.Spells;
+
+			if (spells) {
 				for (let i = 0; i < spells.length; i++) {
-					if (
-						spells[i].NetworkedManaCost > 0 || 
-						spells[i].IsPassive || 
-						spells[i].CooldownRestoreTime > 0
-					) {
+					const spell = spells[i];
 
-						if (!spells[i].Name_.startsWith("special_bonus_")) {
-							let isTargeted = spells[i].HasBehavior(DOTA_ABILITY_BEHAVIOR.DOTA_ABILITY_BEHAVIOR_UNIT_TARGET) ||
-											spells[i].HasBehavior(DOTA_ABILITY_BEHAVIOR.DOTA_ABILITY_BEHAVIOR_POINT);
-
-							let targetTypes = spells[i].TargetTypeMask;
-							let isUnitTarget = targetTypes.hasMask(DOTA_UNIT_TARGET_TYPE.DOTA_UNIT_TARGET_HERO) ||
-											targetTypes.hasMask(DOTA_UNIT_TARGET_TYPE.DOTA_UNIT_TARGET_CREEP);
-
-							console.log(
-								spells[i].Name_, 
-								spells[i].NetworkedManaCost, 
-								spells[i].IsPassive, 
-								spells[i].CooldownRestoreTime > 0,
-								isTargeted || isUnitTarget
-							);
+					if (spell) {
+						if (
+							spell.NetworkedManaCost > 0 || 
+							spell.IsPassive || 
+							(spell.CooldownRestoreTime > 0)
+						) {
+	
+							if (spell.Name_ && !spell.Name_.startsWith("special_bonus_")) {
+								const isTargeted = spell.HasBehavior(DOTA_ABILITY_BEHAVIOR.DOTA_ABILITY_BEHAVIOR_UNIT_TARGET) ||
+												   spell.HasBehavior(DOTA_ABILITY_BEHAVIOR.DOTA_ABILITY_BEHAVIOR_POINT);
+				
+								const targetTypes = spell.TargetTypeMask;
+								const isUnitTarget = targetTypes && (
+									targetTypes.hasMask(DOTA_UNIT_TARGET_TYPE.DOTA_UNIT_TARGET_HERO) ||
+									targetTypes.hasMask(DOTA_UNIT_TARGET_TYPE.DOTA_UNIT_TARGET_CREEP)
+								);
+				
+								console.log(
+									spell.Name_, 
+									spell.NetworkedManaCost, 
+									spell.IsPassive, 
+									spell.CooldownRestoreTime > 0,
+									isTargeted || isUnitTarget // Выводим, является ли способность таргетной
+								);
+							}
 						}
 					}
+					
+				}
 			}
+			
 		}
 	}
 
