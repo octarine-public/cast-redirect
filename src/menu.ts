@@ -94,7 +94,8 @@ export class MenuManager {
 		const spellNames: string[] = spells
 			.filter((spell): spell is Ability => spell != null)
 			.map(spell => spell.Name);
-	
+		
+		console.log(spells)
 		console.log(spellNames)
 
 		this.RedirectAbilitiesState = this.RedirectAbilities.AddImageSelector(
