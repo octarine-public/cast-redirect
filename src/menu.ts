@@ -103,6 +103,7 @@ export class MenuManager {
 	public updateLocalHero(hero: Nullable<Hero>) {
 		this.localHero = hero
 
+		this.RedirectAbilities.ResetToDefault()
 		this.RedirectAbilitiesState = this.RedirectAbilities.AddImageSelector(
 			"Abilities222",
 			[],
