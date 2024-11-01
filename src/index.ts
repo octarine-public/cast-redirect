@@ -166,12 +166,12 @@ new (class CCastRedirector {
 			const targetSpells = []
 
 			for (let i = 0; i < spells.length; i++) {
+				console.log(spells[i])
+
 				if (this.IsTargetSpell(spells[i])) {
 					targetSpells.push(spells[i]?.Name)
 				}
 			}
-
-			console.log(targetSpells)
 			
 			// this.menu.updateRedirectSpellsMenu(targetSpells)
 		}
