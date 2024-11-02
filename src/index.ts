@@ -16,7 +16,11 @@ import {
 	item_cyclone,
 	item_diffusal_blade,
 	item_force_staff,
-	item_orchid
+	item_orchid,
+	item_bloodthorn,
+	item_disperser,
+	item_hurricane_pike,
+	item_wind_waker
 } from "github.com/octarine-public/wrapper/index"
 
 import { MenuManager } from "./menu"
@@ -162,10 +166,10 @@ new (class CCastRedirector {
 			this.menu.RedirectItemsState.IsEnabled(ability.Name) ||
 			(ability instanceof item_dagon && this.menu.RedirectItemsState.IsEnabled("item_dagon")) ||
 			(ability instanceof item_urn_of_shadows && this.menu.RedirectItemsState.IsEnabled("item_urn_of_shadows")) ||
-			(ability instanceof item_cyclone && this.menu.RedirectItemsState.IsEnabled("item_cyclone")) ||
-			(ability instanceof item_diffusal_blade && this.menu.RedirectItemsState.IsEnabled("item_diffusal_blade")) ||
-			(ability instanceof item_force_staff && this.menu.RedirectItemsState.IsEnabled("item_force_staff")) ||
-			(ability instanceof item_orchid && this.menu.RedirectItemsState.IsEnabled("item_orchid"))
+			(ability instanceof item_wind_waker && this.menu.RedirectItemsState.IsEnabled("item_cyclone")) ||
+			(ability instanceof item_disperser && this.menu.RedirectItemsState.IsEnabled("item_diffusal_blade")) ||
+			(ability instanceof item_hurricane_pike && this.menu.RedirectItemsState.IsEnabled("item_force_staff")) ||
+			(ability instanceof item_bloodthorn && this.menu.RedirectItemsState.IsEnabled("item_orchid"))
 			) {
 			return true
 		}
