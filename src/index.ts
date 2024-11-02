@@ -163,13 +163,12 @@ new (class CCastRedirector {
 
 	protected SetSpells(entity: Entity) {
 		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
-			const abilities = entity.Spells
-
-			for (let i = 0; i < abilities.length; i++) {
-				console.log(abilities[i])
-			}
-
-			// this.menu.updateRedirectSpellsMenu(targetSpells)
+			console.log(entity.Spells)
+			let validAbilities = entity.Spells.map(ability => {
+				if (ability) return entity.GetAbilityByName(ability.Name_)
+			})
+		
+			console.log(validAbilities)
 		}
 	}
 
