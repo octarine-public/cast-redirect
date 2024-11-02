@@ -152,9 +152,10 @@ new (class CCastRedirector {
 	}
 
 	protected RedirectItems(ability: Ability): boolean {
-		if (this.menu.RedirectItemsState.IsEnabled(ability.Name)) {
+		if (this.menu.RedirectItemsState.IsEnabled(ability.Name) || ) {
 			return true
 		}
+
 		return false
 	}
 

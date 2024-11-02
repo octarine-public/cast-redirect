@@ -72,7 +72,7 @@ export class MenuManager {
 				"item_diffusal_blade",
 				"item_abyssal_blade",
 				"item_heavens_halberd",
-				"item_urn_of_shadows",
+				"item_cyclone",
 				"item_spirit_vessel"
 			]
 		)
