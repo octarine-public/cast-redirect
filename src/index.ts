@@ -167,7 +167,7 @@ new (class CCastRedirector {
 
 			for (const elem of spells) {
 				console.log(elem)
-				
+			}
 		}
 	}
 
