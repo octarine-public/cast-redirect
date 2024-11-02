@@ -164,9 +164,7 @@ new (class CCastRedirector {
 		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
 			const spells: number[] = entity.Spells_
 
-			for (let i = 0; spells.length; i++) {
-				console.log(EntityManager.EntityByIndex(spells[i]))
-			}
+			console.log(EntityManager.EntityByIndex(spells[0]))
 		}
 	}
 
