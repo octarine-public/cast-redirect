@@ -163,14 +163,9 @@ new (class CCastRedirector {
 
 	protected SetSpells(entity: Entity) {
 		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
-			const abilities = LocalPlayer.Hero.Spells.filter(abil => this.shouldBeValid(abil)) as Ability[]
+			const abilities = LocalPlayer.Hero.Spells as Ability[]
 
 			console.log(abilities)
-
-			for (let i = 0; i < abilities.length; i++) {
-				console.log(abilities[i])
-			}
-			
 
 			// this.menu.updateRedirectSpellsMenu(targetSpells)
 		}
@@ -179,40 +174,5 @@ new (class CCastRedirector {
 	protected IsTargetSpell(spell: Nullable<Ability>): boolean {
 		if (spell) return spell.AbilityData.TargetType > 0
 		return false
-	}
-
-	private shouldBeValid(abil: Nullable<Ability>) {
-		if (abil === undefined) {
-			return false
-		}
-
-		const isItem = abil.IsItem
-		const isUltimate = abil.IsUltimate
-
-		if ((!isItem && this.excludeSpells(abil))) {
-			return false
-		}
-
-		if (
-			!isItem &&
-			!isUltimate &&
-			abil.HasBehavior(DOTA_ABILITY_BEHAVIOR.DOTA_ABILITY_BEHAVIOR_TOGGLE)
-		) {
-			return false
-		}
-
-		if ((isUltimate || isItem) && abil.IsPassive) {
-			return true
-		}
-
-		return true
-	}
-
-	private excludeSpells(abil: Ability) {
-		return (
-			abil.IsPassive ||
-			!abil.ShouldBeDrawable ||
-			abil.Name.endsWith("_release")
-		)
 	}
 })()
