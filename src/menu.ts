@@ -2,7 +2,6 @@ import {
 	ImageData,
 	Menu,
 	Hero,
-	Ability,
 } from "github.com/octarine-public/wrapper/index"
 
 export class MenuManager {
@@ -61,6 +60,8 @@ export class MenuManager {
 			"Redirect item casts",
 		)
 
+		// to do
+		// off all items if RedirectItems is off
 		this.RedirectItemsState = this.RedirectItemsTree.AddImageSelector(
 			"Items redirect",
 			[
@@ -87,6 +88,8 @@ export class MenuManager {
 			"Redirect abilities cast",
 		)
 
+		// to do
+		// off all items if RedirectAbility is off
 		this.RedirectAbilitiesState = this.RedirectAbilities.AddImageSelector(
 			"Spells",
 			[],

@@ -13,10 +13,6 @@ import {
 	item_dagon,
 	LocalPlayer,
 	item_urn_of_shadows,
-	item_cyclone,
-	item_diffusal_blade,
-	item_force_staff,
-	item_orchid,
 	item_bloodthorn,
 	item_disperser,
 	item_hurricane_pike,
@@ -161,7 +157,8 @@ new (class CCastRedirector {
 	}
 
 	protected RedirectItems(ability: Ability): boolean {
-		// if have time rewrite this condition
+		// to do
+		// change this condition to more optimal
 		if (
 			this.menu.RedirectItemsState.IsEnabled(ability.Name) ||
 			(ability instanceof item_dagon && this.menu.RedirectItemsState.IsEnabled("item_dagon")) ||
