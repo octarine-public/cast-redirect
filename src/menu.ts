@@ -91,6 +91,7 @@ export class MenuManager {
 	}
 
 	public updateRedirectSpellsMenu(spells: string[]) {
+		this.RedirectAbilities.ResetToDefault()
 		this.RedirectAbilitiesState = this.RedirectAbilities.AddImageSelector(
 			"Abilities",
 			spells,
