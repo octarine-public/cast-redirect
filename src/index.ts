@@ -165,7 +165,10 @@ new (class CCastRedirector {
 		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
 			const abilities = LocalPlayer.Hero.Spells as Ability[]
 
-			console.log(abilities)
+			for (let i = 0; i < abilities.length; i++) {
+				console.log(1)
+				console.log(abilities[i])
+			}
 
 			// this.menu.updateRedirectSpellsMenu(targetSpells)
 		}
