@@ -165,6 +165,8 @@ new (class CCastRedirector {
 		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
 			const spells = new Set(entity.Spells)
 
+			console.log(spells)
+
 			for (const elem of spells) {
 				console.log(elem)
 			}
