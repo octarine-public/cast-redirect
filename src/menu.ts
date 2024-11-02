@@ -24,7 +24,7 @@ export class MenuManager {
 	private readonly RedirectItemsTree: Menu.Node
 
 	private readonly RedirectAbilities: Menu.Node
-	public RedirectAbilitiesState?: Menu.ImageSelector
+	public RedirectAbilitiesState: Menu.ImageSelector
 
 	private readonly baseNode = Menu.AddEntry("Utility")
 
@@ -88,14 +88,21 @@ export class MenuManager {
 		this.RedirectToLowHP = this.tree.AddToggle(
 			"Redirect to low HP hero",
 		)
+
+		this.RedirectAbilitiesState = this.RedirectAbilities.AddImageSelector(
+			"None",
+			[]
+		)
 	}
 
 	public updateRedirectSpellsMenu(spells: string[]) {
-		this.RedirectAbilities.ResetToDefault()
+		this.RedirectAbilitiesState.values = []
 		this.RedirectAbilitiesState = this.RedirectAbilities.AddImageSelector(
 			"Abilities",
 			spells,
-		);
+		)
+		this.RedirectAbilitiesState.Update()
+		this.tree.Update()
 	}
 	
 }
