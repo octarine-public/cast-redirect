@@ -165,11 +165,11 @@ new (class CCastRedirector {
 			const spells = LocalPlayer.Hero.Spells
 			const targetSpells = []
 
-			for (let i = 0; i < spells.length; i++) {
-				console.log(spells[i])
-
-				if (this.IsTargetSpell(spells[i])) {
-					targetSpells.push(spells[i]?.Name)
+			for (let key in spells) {
+				if (typeof spells[key] == 'object') {
+					if (this.IsTargetSpell(spells[key])) {
+						console.log(spells[key])
+					}
 				}
 			}
 			
