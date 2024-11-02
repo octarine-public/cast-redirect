@@ -152,6 +152,8 @@ new (class CCastRedirector {
 	}
 
 	protected RedirectItems(ability: Ability): boolean {
+		console.log(this.menu.RedirectItemsState.IsEnabled(ability.Name))
+		console.log(ability.Name)
 		if (this.menu.RedirectItemsState.IsEnabled(ability.Name)) {
 			return true
 		}
