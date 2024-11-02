@@ -29,14 +29,16 @@ new (class CCastRedirector {
 		const ability = order.Ability_ as Ability
 		const caster = order.Issuers[0]
 
-		// this.menu.updateLocalHero(LocalPlayer?.Hero)
-
 		if (!this.menu.State.value || !this.IsItemFilter() && ability.IsItem) {
 			return true
 		}
 
 		if (order.IsPlayerInput && this.IsToTarget(order.Target) && this.IsAbility(ability)) {
 			if (!this.RedirectItems(ability) && ability.IsItem) {
+				return true
+			}
+
+			if (!this.RedirectSpells(ability) && ability.IsAbility) {
 				return true
 			}
 
@@ -149,8 +151,15 @@ new (class CCastRedirector {
 		return false
 	}
 
-	protected RedirectItems(ability: Ability) {
+	protected RedirectItems(ability: Ability): boolean {
 		if (this.menu.RedirectItemsState.IsEnabled(ability.Name)) {
+			return true
+		}
+		return false
+	}
+
+	protected RedirectSpells(ability: Ability)  {
+		if (this.menu.RedirectAbilitiesState.IsEnabled(ability.Name)) {
 			return true
 		}
 		return false

@@ -24,14 +24,12 @@ export class MenuManager {
 	private readonly RedirectItemsTree: Menu.Node
 
 	private readonly RedirectAbilities: Menu.Node
+	public readonly RedirectAbility: Menu.Toggle
 	public RedirectAbilitiesState: Menu.ImageSelector
 
 	private readonly baseNode = Menu.AddEntry("Utility")
 
 	constructor() {
-		// this.hero = hero
-		//this.spells = this.getHeroAbilities(this.hero)
-
 		this.tree = this.baseNode.AddNode(
 			"Cast Redirect",
 			ImageData.Paths.Icons.magic_resist
@@ -87,6 +85,10 @@ export class MenuManager {
 
 		this.RedirectToLowHP = this.tree.AddToggle(
 			"Redirect to low HP hero",
+		)
+
+		this.RedirectAbility = this.RedirectAbilities.AddToggle(
+			"Redirect abilities cast",
 		)
 
 		this.RedirectAbilitiesState = this.RedirectAbilities.AddImageSelector(
