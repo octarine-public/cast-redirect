@@ -11,8 +11,7 @@ import {
 	Creep,
 	FakeUnit,
 	item_dagon,
-	LocalPlayer,
-	ArrayExtensions
+	LocalPlayer
 } from "github.com/octarine-public/wrapper/index"
 
 import { MenuManager } from "./menu"
@@ -163,11 +162,11 @@ new (class CCastRedirector {
 
 	protected SetSpells(entity: Entity) {
 		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
-			const array: number[] = entity.Spells_
-			for (let i = 0; i < array.length; i++) {
-				console.log(array[i])
-			}
+			const spells: number[] = entity.Spells_
 
+			for (let i = 0; spells.length; i++) {
+				console.log(EntityManager.EntityByIndex(spells[i]))
+			}
 		}
 	}
 
