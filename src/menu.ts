@@ -91,12 +91,13 @@ export class MenuManager {
 
 		this.RedirectAbilitiesState = this.RedirectAbilities.AddImageSelector(
 			"Spells",
-			[]
+			[],
 		)
 	}
 
 	public updateRedirectSpellsMenu(spells: string[]) {
 		this.RedirectAbilitiesState.values = spells
+		this.RedirectAbilitiesState.defaultValues = new Map(spells.map(spell => [spell, true]))
 		this.RedirectAbilitiesState.Update()
 		this.tree.Update()
 	}
