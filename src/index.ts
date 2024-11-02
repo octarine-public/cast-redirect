@@ -165,13 +165,7 @@ new (class CCastRedirector {
 		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
 			const spells = entity.Spells
 
-			spells.reduce((prev, val) => {
-				console.log(val)
-				if (val !== undefined) {
-					prev++
-				}
-				return prev
-			}, 0)
+			ArrayExtensions.CompareArrays(spells, [])
 		}
 	}
 
