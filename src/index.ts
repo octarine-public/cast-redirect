@@ -162,9 +162,18 @@ new (class CCastRedirector {
 
 	protected SetSpells(entity: Entity) {
 		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
-			const spells: number[] = entity.Spells_
+			const spellsId: number[] = entity.Spells_
+			const spells: Entity[] = []
 
-			console.log(EntityManager.EntityByIndex(spells[0]))
+			for (let i = 0; i < spellsId.length; i++) {
+				let spell = EntityManager.EntityByIndex(spellsId[0]) as Ability
+				if (this.IsTargetSpell(spell)) {
+					console.log(1)
+					spells.push(spell)
+				}
+			}
+
+			console.log(spells)
 		}
 	}
 
