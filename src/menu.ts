@@ -69,15 +69,12 @@ export class MenuManager {
 				"item_orchid", 
 				"item_force_staff", 
 				"item_ethereal_blade",
-			 	"item_diffusal_blade",
+				"item_diffusal_blade",
 				"item_abyssal_blade",
 				"item_heavens_halberd",
 				"item_urn_of_shadows",
 				"item_spirit_vessel"
-			],
-			new Map([
-				["item_dagon", true],
-			])
+			]
 		)
 
 		this.RedirectAbilities = this.tree.AddNode("Ability redirection settings")
