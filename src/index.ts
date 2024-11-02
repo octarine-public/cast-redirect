@@ -11,7 +11,12 @@ import {
 	Creep,
 	FakeUnit,
 	item_dagon,
-	LocalPlayer
+	LocalPlayer,
+	item_urn_of_shadows,
+	item_cyclone,
+	item_diffusal_blade,
+	item_force_staff,
+	item_orchid
 } from "github.com/octarine-public/wrapper/index"
 
 import { MenuManager } from "./menu"
@@ -152,12 +157,22 @@ new (class CCastRedirector {
 	}
 
 	protected RedirectItems(ability: Ability): boolean {
-		if (this.menu.RedirectItemsState.IsEnabled(ability.Name) || ) {
+		// if have time rewrite this condition
+		if (
+			this.menu.RedirectItemsState.IsEnabled(ability.Name) ||
+			(ability instanceof item_dagon && this.menu.RedirectItemsState.IsEnabled("item_dagon")) ||
+			(ability instanceof item_urn_of_shadows && this.menu.RedirectItemsState.IsEnabled("item_urn_of_shadows")) ||
+			(ability instanceof item_cyclone && this.menu.RedirectItemsState.IsEnabled("item_cyclone")) ||
+			(ability instanceof item_diffusal_blade && this.menu.RedirectItemsState.IsEnabled("item_diffusal_blade")) ||
+			(ability instanceof item_force_staff && this.menu.RedirectItemsState.IsEnabled("item_force_staff")) ||
+			(ability instanceof item_orchid && this.menu.RedirectItemsState.IsEnabled("item_orchid"))
+			) {
 			return true
 		}
 
 		return false
 	}
+
 
 	protected RedirectSpells(ability: Ability)  {
 		if (this.menu.RedirectAbilitiesState.IsEnabled(ability.Name)) {
