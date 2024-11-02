@@ -34,10 +34,12 @@ new (class CCastRedirector {
 		}
 
 		if (order.IsPlayerInput && this.IsToTarget(order.Target) && this.IsAbility(ability)) {
+			console.log(!this.RedirectItems(ability), ability.IsItem)
 			if (!this.RedirectItems(ability) && ability.IsItem) {
 				return true
 			}
 
+			console.log(!this.RedirectSpells(ability), ability.IsAbility)
 			if (!this.RedirectSpells(ability) && ability.IsAbility) {
 				return true
 			}
@@ -152,8 +154,6 @@ new (class CCastRedirector {
 	}
 
 	protected RedirectItems(ability: Ability): boolean {
-		console.log(this.menu.RedirectItemsState.IsEnabled(ability.Name))
-		console.log(ability.Name)
 		if (this.menu.RedirectItemsState.IsEnabled(ability.Name)) {
 			return true
 		}
