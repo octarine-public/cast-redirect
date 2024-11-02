@@ -90,17 +90,13 @@ export class MenuManager {
 		)
 
 		this.RedirectAbilitiesState = this.RedirectAbilities.AddImageSelector(
-			"None",
+			"Spells",
 			[]
 		)
 	}
 
 	public updateRedirectSpellsMenu(spells: string[]) {
-		this.RedirectAbilitiesState.values = []
-		this.RedirectAbilitiesState = this.RedirectAbilities.AddImageSelector(
-			"Abilities",
-			spells,
-		)
+		this.RedirectAbilitiesState.values = spells
 		this.RedirectAbilitiesState.Update()
 		this.tree.Update()
 	}
