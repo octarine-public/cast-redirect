@@ -37,7 +37,7 @@ export class MenuManager {
 
 		this.State = this.tree.AddToggle("State")
 
-		this.RedirectFrom = this.tree.AddNode("Redirect from options")
+		this.RedirectFrom = this.tree.AddNode("Redirection settings from")
 
 		this.RedirectFromIllusions = this.RedirectFrom.AddToggle(
 			"Redirect from Illusions",
@@ -55,7 +55,7 @@ export class MenuManager {
 
 		this.searchRange = this.tree.AddSlider("Search range", 800, 100, 1400, 0, "Range of search heroes")
 
-		this.RedirectItemsTree = this.tree.AddNode("Redirect items options")
+		this.RedirectItemsTree = this.tree.AddNode("Item redirection settings")
 
 		this.RedirectItems = this.RedirectItemsTree.AddToggle(
 			"Redirect item casts",
@@ -77,11 +77,10 @@ export class MenuManager {
 			],
 			new Map([
 				["item_dagon", true],
-			]),
-			"Disable redirection for items that do not require it"
+			])
 		)
 
-		this.RedirectAbilities = this.tree.AddNode("Redirect abilities options")
+		this.RedirectAbilities = this.tree.AddNode("Ability redirection settings")
 
 		this.RedirectToLowHP = this.tree.AddToggle(
 			"Redirect to low HP hero",
