@@ -165,9 +165,7 @@ new (class CCastRedirector {
 			const spells = LocalPlayer.Hero.Spells
 			const targetSpells = []
 
-			for (let key in spells) {
-				console.log(spells[key])
-			}
+			spells.forEach(e => console.log(e))
 			
 			// this.menu.updateRedirectSpellsMenu(targetSpells)
 		}
