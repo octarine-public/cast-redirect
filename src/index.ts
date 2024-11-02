@@ -163,10 +163,9 @@ new (class CCastRedirector {
 
 	protected SetSpells(entity: Entity) {
 		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
-			const abilities = LocalPlayer.Hero.Spells as Ability[]
+			const abilities = entity.Spells
 
 			for (let i = 0; i < abilities.length; i++) {
-				console.log(1)
 				console.log(abilities[i])
 			}
 
