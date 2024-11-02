@@ -165,7 +165,7 @@ new (class CCastRedirector {
 		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
 			console.log(entity.Spells)
 			let validAbilities = entity.Spells.map(ability => {
-				if (ability) return entity.GetAbilityByName(ability.Name_)
+				if (ability) return ability
 			})
 		
 			console.log(validAbilities)
