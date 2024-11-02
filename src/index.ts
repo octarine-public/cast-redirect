@@ -166,9 +166,8 @@ new (class CCastRedirector {
 			const spells: Entity[] = []
 
 			for (let i = 0; i < spellsId.length; i++) {
-				let spell = EntityManager.EntityByIndex(spellsId[0]) as Ability
+				let spell = EntityManager.EntityByIndex(spellsId[i]) as Ability
 				if (this.IsTargetSpell(spell)) {
-					console.log(1)
 					spells.push(spell)
 				}
 			}
