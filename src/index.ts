@@ -163,12 +163,12 @@ new (class CCastRedirector {
 	protected SetSpells(entity: Entity) {
 		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
 			const spellsId: number[] = entity.Spells_
-			const spells: Entity[] = []
+			const spells: string[] = []
 
 			for (let i = 0; i < spellsId.length; i++) {
 				let spell = EntityManager.EntityByIndex(spellsId[i]) as Ability
 				if (this.IsTargetSpell(spell)) {
-					spells.push(spell)
+					spells.push(spell.Name_)
 				}
 			}
 
