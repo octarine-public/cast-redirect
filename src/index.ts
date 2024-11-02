@@ -12,7 +12,7 @@ import {
 	FakeUnit,
 	item_dagon,
 	LocalPlayer,
-	DOTA_ABILITY_BEHAVIOR
+	ArrayExtensions
 } from "github.com/octarine-public/wrapper/index"
 
 import { MenuManager } from "./menu"
@@ -163,13 +163,15 @@ new (class CCastRedirector {
 
 	protected SetSpells(entity: Entity) {
 		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
-			const spells = new Set(entity.Spells)
+			const spells = entity.Spells
 
-			console.log(spells)
-
-			for (const elem of spells) {
-				console.log(elem)
-			}
+			spells.reduce((prev, val) => {
+				console.log(val)
+				if (val !== undefined) {
+					prev++
+				}
+				return prev
+			}, 0)
 		}
 	}
 
