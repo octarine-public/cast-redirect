@@ -165,10 +165,7 @@ new (class CCastRedirector {
 		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
 			const spells = entity.Spells
 
-			console.log(spells.some(spell => {
-				console.log(spell)
-				spell == undefined
-			}))
+			console.log(spells.join(' '))
 		}
 	}
 
