@@ -163,7 +163,7 @@ new (class CCastRedirector {
 
 	protected SetSpells(entity: Entity) {
 		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
-			const array: Nullable<Ability>[] = entity.Spells
+			const array: number[] = entity.Spells_
 			for (let i = 0; i < array.length; i++) {
 				console.log(array[i])
 			}
