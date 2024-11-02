@@ -90,17 +90,10 @@ export class MenuManager {
 		)
 	}
 
-	public updateRedirectSpellsMenu(spells: Nullable<Ability>[]) {
-		const spellNames: string[] = spells
-			.filter((spell): spell is Ability => spell != null)
-			.map(spell => spell.Name);
-		
-		console.log(spells)
-		console.log(spellNames)
-
+	public updateRedirectSpellsMenu(spells: string[]) {
 		this.RedirectAbilitiesState = this.RedirectAbilities.AddImageSelector(
 			"Abilities",
-			spellNames,
+			spells,
 		);
 	}
 	

@@ -172,7 +172,7 @@ new (class CCastRedirector {
 				}
 			}
 
-			console.log(spells)
+			this.menu.updateRedirectSpellsMenu(spells)
 		}
 	}
 
