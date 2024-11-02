@@ -36,7 +36,7 @@ new (class CCastRedirector {
 		}
 
 		if (order.IsPlayerInput && this.IsToTarget(order.Target) && this.IsAbility(ability)) {
-			if (!this.RedirectDagon() && ability instanceof item_dagon) {
+			if (!this.RedirectItems(ability) && ability.IsItem) {
 				return true
 			}
 
@@ -149,15 +149,11 @@ new (class CCastRedirector {
 		return false
 	}
 
-	protected RedirectDagon() {
-		// change code if more than 1 item
-		// rewrite!!!
-		return this.menu.RedirectItemsState.values.some(value => {
-			if (this.menu.RedirectItemsState.IsEnabled(value)) {
-				return true
-			}
-			return false
-		})
+	protected RedirectItems(ability: Ability) {
+		if (this.menu.RedirectItemsState.IsEnabled(ability.Name)) {
+			return true
+		}
+		return false
 	}
 
 	protected SetSpells(entity: Entity) {
