@@ -35,8 +35,6 @@ new (class CCastRedirector {
 		const caster = order.Issuers[0]
 
 		if (order.IsPlayerInput && this.IsToTarget(order.Target) && this.IsAbility(ability) &&  this.IsLocalPlayer(caster)) {
-			console.log(ability.IsItem)
-
 			if (!this.menu.State.value || !this.IsItemFilter() && ability?.IsItem) {
 				return true
 			}
@@ -45,6 +43,7 @@ new (class CCastRedirector {
 				return true
 			}
 
+			// to do: find other way to check that is hero spell
 			if (!this.RedirectSpells(ability) && !ability?.IsItem) {
 				return true
 			}
@@ -164,8 +163,7 @@ new (class CCastRedirector {
 	}
 
 	protected RedirectItems(ability: Ability): boolean {
-		// to do
-		// change this condition to more optimal
+		// to do: change this condition to more optimal
 		if (
 			this.menu.RedirectItemsState.IsEnabled(ability.Name) ||
 			(ability instanceof item_dagon && this.menu.RedirectItemsState.IsEnabled("item_dagon")) ||
