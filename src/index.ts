@@ -43,7 +43,6 @@ new (class CCastRedirector {
 				return true
 			}
 
-			// to do: find other way to check that is hero spell
 			if (!this.RedirectSpells(ability) && !ability?.IsItem) {
 				return true
 			}
@@ -182,7 +181,6 @@ new (class CCastRedirector {
 
 		return false
 	}
-
 
 	protected RedirectSpells(ability: Ability)  {
 		if (this.menu.RedirectAbilitiesState.IsEnabled(ability.Name)) {

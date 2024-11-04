@@ -1,33 +1,28 @@
 import {
 	ImageData,
 	Menu,
-	Hero,
 } from "github.com/octarine-public/wrapper/index"
 
 export class MenuManager {
-	// to do: reorgonize properties
-	public localHero: Nullable<Hero>
+	private readonly baseNode = Menu.AddEntry("Utility")
+	private readonly tree: Menu.Node
 	public readonly State: Menu.Toggle
+
 	public readonly RedirectFromIllusions: Menu.Toggle
 	public readonly RedirectFromCreeps: Menu.Toggle
 	public readonly RedirectFromClones: Menu.Toggle
 	public readonly RedirectToLowHP: Menu.Toggle
+	private readonly RedirectFrom: Menu.Node
 
 	public readonly RedirectItems: Menu.Toggle
 	public readonly RedirectItemsState: Menu.ImageSelector
-
-	public readonly searchRange: Menu.Slider
-	private readonly tree: Menu.Node
-	
-	private readonly RedirectFrom: Menu.Node
-
 	private readonly RedirectItemsTree: Menu.Node
 
-	private readonly RedirectAbilities: Menu.Node
 	public readonly RedirectAbility: Menu.Toggle
 	public RedirectAbilitiesState: Menu.ImageSelector
+	private readonly RedirectAbilities: Menu.Node
 
-	private readonly baseNode = Menu.AddEntry("Utility")
+	public readonly searchRange: Menu.Slider
 
 	constructor() {
 		this.tree = this.baseNode.AddNode(
@@ -53,7 +48,7 @@ export class MenuManager {
 			"Redirect from Clones (e.x Meepo, Vengeful spirit)"
 		)
 
-		this.searchRange = this.tree.AddSlider("Search range", 800, 100, 1400, 0, "Range of search heroes")
+		this.searchRange = this.tree.AddSlider("Search range", 900, 100, 1400, 0, "Range of search heroes")
 
 		this.RedirectItemsTree = this.tree.AddNode("Item redirection settings")
 
