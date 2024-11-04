@@ -73,7 +73,7 @@ export class MenuManager {
 				"item_abyssal_blade",
 				"item_heavens_halberd",
 				"item_cyclone",
-				"item_spirit_vessel"
+				"item_sheepstick"
 			]
 		)
 
