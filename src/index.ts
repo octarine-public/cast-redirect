@@ -34,16 +34,17 @@ new (class CCastRedirector {
 		const ability = order.Ability_ as Ability
 		const caster = order.Issuers[0]
 
-		if (!this.menu.State.value || !this.IsItemFilter() && ability.IsItem) {
+		if (!this.menu.State.value || !this.IsItemFilter() && ability?.IsItem) {
 			return true
 		}
 
 		if (order.IsPlayerInput && this.IsToTarget(order.Target) && this.IsAbility(ability)) {
-			if (!this.RedirectItems(ability) && ability.IsItem) {
+			console.log(1)
+			if (!this.RedirectItems(ability) && ability?.IsItem) {
 				return true
 			}
 
-			if (!this.RedirectSpells(ability) && !ability.IsItem) {
+			if (!this.RedirectSpells(ability) && !ability?.IsItem) {
 				return true
 			}
 
