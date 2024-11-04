@@ -31,7 +31,7 @@ new (class CCastRedirector {
 	}
 
 	protected PrepareUnitOrders(order: ExecuteOrder): boolean {
-		const ability = undefined
+		const ability = order.Ability_ as Ability
 		const caster = order.Issuers[0]
 
 		if (order.IsPlayerInput && this.IsToTarget(order.Target) && this.IsAbility(ability) &&  this.IsLocalPlayer(caster)) {
@@ -163,17 +163,21 @@ new (class CCastRedirector {
 	}
 
 	protected RedirectItems(ability: Ability): boolean {
-		// to do: change this condition to more optimal
-		if (
-			this.menu.RedirectItemsState.IsEnabled(ability.Name) ||
-			(ability instanceof item_dagon && this.menu.RedirectItemsState.IsEnabled("item_dagon")) ||
-			(ability instanceof item_urn_of_shadows && this.menu.RedirectItemsState.IsEnabled("item_urn_of_shadows")) ||
-			(ability instanceof item_wind_waker && this.menu.RedirectItemsState.IsEnabled("item_cyclone")) ||
-			(ability instanceof item_disperser && this.menu.RedirectItemsState.IsEnabled("item_diffusal_blade")) ||
-			(ability instanceof item_hurricane_pike && this.menu.RedirectItemsState.IsEnabled("item_force_staff")) ||
-			(ability instanceof item_bloodthorn && this.menu.RedirectItemsState.IsEnabled("item_orchid"))
-			) {
-			return true
+		if (this.menu.RedirectItemsState.IsEnabled(ability.Name)) return true
+
+		const abilityClassMap: [Function, string][] = [
+			[item_dagon, "item_dagon"],
+			[item_urn_of_shadows, "item_urn_of_shadows"],
+			[item_wind_waker, "item_cyclone"],
+			[item_disperser, "item_diffusal_blade"],
+			[item_hurricane_pike, "item_force_staff"],
+			[item_bloodthorn, "item_orchid"]
+		];
+	
+		for (const [abilityClass, mappedName] of abilityClassMap) {
+			if (ability instanceof abilityClass && this.menu.RedirectItemsState.IsEnabled(mappedName)) {
+				return true;
+			}
 		}
 
 		return false
