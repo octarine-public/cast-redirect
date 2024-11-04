@@ -31,7 +31,7 @@ new (class CCastRedirector {
 	}
 
 	protected PrepareUnitOrders(order: ExecuteOrder): boolean {
-		const ability = order.Ability_ as Ability
+		const ability = undefined
 		const caster = order.Issuers[0]
 
 		if (order.IsPlayerInput && this.IsToTarget(order.Target) && this.IsAbility(ability) &&  this.IsLocalPlayer(caster)) {
