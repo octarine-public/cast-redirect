@@ -38,7 +38,7 @@ new (class CCastRedirector {
 			return true
 		}
 
-		if (order.IsPlayerInput && this.IsToTarget(order.Target) && this.IsAbility(ability)) {
+		if (order.IsPlayerInput && this.IsToTarget(order.Target) && this.IsAbility(ability) &&  this.IsLocalPlayer(caster)) {
 			console.log(1)
 			if (!this.RedirectItems(ability) && ability?.IsItem) {
 				return true
@@ -85,6 +85,11 @@ new (class CCastRedirector {
 		}
 
 		return true
+	}
+
+	protected IsLocalPlayer(unit: Unit): boolean {
+		if (unit) return unit == LocalPlayer?.Hero
+		return false
 	}
 
 	protected IsItemFilter(): boolean {
