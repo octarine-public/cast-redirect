@@ -34,12 +34,13 @@ new (class CCastRedirector {
 		const ability = order.Ability_ as Ability
 		const caster = order.Issuers[0]
 
+		console.log(ability)
+
 		if (!this.menu.State.value || !this.IsItemFilter() && ability?.IsItem) {
 			return true
 		}
 
 		if (order.IsPlayerInput && this.IsToTarget(order.Target) && this.IsAbility(ability) &&  this.IsLocalPlayer(caster)) {
-			console.log(1)
 			if (!this.RedirectItems(ability) && ability?.IsItem) {
 				return true
 			}
@@ -87,7 +88,7 @@ new (class CCastRedirector {
 		return true
 	}
 
-	protected IsLocalPlayer(unit: Unit): boolean {
+	protected IsLocalPlayer(unit: Unit | Entity): boolean {
 		if (unit) return unit == LocalPlayer?.Hero
 		return false
 	}
@@ -189,7 +190,7 @@ new (class CCastRedirector {
 	}
 
 	protected SetSpells(entity: Entity) {
-		if (entity instanceof Hero && entity == LocalPlayer?.Hero) {
+		if (entity instanceof Hero && this.IsLocalPlayer(entity)) {
 			const spellsId: number[] = entity.Spells_
 			const spells: string[] = []
 
