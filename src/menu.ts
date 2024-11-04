@@ -4,6 +4,8 @@ import {
 } from "github.com/octarine-public/wrapper/index"
 
 export class MenuManager {
+	private readonly items: string[]
+
 	private readonly baseNode = Menu.AddEntry("Utility")
 	private readonly tree: Menu.Node
 	public readonly State: Menu.Toggle
@@ -56,20 +58,23 @@ export class MenuManager {
 			"Redirect item casts",
 		)
 
+		this.items = [
+			"item_dagon",
+			"item_rod_of_atos", 
+			"item_orchid", 
+			"item_force_staff", 
+			"item_ethereal_blade",
+			"item_diffusal_blade",
+			"item_abyssal_blade",
+			"item_heavens_halberd",
+			"item_cyclone",
+			"item_sheepstick"
+		]
+
 		this.RedirectItemsState = this.RedirectItemsTree.AddImageSelector(
 			"Items redirect",
-			[
-				"item_dagon",
-				"item_rod_of_atos", 
-				"item_orchid", 
-				"item_force_staff", 
-				"item_ethereal_blade",
-				"item_diffusal_blade",
-				"item_abyssal_blade",
-				"item_heavens_halberd",
-				"item_cyclone",
-				"item_sheepstick"
-			]
+			this.items,
+			new Map(this.items.map(item => [item, true]))
 		)
 
 		this.RedirectAbilities = this.tree.AddNode("Ability redirection settings")
