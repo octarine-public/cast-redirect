@@ -1,103 +1,143 @@
 import {
+	Ability,
+	DOTA_ABILITY_BEHAVIOR,
 	ImageData,
-	Menu,
+	Menu
 } from "github.com/octarine-public/wrapper/index"
 
 export class MenuManager {
-	private readonly items: string[]
-
-	private readonly baseNode = Menu.AddEntry("Utility")
-	private readonly tree: Menu.Node
 	public readonly State: Menu.Toggle
+	public readonly Creeps: Menu.Toggle
+	public readonly Clones: Menu.Toggle
+	public readonly ToLowHP: Menu.Toggle
+	public readonly Illusions: Menu.Toggle
+	public readonly SearchRange: Menu.Slider
 
-	public readonly RedirectFromIllusions: Menu.Toggle
-	public readonly RedirectFromCreeps: Menu.Toggle
-	public readonly RedirectFromClones: Menu.Toggle
-	public readonly RedirectToLowHP: Menu.Toggle
-	private readonly RedirectFrom: Menu.Node
+	private readonly items: string[] = [
+		"item_dagon_5",
+		"item_rod_of_atos",
+		"item_orchid",
+		"item_bloodthorn",
+		"item_force_staff",
+		"item_hurricane_pike",
+		"item_ethereal_blade",
+		"item_diffusal_blade",
+		"item_disperser",
+		"item_abyssal_blade",
+		"item_heavens_halberd",
+		"item_cyclone",
+		"item_wind_waker",
+		"item_sheepstick",
+		"item_nullifier",
+		"item_book_of_shadows",
+		"item_psychic_headband",
+		"item_bullwhip"
+	]
 
-	public readonly RedirectItems: Menu.Toggle
-	public readonly RedirectItemsState: Menu.ImageSelector
-	private readonly RedirectItemsTree: Menu.Node
+	private readonly cachedSpellNames = new Set<string>()
+	private readonly tree = Menu.AddEntryDeep(
+		["Utility", "Cast Redirect"],
+		[ImageData.Paths.Icons.magic_resist]
+	)
 
-	public readonly RedirectAbility: Menu.Toggle
-	public RedirectAbilitiesState: Menu.ImageSelector
-	private readonly RedirectAbilities: Menu.Node
+	private readonly fromTree: Menu.Node
 
-	public readonly searchRange: Menu.Slider
+	private readonly itemsTree: Menu.Node
+	private readonly abilitiesTree: Menu.Node
+
+	private readonly redirectItems: Menu.Toggle
+	private readonly redirectAbility: Menu.Toggle
+	private readonly itemsState: Menu.ImageSelector
+	private readonly abilitiesState: Menu.ImageSelector
 
 	constructor() {
-		this.tree = this.baseNode.AddNode(
-			"Cast Redirect",
-			ImageData.Paths.Icons.magic_resist
-		)
-
 		this.State = this.tree.AddToggle("State")
+		this.fromTree = this.tree.AddNode("Redirection settings from")
+		this.Illusions = this.fromTree.AddToggle("Redirect from Illusions")
 
-		this.RedirectFrom = this.tree.AddNode("Redirection settings from")
-
-		this.RedirectFromIllusions = this.RedirectFrom.AddToggle(
-			"Redirect from Illusions",
-		)
-
-		this.RedirectFromCreeps = this.RedirectFrom.AddToggle(
-			"Redirect from Creeps",
-		)
-
-		this.RedirectFromClones = this.RedirectFrom.AddToggle(
+		this.Creeps = this.fromTree.AddToggle("Redirect from Creeps")
+		this.Clones = this.fromTree.AddToggle(
 			"Redirect from Clones",
 			true,
 			"Redirect from Clones (e.x Meepo, Vengeful spirit)"
 		)
 
-		this.searchRange = this.tree.AddSlider("Search range", 900, 100, 1400, 0, "Range of search heroes")
-
-		this.RedirectItemsTree = this.tree.AddNode("Item redirection settings")
-
-		this.RedirectItems = this.RedirectItemsTree.AddToggle(
-			"Redirect item casts",
+		this.SearchRange = this.tree.AddSlider(
+			"Search range",
+			900,
+			100,
+			1400,
+			0,
+			"Range of search heroes"
 		)
 
-		this.items = [
-			"item_dagon",
-			"item_rod_of_atos", 
-			"item_orchid", 
-			"item_force_staff", 
-			"item_ethereal_blade",
-			"item_diffusal_blade",
-			"item_abyssal_blade",
-			"item_heavens_halberd",
-			"item_cyclone",
-			"item_sheepstick"
-		]
+		this.itemsTree = this.tree.AddNode("Item redirection settings")
+		this.redirectItems = this.itemsTree.AddToggle("Redirect item casts")
 
-		this.RedirectItemsState = this.RedirectItemsTree.AddImageSelector(
-			"Items redirect",
+		this.itemsState = this.itemsTree.AddImageSelector(
+			"Items",
 			this.items,
 			new Map(this.items.map(item => [item, true]))
 		)
 
-		this.RedirectAbilities = this.tree.AddNode("Ability redirection settings")
+		this.abilitiesTree = this.tree.AddNode("Ability redirection settings")
+		this.ToLowHP = this.tree.AddToggle("Redirect to low HP hero")
 
-		this.RedirectToLowHP = this.tree.AddToggle(
-			"Redirect to low HP hero",
-		)
-
-		this.RedirectAbility = this.RedirectAbilities.AddToggle(
-			"Redirect abilities cast",
-		)
-
-		this.RedirectAbilitiesState = this.RedirectAbilities.AddImageSelector(
-			"Spells",
-			[],
-		)
+		this.redirectAbility = this.abilitiesTree.AddToggle("Redirect abilities cast")
+		this.abilitiesState = this.abilitiesTree.AddImageSelector("Spells", [])
+		this.abilitiesState.IsHidden = true
 	}
 
-	public updateRedirectSpellsMenu(spells: string[]) {
-		this.RedirectAbilitiesState.values = spells
-		this.RedirectAbilitiesState.defaultValues = new Map(spells.map(spell => [spell, true]))
-		this.RedirectAbilitiesState.Update()
+	public IsEnabled(name: string, isItem: boolean): boolean {
+		if (!isItem) {
+			return this.redirectAbility.value && this.abilitiesState.IsEnabled(name)
+		}
+		if (!this.redirectItems.value) {
+			return false
+		}
+		let temp = name
+		if (name.startsWith("item_dagon_")) {
+			temp = "item_dagon_5"
+		}
+		return this.itemsState.IsEnabled(temp)
+	}
+
+	public AddSpellInMenu(ability: Nullable<Ability>, defualtState: boolean = true) {
+		if (ability === undefined || !ability.IsValid) {
+			return
+		}
+		if (ability.IsItem || ability.IsHidden) {
+			return
+		}
+		if (!ability.ShouldBeDrawable || ability.IsPassive) {
+			return
+		}
+		const name = ability.Name
+		const isTargetable = ability.HasBehavior(
+			DOTA_ABILITY_BEHAVIOR.DOTA_ABILITY_BEHAVIOR_UNIT_TARGET
+		)
+		if (!isTargetable || this.cachedSpellNames.has(name)) {
+			return
+		}
+		if (!this.abilitiesState.defaultValues.has(name)) {
+			this.abilitiesState.defaultValues.set(name, defualtState)
+		}
+		this.cachedSpellNames.add(name)
+		this.abilitiesState.IsHidden = false
+		this.abilitiesState.values.push(name)
+		this.abilitiesState.Update()
 		this.tree.Update()
 	}
-	
+
+	public GameEnded() {
+		const arr = this.abilitiesState.values
+		for (let i = arr.length - 1; i > -1; i--) {
+			const spellName = arr[i]
+			this.cachedSpellNames.delete(spellName)
+			this.abilitiesState.values.remove(spellName)
+		}
+		this.abilitiesState.IsHidden = arr.length === 0
+		this.abilitiesState.Update()
+		this.tree.Update()
+	}
 }

@@ -1,16 +1,39 @@
 {
-  "devDependencies": {
-    "@types/node": "^22.8.1",
-		"@typescript-eslint/eslint-plugin": "^6.14.0",
-		"@typescript-eslint/parser": "^6.14.0",
-		"eslint": "^8.55.0",
+	"name": "cast-redirect",
+	"version": "1.0.0",
+	"author": "RustiktamQ",
+	"description": "Cast redirect",
+	"license": "GPL-3.0-or-later",
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^7.12.0",
+		"@typescript-eslint/parser": "^7.12.0",
+		"eslint": "^8.56.0",
 		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-import": "^2.29.1",
-		"eslint-plugin-prettier": "^5.1.3",
-		"eslint-plugin-simple-import-sort": "^10.0.0",
-		"eslint-plugin-unicorn": "^49.0.0",
-		"eslint-plugin-unused-imports": "^3.0.0",
-		"prettier": "^3.3.0",
-		"typescript": "^5.4.5"
-  }
+		"eslint-plugin-import": "^2.31.0",
+		"eslint-plugin-prettier": "^5.2.1",
+		"eslint-plugin-simple-import-sort": "^12.1.0",
+		"eslint-plugin-unicorn": "^53.0.0",
+		"eslint-plugin-unused-imports": "^3.2.0",
+		"madge": "^7.0.0",
+		"prettier": "^3.3.1",
+		"typescript": "^5.6.3"
+	},
+	"scripts": {
+		"check-types": "npx tsc",
+		"check-types-watch": "npx tsc --watch",
+		"check-circular": "npx madge --circular scripts/",
+		"upgrade-pack": "yarn upgrade-interactive --latest",
+		"lint": "eslint -c .eslintrc.json --ext .ts --fix ."
+	},
+	"contributors": [
+		"SicdeX-"
+	],
+	"repository": {
+		"type": "git",
+		"directory": "/",
+		"url": "https://github.com/octarine-public/cast-redirect.git"
+	},
+	"engines": {
+		"node": ">=18"
+	}
 }
