@@ -34,7 +34,7 @@ new (class CCastRedirector {
 	}
 
 	protected EntityCreated(entity: Entity) {
-		if (entity instanceof Hero && entity === LocalPlayer?.Hero) {
+		if (entity instanceof Hero) {
 			this.heroes.push(entity)
 		}
 		if (!(entity instanceof Ability)) {
@@ -44,7 +44,11 @@ new (class CCastRedirector {
 		if (abilOwner === undefined || abilOwner.IsEnemy()) {
 			return
 		}
-		if (!this.isIllusion(abilOwner) && abilOwner.IsControllable) {
+		if (
+			!this.isIllusion(abilOwner) &&
+			abilOwner.IsControllable &&
+			abilOwner === LocalPlayer?.Hero
+		) {
 			this.menu.AddSpellInMenu(entity)
 		}
 	}
