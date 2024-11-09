@@ -14,5 +14,6 @@
     "Disable redirection for items that do not require it": "禁用不需要重定向的物品",
     "Ability redirection settings": "技能重定向设置",
     "Redirection settings from": "重定向设置来源",
-    "Item redirection settings": "物品重定向设置"
+    "Item redirection settings": "物品重定向设置",
+    "Redirect to friend": "重定向到盟友"
 }

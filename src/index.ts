@@ -3,6 +3,7 @@ import "./translations"
 import {
 	Ability,
 	DOTA_UNIT_TARGET_FLAGS,
+	DOTA_UNIT_TARGET_TEAM,
 	dotaunitorder_t,
 	Entity,
 	EventsSDK,
@@ -17,8 +18,7 @@ import { MenuManager } from "./menu"
 
 new (class CCastRedirector {
 	private readonly menu = new MenuManager()
-	private readonly enemies: Hero[] = []
-	private readonly friends: Hero[] = []
+	private readonly heroes: Hero[] = []
 
 	constructor() {
 		EventsSDK.on("GameEnded", this.GameEnded.bind(this))
@@ -34,11 +34,7 @@ new (class CCastRedirector {
 
 	protected EntityCreated(entity: Entity) {
 		if (entity instanceof Hero) {
-			if (entity.IsEnemy()) {
-				this.enemies.push(entity)
-			} else {
-				this.friends.push(entity)
-			}
+			this.heroes.push(entity)
 		}
 		if (!(entity instanceof Ability)) {
 			return
@@ -57,11 +53,7 @@ new (class CCastRedirector {
 			return
 		}
 		if (!this.isIllusion(entity)) {
-			if (entity.IsEnemy()) {
-				this.enemies.remove(entity)
-			} else {
-				this.friends.remove(entity)
-			}
+			this.heroes.remove(entity)
 		}
 	}
 
@@ -148,12 +140,16 @@ new (class CCastRedirector {
 		const range = this.menu.SearchRange.value
 
 		const heroes = isLowHP
-			? (isFriend ? this.friends : this.enemies).orderBy(x => x.HPPercent)
-			: (isFriend ? this.friends : this.enemies).orderBy(x => x.Distance2D(caster))
+			? this.heroes.orderBy(x => x.HPPercent)
+			: this.heroes.orderBy(x => x.Distance2D(caster))
 
 		// example: item_nullifier
 		const canUseInInvulnerable = ability.HasTargetFlags(
 			DOTA_UNIT_TARGET_FLAGS.DOTA_UNIT_TARGET_FLAG_INVULNERABLE
+		)
+
+		const canUseToFriend = ability.HasTargetTeam(
+			DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_FRIENDLY
 		)
 
 		// mabye any check
@@ -165,6 +161,7 @@ new (class CCastRedirector {
 			!hero.IsClone &&
 			!hero.IsIllusion &&
 			(canUseInInvulnerable || !hero.IsInvulnerable) &&
+			((isFriend && canUseToFriend && !hero.IsEnemy()) || !isFriend) &&
 			hero.Distance2D(caster) <= range
 
 		return heroes.find(x => isValidHero(x))

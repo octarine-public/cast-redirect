@@ -14,5 +14,6 @@
 	"Disable redirection for items that do not require it": "Отключите перенаправление для предметов которые не нуждаются в этом",
 	"Ability redirection settings": "Настройки перенаправления способностей",
 	"Redirection settings from": "Настройки перенаправления с",
-	"Item redirection settings": "Настройки перенаправления предметов"
+	"Item redirection settings": "Настройки перенаправления предметов",
+	"Redirect to friend": "Перенаправление на союзников"
 }
