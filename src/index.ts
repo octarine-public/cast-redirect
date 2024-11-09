@@ -63,7 +63,12 @@ new (class CCastRedirector {
 	}
 
 	protected UnitAbilitiesChanged(unit: Unit) {
-		if (unit.IsEnemy() || this.isIllusion(unit) || !unit.IsControllable) {
+		if (
+			unit.IsEnemy() ||
+			this.isIllusion(unit) ||
+			!unit.IsControllable ||
+			!LocalPlayer?.Hero
+		) {
 			return
 		}
 		const arr = unit.Spells
@@ -175,6 +180,7 @@ new (class CCastRedirector {
 			(canUseInInvulnerable || !hero.IsInvulnerable) &&
 			((isFriend && canUseToFriend && !hero.IsEnemy()) ||
 				(!isFriend && canUseToEnemy && hero.IsEnemy()) ||
+				(isFriend && canUseToEnemy && hero.IsEnemy()) ||
 				(isFriend && canUseToBoth && !hero.IsEnemy())) &&
 			hero.Distance2D(caster) <= range
 
