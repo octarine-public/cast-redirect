@@ -10,6 +10,7 @@ import {
 	ExecuteOrder,
 	Hero,
 	InputManager,
+	LocalPlayer,
 	Player,
 	Unit
 } from "github.com/octarine-public/wrapper/index"
@@ -33,7 +34,7 @@ new (class CCastRedirector {
 	}
 
 	protected EntityCreated(entity: Entity) {
-		if (entity instanceof Hero) {
+		if (entity instanceof Hero && entity === LocalPlayer?.Hero) {
 			this.heroes.push(entity)
 		}
 		if (!(entity instanceof Ability)) {
@@ -148,6 +149,7 @@ new (class CCastRedirector {
 			DOTA_UNIT_TARGET_FLAGS.DOTA_UNIT_TARGET_FLAG_INVULNERABLE
 		)
 
+		// TODO: think about mana drain?
 		const canUseToFriend =
 			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_FRIENDLY) ||
 			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_BOTH)
@@ -156,7 +158,7 @@ new (class CCastRedirector {
 			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_ENEMY) ||
 			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_BOTH)
 
-		console.log(isFriend, canUseToFriend)
+		const canUseToBoth = canUseToFriend && canUseToEnemy
 
 		// mabye any check
 		const isValidHero = (hero: Unit) =>
@@ -167,10 +169,9 @@ new (class CCastRedirector {
 			!hero.IsClone &&
 			!hero.IsIllusion &&
 			(canUseInInvulnerable || !hero.IsInvulnerable) &&
-			// TODO: think about other way
 			((isFriend && canUseToFriend && !hero.IsEnemy()) ||
 				(!isFriend && canUseToEnemy && hero.IsEnemy()) ||
-				(isFriend && canUseToEnemy && hero.IsEnemy())) &&
+				(isFriend && canUseToBoth && !hero.IsEnemy())) &&
 			hero.Distance2D(caster) <= range
 
 		return heroes.find(x => isValidHero(x))
