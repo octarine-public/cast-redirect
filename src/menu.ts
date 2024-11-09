@@ -10,6 +10,7 @@ export class MenuManager {
 	public readonly Creeps: Menu.Toggle
 	public readonly Clones: Menu.Toggle
 	public readonly ToLowHP: Menu.Toggle
+	public readonly ToFriend: Menu.Toggle
 	public readonly Illusions: Menu.Toggle
 	public readonly SearchRange: Menu.Slider
 
@@ -82,6 +83,7 @@ export class MenuManager {
 
 		this.abilitiesTree = this.tree.AddNode("Ability redirection settings")
 		this.ToLowHP = this.tree.AddToggle("Redirect to low HP hero")
+		this.ToFriend = this.tree.AddToggle("Redirect to friend")
 
 		this.redirectAbility = this.abilitiesTree.AddToggle("Redirect abilities cast")
 		this.abilitiesState = this.abilitiesTree.AddImageSelector("Spells", [])

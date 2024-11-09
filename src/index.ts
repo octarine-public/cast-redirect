@@ -18,6 +18,7 @@ import { MenuManager } from "./menu"
 new (class CCastRedirector {
 	private readonly menu = new MenuManager()
 	private readonly enemies: Hero[] = []
+	private readonly friends: Hero[] = []
 
 	constructor() {
 		EventsSDK.on("GameEnded", this.GameEnded.bind(this))
@@ -32,8 +33,12 @@ new (class CCastRedirector {
 	}
 
 	protected EntityCreated(entity: Entity) {
-		if (entity instanceof Hero && entity.IsEnemy()) {
-			this.enemies.push(entity)
+		if (entity instanceof Hero) {
+			if (entity.IsEnemy()) {
+				this.enemies.push(entity)
+			} else {
+				this.friends.push(entity)
+			}
 		}
 		if (!(entity instanceof Ability)) {
 			return
@@ -51,8 +56,12 @@ new (class CCastRedirector {
 		if (!(entity instanceof Hero)) {
 			return
 		}
-		if (entity.IsEnemy() && !this.isIllusion(entity)) {
-			this.enemies.remove(entity)
+		if (!this.isIllusion(entity)) {
+			if (entity.IsEnemy()) {
+				this.enemies.remove(entity)
+			} else {
+				this.friends.remove(entity)
+			}
 		}
 	}
 
@@ -135,11 +144,12 @@ new (class CCastRedirector {
 
 	private getOtherHero(target: Entity, caster: Unit, ability: Ability): Nullable<Unit> {
 		const isLowHP = this.menu.ToLowHP.value
+		const isFriend = this.menu.ToFriend.value
 		const range = this.menu.SearchRange.value
 
 		const heroes = isLowHP
-			? this.enemies.orderBy(x => x.HPPercent)
-			: this.enemies.orderBy(x => x.Distance2D(caster))
+			? (isFriend ? this.friends : this.enemies).orderBy(x => x.HPPercent)
+			: (isFriend ? this.friends : this.enemies).orderBy(x => x.Distance2D(caster))
 
 		// example: item_nullifier
 		const canUseInInvulnerable = ability.HasTargetFlags(
