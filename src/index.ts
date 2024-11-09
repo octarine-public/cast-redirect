@@ -152,6 +152,10 @@ new (class CCastRedirector {
 			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_FRIENDLY) ||
 			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_BOTH)
 
+		const canUseToEnemy =
+			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_ENEMY) ||
+			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_BOTH)
+
 		// mabye any check
 		const isValidHero = (hero: Unit) =>
 			hero !== caster &&
@@ -162,7 +166,7 @@ new (class CCastRedirector {
 			!hero.IsIllusion &&
 			(canUseInInvulnerable || !hero.IsInvulnerable) &&
 			((isFriend && canUseToFriend && !hero.IsEnemy()) ||
-				(!isFriend && !canUseToFriend && hero.IsEnemy())) &&
+				(!isFriend && canUseToEnemy && hero.IsEnemy())) &&
 			hero.Distance2D(caster) <= range
 
 		return heroes.find(x => isValidHero(x))
