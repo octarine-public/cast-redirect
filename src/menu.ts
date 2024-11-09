@@ -134,7 +134,7 @@ export class MenuManager {
 		this.tree.Update()
 	}
 
-	public GameEnded() {
+	public ResetSkills() {
 		const arr = this.abilitiesState.values
 		for (let i = arr.length - 1; i > -1; i--) {
 			const spellName = arr[i]

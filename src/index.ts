@@ -30,7 +30,7 @@ new (class CCastRedirector {
 	}
 
 	public GameEnded() {
-		this.menu.GameEnded()
+		this.menu.ResetSkills()
 	}
 
 	protected EntityCreated(entity: Entity) {
@@ -71,6 +71,7 @@ new (class CCastRedirector {
 		) {
 			return
 		}
+		this.menu.ResetSkills()
 		const arr = unit.Spells
 		for (let i = arr.length - 1; i > -1; i--) {
 			this.menu.AddSpellInMenu(arr[i])
