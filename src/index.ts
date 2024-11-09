@@ -161,7 +161,9 @@ new (class CCastRedirector {
 			!hero.IsClone &&
 			!hero.IsIllusion &&
 			(canUseInInvulnerable || !hero.IsInvulnerable) &&
-			((isFriend && canUseToFriend && !hero.IsEnemy()) || !isFriend) &&
+			((isFriend && canUseToFriend && !hero.IsEnemy()) ||
+				!isFriend ||
+				(!canUseToFriend && hero.IsEnemy())) &&
 			hero.Distance2D(caster) <= range
 
 		return heroes.find(x => isValidHero(x))
