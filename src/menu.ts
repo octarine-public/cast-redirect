@@ -14,6 +14,7 @@ export class MenuManager {
 	public readonly Illusions: Menu.Toggle
 	public readonly SearchRange: Menu.Slider
 
+	// TODO: add support items
 	private readonly items: string[] = [
 		"item_dagon_5",
 		"item_rod_of_atos",
@@ -86,6 +87,8 @@ export class MenuManager {
 		this.ToFriend = this.tree.AddToggle("Redirect to friend")
 
 		this.redirectAbility = this.abilitiesTree.AddToggle("Redirect abilities cast")
+
+		// TODO: fix abilities showing bug
 		this.abilitiesState = this.abilitiesTree.AddImageSelector("Spells", [])
 		this.abilitiesState.IsHidden = true
 	}

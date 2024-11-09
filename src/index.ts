@@ -148,11 +148,9 @@ new (class CCastRedirector {
 			DOTA_UNIT_TARGET_FLAGS.DOTA_UNIT_TARGET_FLAG_INVULNERABLE
 		)
 
-		const canUseToFriend = ability.HasTargetTeam(
-			DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_FRIENDLY
-		)
-
-		console.log(canUseToFriend)
+		const canUseToFriend =
+			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_FRIENDLY) ||
+			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_BOTH)
 
 		// mabye any check
 		const isValidHero = (hero: Unit) =>
