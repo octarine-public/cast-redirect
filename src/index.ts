@@ -152,6 +152,8 @@ new (class CCastRedirector {
 			DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_FRIENDLY
 		)
 
+		console.log(canUseToFriend)
+
 		// mabye any check
 		const isValidHero = (hero: Unit) =>
 			hero !== caster &&
