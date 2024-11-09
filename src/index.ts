@@ -156,6 +156,8 @@ new (class CCastRedirector {
 			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_ENEMY) ||
 			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_BOTH)
 
+		console.log(isFriend, canUseToFriend)
+
 		// mabye any check
 		const isValidHero = (hero: Unit) =>
 			hero !== caster &&
