@@ -96,7 +96,6 @@ new (class CCastRedirector {
 			return true
 		}
 		if (!this.menu.IsFriendCastEnabled(ability)) {
-			console.log(1)
 			return true
 		}
 		const originalTargetHero = this.getOriginalHero(target)
