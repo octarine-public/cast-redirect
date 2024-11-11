@@ -145,7 +145,7 @@ export class MenuManager {
 			DOTA_ABILITY_BEHAVIOR.DOTA_ABILITY_BEHAVIOR_UNIT_TARGET
 		)
 		if (!isTargetable || this.cachedSpellNames.has(name)) {
-			console.log(5)
+			console.log(5, name)
 			return
 		}
 		console.log(6)
