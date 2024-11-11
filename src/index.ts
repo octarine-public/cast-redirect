@@ -137,7 +137,7 @@ new (class CCastRedirector {
 		if (!(target instanceof Hero)) {
 			return undefined
 		}
-		const targetOwner = target.Owner
+		const targetOwner = target.OwnerEntity
 		if (!(targetOwner instanceof Player)) {
 			return undefined
 		}
@@ -192,10 +192,9 @@ new (class CCastRedirector {
 
 	protected isAvailableOriginalHero(hero: Nullable<Hero>, caster: Unit): hero is Hero {
 		if (hero === undefined || this.menu.ToLowHP.value) {
-			console.log(1)
 			return false
 		}
-		console.log(2)
+
 		return (
 			hero.IsVisible &&
 			hero.IsAlive &&
