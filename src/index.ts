@@ -44,7 +44,11 @@ new (class CCastRedirector {
 		if (abilOwner === undefined || abilOwner.IsEnemy()) {
 			return
 		}
-		if (!this.isIllusion(abilOwner) && abilOwner.IsControllable) {
+		if (
+			!this.isIllusion(abilOwner) &&
+			abilOwner.IsControllable &&
+			LocalPlayer?.Hero === abilOwner
+		) {
 			this.menu.AddSpellInMenu(entity)
 		}
 	}
@@ -170,7 +174,6 @@ new (class CCastRedirector {
 
 		const canUseToBoth = canUseToFriend && canUseToEnemy
 
-		// mabye any check
 		const isValidHero = (hero: Unit) =>
 			hero !== caster &&
 			hero !== target &&

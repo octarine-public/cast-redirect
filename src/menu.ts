@@ -146,7 +146,7 @@ export class MenuManager {
 		if (!this.abilitiesState.defaultValues.has(name)) {
 			this.abilitiesState.defaultValues.set(name, defualtState)
 		}
-		console.log(name)
+
 		this.cachedSpellNames.add(name)
 		this.abilitiesState.IsHidden = false
 		this.abilitiesState.values.push(name)
