@@ -134,16 +134,14 @@ new (class CCastRedirector {
 
 	private getOriginalHero(target: Unit): Nullable<Hero> {
 		if (!(target instanceof Hero)) {
-			console.log(1)
 			return undefined
 		}
-		console.log(target)
 		const targetOwner = target.OwnerEntity
 		console.log(targetOwner)
 		if (!(targetOwner instanceof Player)) {
-			console.log(2)
 			return undefined
 		}
+		console.log(targetOwner.Hero instanceof Hero, targetOwner.IsAlive)
 		if (!(targetOwner.Hero instanceof Hero) || !targetOwner.IsAlive) {
 			console.log(3)
 			return undefined
