@@ -44,11 +44,7 @@ new (class CCastRedirector {
 		if (abilOwner === undefined || abilOwner.IsEnemy()) {
 			return
 		}
-		if (
-			!this.isIllusion(abilOwner) &&
-			abilOwner.IsControllable &&
-			abilOwner === LocalPlayer?.Hero
-		) {
+		if (!this.isIllusion(abilOwner) && abilOwner.IsControllable) {
 			this.menu.AddSpellInMenu(entity)
 		}
 	}
