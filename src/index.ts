@@ -96,6 +96,7 @@ new (class CCastRedirector {
 			return true
 		}
 		const originalTargetHero = this.getOriginalHero(target)
+		console.log(originalTargetHero)
 		const state =
 			(target.IsClone && this.menu.Clones.value) ||
 			(target.IsCreep && this.menu.Creeps.value) ||
@@ -117,7 +118,7 @@ new (class CCastRedirector {
 		}
 		if (this.isAvailableOriginalHero(originalTargetHero, caster)) {
 			caster.CastTarget(ability, originalTargetHero)
-			console.log(1)
+			console.log(3)
 			return true
 		}
 		const nearliestHero = this.getOtherHero(target, caster, ability)
@@ -191,8 +192,10 @@ new (class CCastRedirector {
 
 	protected isAvailableOriginalHero(hero: Nullable<Hero>, caster: Unit): hero is Hero {
 		if (hero === undefined || this.menu.ToLowHP.value) {
+			console.log(1)
 			return false
 		}
+		console.log(2)
 		return (
 			hero.IsVisible &&
 			hero.IsAlive &&
