@@ -67,7 +67,7 @@ new (class CCastRedirector {
 			unit.IsEnemy() ||
 			this.isIllusion(unit) ||
 			!unit.IsControllable ||
-			!LocalPlayer?.Hero
+			LocalPlayer?.Hero === unit
 		) {
 			return
 		}
