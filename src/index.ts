@@ -117,6 +117,7 @@ new (class CCastRedirector {
 		}
 		if (this.isAvailableOriginalHero(originalTargetHero, caster)) {
 			caster.CastTarget(ability, originalTargetHero)
+			console.log(1)
 			return true
 		}
 		const nearliestHero = this.getOtherHero(target, caster, ability)
