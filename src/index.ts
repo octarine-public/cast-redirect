@@ -137,15 +137,13 @@ new (class CCastRedirector {
 			return undefined
 		}
 		const targetOwner = target.OwnerEntity
-		console.log(targetOwner)
 		if (!(targetOwner instanceof Player)) {
 			return undefined
 		}
-		console.log(targetOwner.Hero instanceof Hero, targetOwner.IsAlive)
-		if (!(targetOwner.Hero instanceof Hero) || !targetOwner.IsAlive) {
-			console.log(3)
+		if (!(targetOwner.Hero instanceof Hero) || !targetOwner.Hero.IsAlive) {
 			return undefined
 		}
+		console.log(12)
 		return targetOwner.Hero
 	}
 
