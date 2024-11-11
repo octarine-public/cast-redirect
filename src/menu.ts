@@ -1,6 +1,7 @@
 import {
 	Ability,
 	DOTA_ABILITY_BEHAVIOR,
+	DOTA_UNIT_TARGET_TEAM,
 	ImageData,
 	Menu
 } from "github.com/octarine-public/wrapper/index"
@@ -105,6 +106,18 @@ export class MenuManager {
 			temp = "item_dagon_5"
 		}
 		return this.itemsState.IsEnabled(temp)
+	}
+
+	public IsFriendCastEnabled(ability: Ability): boolean {
+		return (
+			(ability.HasTargetTeam(
+				DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_FRIENDLY
+			) ||
+				ability.HasTargetTeam(
+					DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_BOTH
+				)) &&
+			this.ToLowHP.value
+		)
 	}
 
 	public AddSpellInMenu(ability: Nullable<Ability>, defualtState: boolean = true) {

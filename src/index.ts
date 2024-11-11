@@ -95,6 +95,9 @@ new (class CCastRedirector {
 		if (caster === undefined || !this.menu.IsEnabled(ability.Name, ability.IsItem)) {
 			return true
 		}
+		if (!this.menu.IsFriendCastEnabled(ability)) {
+			return true
+		}
 		const originalTargetHero = this.getOriginalHero(target)
 
 		const state =
@@ -143,7 +146,7 @@ new (class CCastRedirector {
 		if (!(targetOwner.Hero instanceof Hero) || !targetOwner.Hero.IsAlive) {
 			return undefined
 		}
-		console.log(12)
+
 		return targetOwner.Hero
 	}
 
@@ -161,7 +164,6 @@ new (class CCastRedirector {
 			DOTA_UNIT_TARGET_FLAGS.DOTA_UNIT_TARGET_FLAG_INVULNERABLE
 		)
 
-		// TODO: think about mana drain?
 		const canUseToFriend =
 			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_FRIENDLY) ||
 			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_BOTH)
