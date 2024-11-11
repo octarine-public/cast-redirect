@@ -95,7 +95,7 @@ new (class CCastRedirector {
 		if (caster === undefined || !this.menu.IsEnabled(ability.Name, ability.IsItem)) {
 			return true
 		}
-		if (!this.menu.IsFriendCastEnabled(ability)) {
+		if (!this.menu.IsFriendCastEnabled(ability) && !target.IsEnemy()) {
 			return true
 		}
 		const originalTargetHero = this.getOriginalHero(target)
