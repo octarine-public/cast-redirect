@@ -15,13 +15,11 @@ export class MenuManager {
 	public readonly Illusions: Menu.Toggle
 	public readonly SearchRange: Menu.Slider
 
-	// TODO: add support items
 	private readonly items: string[] = [
 		"item_dagon_5",
 		"item_rod_of_atos",
 		"item_orchid",
 		"item_bloodthorn",
-		"item_force_staff",
 		"item_hurricane_pike",
 		"item_ethereal_blade",
 		"item_diffusal_blade",
@@ -29,9 +27,11 @@ export class MenuManager {
 		"item_abyssal_blade",
 		"item_heavens_halberd",
 		"item_cyclone",
-		"item_wind_waker",
 		"item_sheepstick",
 		"item_nullifier",
+		"item_force_staff",
+		"item_glimmer_cape",
+		"item_wind_waker",
 		"item_book_of_shadows",
 		"item_psychic_headband",
 		"item_bullwhip"
