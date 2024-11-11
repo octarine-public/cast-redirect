@@ -128,24 +128,32 @@ export class MenuManager {
 
 	public AddSpellInMenu(ability: Nullable<Ability>, defualtState: boolean = true) {
 		if (ability === undefined || !ability.IsValid) {
+			console.log(1)
 			return
 		}
 		if (ability.IsItem || ability.IsHidden) {
+			console.log(2)
 			return
 		}
 		if (!ability.ShouldBeDrawable || ability.IsPassive) {
+			console.log(3)
 			return
 		}
+		console.log(4)
 		const name = ability.Name
 		const isTargetable = ability.HasBehavior(
 			DOTA_ABILITY_BEHAVIOR.DOTA_ABILITY_BEHAVIOR_UNIT_TARGET
 		)
 		if (!isTargetable || this.cachedSpellNames.has(name)) {
+			console.log(5)
 			return
 		}
+		console.log(6)
 		if (!this.abilitiesState.defaultValues.has(name)) {
 			this.abilitiesState.defaultValues.set(name, defualtState)
+			console.log(7)
 		}
+		console.log(8)
 		this.cachedSpellNames.add(name)
 		this.abilitiesState.IsHidden = false
 		this.abilitiesState.values.push(name)

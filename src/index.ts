@@ -45,7 +45,6 @@ new (class CCastRedirector {
 			return
 		}
 		if (!this.isIllusion(abilOwner) && abilOwner.IsControllable) {
-			console.log(entity)
 			this.menu.AddSpellInMenu(entity)
 		}
 	}
