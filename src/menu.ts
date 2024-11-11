@@ -32,7 +32,13 @@ export class MenuManager {
 		"item_force_staff",
 		"item_glimmer_cape",
 		"item_wind_waker",
+		"item_lotus_orb",
+		"item_pavise",
+		"item_solar_crest",
+		"item_holy_locket",
+		"item_royal_jelly",
 		"item_book_of_shadows",
+		"item_force_boots",
 		"item_psychic_headband",
 		"item_bullwhip"
 	]
