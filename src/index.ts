@@ -144,11 +144,11 @@ new (class CCastRedirector {
 			console.log(2)
 			return undefined
 		}
-		if (!(targetOwner.Owner instanceof Hero) || !targetOwner.IsAlive) {
+		if (!(targetOwner.Hero instanceof Hero) || !targetOwner.IsAlive) {
 			console.log(3)
 			return undefined
 		}
-		return targetOwner.Owner
+		return targetOwner.Hero
 	}
 
 	private getOtherHero(target: Entity, caster: Unit, ability: Ability): Nullable<Unit> {
