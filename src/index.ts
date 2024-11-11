@@ -96,7 +96,7 @@ new (class CCastRedirector {
 			return true
 		}
 		const originalTargetHero = this.getOriginalHero(target)
-		console.log(originalTargetHero)
+
 		const state =
 			(target.IsClone && this.menu.Clones.value) ||
 			(target.IsCreep && this.menu.Creeps.value) ||
@@ -118,7 +118,6 @@ new (class CCastRedirector {
 		}
 		if (this.isAvailableOriginalHero(originalTargetHero, caster)) {
 			caster.CastTarget(ability, originalTargetHero)
-			console.log(3)
 			return true
 		}
 		const nearliestHero = this.getOtherHero(target, caster, ability)
@@ -135,13 +134,18 @@ new (class CCastRedirector {
 
 	private getOriginalHero(target: Unit): Nullable<Hero> {
 		if (!(target instanceof Hero)) {
+			console.log(1)
 			return undefined
 		}
+		console.log(target)
 		const targetOwner = target.OwnerEntity
+		console.log(targetOwner)
 		if (!(targetOwner instanceof Player)) {
+			console.log(2)
 			return undefined
 		}
 		if (!(targetOwner.Owner instanceof Hero) || !targetOwner.IsAlive) {
+			console.log(3)
 			return undefined
 		}
 		return targetOwner.Owner
