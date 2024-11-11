@@ -109,6 +109,11 @@ export class MenuManager {
 	}
 
 	public IsFriendCastEnabled(ability: Ability): boolean {
+		console.log(
+			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_FRIENDLY) ||
+				ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_BOTH),
+			this.ToLowHP.value
+		)
 		return (
 			(ability.HasTargetTeam(
 				DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_FRIENDLY
