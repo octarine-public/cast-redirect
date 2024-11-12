@@ -16,6 +16,6 @@
 	"Redirection settings from": "Настройки перенаправления с",
 	"Item redirection settings": "Настройки перенаправления предметов",
 	"Redirect to friend": "Перенаправление на союзников",
-	"Use spell cast range": "Использовать дальность применения скилов",
-	"Consider cast range instead of manual configuration": "Учитывать дальность применения скилов вместо ручной настройки"
+	"Use spell cast range": "Использовать дальность применения скилов ",
+	"Consider cast range instead of manual configuration for seacrh": "Учитывать дальность применения скилов вместо ручной настройки для поиска"
 }

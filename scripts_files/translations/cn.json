@@ -17,5 +17,5 @@
     "Item redirection settings": "物品重定向设置",
     "Redirect to friend": "重定向到盟友",
     "Use spell cast range": "使用技能施法距离",
-    "Consider cast range instead of manual configuration": "考虑技能施法距离而非手动设置"
+    "Consider cast range instead of manual configuration for search": "考虑技能施法距离而非手动设置以进行搜索"
 }

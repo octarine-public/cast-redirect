@@ -75,8 +75,8 @@ export class MenuManager {
 		this.SearchRange = this.tree.AddSlider(
 			"Search range",
 			900,
-			100,
-			1400,
+			200,
+			2200,
 			0,
 			"Range of search heroes"
 		)
@@ -84,7 +84,7 @@ export class MenuManager {
 		this.castRange = this.tree.AddToggle(
 			"Use spell cast range",
 			false,
-			"Consider cast range instead of manual configuration"
+			"Consider cast range instead of manual configuration for seacrh"
 		)
 
 		this.itemsTree = this.tree.AddNode("Item redirection settings")
