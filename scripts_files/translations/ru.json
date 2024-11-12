@@ -15,5 +15,7 @@
 	"Ability redirection settings": "Настройки перенаправления способностей",
 	"Redirection settings from": "Настройки перенаправления с",
 	"Item redirection settings": "Настройки перенаправления предметов",
-	"Redirect to friend": "Перенаправление на союзников"
+	"Redirect to friend": "Перенаправление на союзников",
+	"Use spell cast range": "Использовать дальность применения скилов",
+	"Consider cast range instead of manual configuration": "Учитывать дальность применения скилов вместо ручной настройки"
 }

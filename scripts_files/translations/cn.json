@@ -4,7 +4,7 @@
     "Redirect from Illusions": "从幻象重定向",
     "Redirect from Creeps": "从小兵重定向",
     "Redirect from Clones": "从克隆重定向",
-    "Redirect from Clones (e.x Meepo, Vengeful spirit)": "从克隆重定向（例如：Meepo，复仇之魂）",
+    "Redirect from Clones (e.x Meepo, Vengeful spirit)": "从克隆重定向 (例如: Meepo, 复仇之魂)",
     "Search range": "搜索范围",
     "Range of search heroes": "搜索英雄的范围",
     "Redirect item casts": "重定向物品施法",
@@ -15,5 +15,7 @@
     "Ability redirection settings": "技能重定向设置",
     "Redirection settings from": "重定向设置来源",
     "Item redirection settings": "物品重定向设置",
-    "Redirect to friend": "重定向到盟友"
+    "Redirect to friend": "重定向到盟友",
+    "Use spell cast range": "使用技能施法距离",
+    "Consider cast range instead of manual configuration": "考虑技能施法距离而非手动设置"
 }

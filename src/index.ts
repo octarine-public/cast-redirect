@@ -10,7 +10,6 @@ import {
 	ExecuteOrder,
 	Hero,
 	InputManager,
-	LocalPlayer,
 	Player,
 	Unit
 } from "github.com/octarine-public/wrapper/index"
@@ -44,11 +43,7 @@ new (class CCastRedirector {
 		if (abilOwner === undefined || abilOwner.IsEnemy()) {
 			return
 		}
-		if (
-			!this.isIllusion(abilOwner) &&
-			abilOwner.IsControllable &&
-			LocalPlayer?.Hero === abilOwner
-		) {
+		if (!this.isIllusion(abilOwner) && abilOwner.IsControllable) {
 			this.menu.AddSpellInMenu(entity)
 		}
 	}
@@ -57,21 +52,15 @@ new (class CCastRedirector {
 		if (!(entity instanceof Hero)) {
 			return
 		}
-		if (!this.isIllusion(entity)) {
+		if (entity instanceof Hero) {
 			this.heroes.remove(entity)
 		}
 	}
 
 	protected UnitAbilitiesChanged(unit: Unit) {
-		if (
-			unit.IsEnemy() ||
-			this.isIllusion(unit) ||
-			!unit.IsControllable ||
-			LocalPlayer?.Hero !== unit
-		) {
+		if (unit.IsEnemy() || this.isIllusion(unit) || !unit.IsControllable) {
 			return
 		}
-		this.menu.ResetSkills()
 		const arr = unit.Spells
 		for (let i = arr.length - 1; i > -1; i--) {
 			this.menu.AddSpellInMenu(arr[i])
@@ -119,7 +108,7 @@ new (class CCastRedirector {
 		if (!state) {
 			return false
 		}
-		if (this.isAvailableOriginalHero(originalTargetHero, caster)) {
+		if (this.isAvailableOriginalHero(originalTargetHero, caster, ability)) {
 			caster.CastTarget(ability, originalTargetHero)
 			return true
 		}
@@ -132,7 +121,7 @@ new (class CCastRedirector {
 	}
 
 	private isIllusion(target: Unit): boolean {
-		return (target.IsIllusion || target.IsHiddenIllusion) && !target.IsStrongIllusion
+		return target.IsIllusion && !target.IsStrongIllusion
 	}
 
 	private getOriginalHero(target: Unit): Nullable<Hero> {
@@ -152,8 +141,10 @@ new (class CCastRedirector {
 
 	private getOtherHero(target: Entity, caster: Unit, ability: Ability): Nullable<Unit> {
 		const isLowHP = this.menu.ToLowHP.value
-		const isFriend = this.menu.ToFriend.value
-		const range = this.menu.SearchRange.value
+		const isToFriend = this.menu.ToFriend.value
+		const useCastRange = this.menu.castRange.value
+
+		const range = useCastRange ? ability.CastRange : this.menu.SearchRange.value
 
 		const heroes = isLowHP
 			? this.heroes.orderBy(x => x.HPPercent)
@@ -182,24 +173,28 @@ new (class CCastRedirector {
 			!hero.IsClone &&
 			!hero.IsIllusion &&
 			(canUseInInvulnerable || !hero.IsInvulnerable) &&
-			((isFriend && canUseToFriend && !hero.IsEnemy()) ||
-				(!isFriend && canUseToEnemy && hero.IsEnemy()) ||
-				(isFriend && canUseToEnemy && hero.IsEnemy()) ||
-				(isFriend && canUseToBoth && !hero.IsEnemy())) &&
+			((isToFriend && canUseToFriend && !hero.IsEnemy()) ||
+				(!isToFriend && canUseToEnemy && hero.IsEnemy()) ||
+				(isToFriend && canUseToEnemy && hero.IsEnemy()) ||
+				(isToFriend && canUseToBoth && !hero.IsEnemy())) &&
 			hero.Distance2D(caster) <= range
 
 		return heroes.find(x => isValidHero(x))
 	}
 
-	protected isAvailableOriginalHero(hero: Nullable<Hero>, caster: Unit): hero is Hero {
+	protected isAvailableOriginalHero(
+		hero: Nullable<Hero>,
+		caster: Unit,
+		ability: Ability
+	): hero is Hero {
 		if (hero === undefined || this.menu.ToLowHP.value) {
 			return false
 		}
 
-		return (
-			hero.IsVisible &&
-			hero.IsAlive &&
-			hero.Distance2D(caster) < this.menu.SearchRange.value
-		)
+		const range = this.menu.castRange.value
+			? ability.CastRange
+			: this.menu.SearchRange.value
+
+		return hero.IsVisible && hero.IsAlive && hero.Distance2D(caster) < range
 	}
 })()

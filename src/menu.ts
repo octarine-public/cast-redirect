@@ -10,9 +10,10 @@ export class MenuManager {
 	public readonly State: Menu.Toggle
 	public readonly Creeps: Menu.Toggle
 	public readonly Clones: Menu.Toggle
+	public readonly Illusions: Menu.Toggle
 	public readonly ToLowHP: Menu.Toggle
 	public readonly ToFriend: Menu.Toggle
-	public readonly Illusions: Menu.Toggle
+	public readonly castRange: Menu.Toggle
 	public readonly SearchRange: Menu.Slider
 
 	private readonly items: string[] = [
@@ -78,6 +79,12 @@ export class MenuManager {
 			1400,
 			0,
 			"Range of search heroes"
+		)
+
+		this.castRange = this.tree.AddToggle(
+			"Use spell cast range",
+			false,
+			"Consider cast range instead of manual configuration"
 		)
 
 		this.itemsTree = this.tree.AddNode("Item redirection settings")
