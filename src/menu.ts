@@ -2,6 +2,7 @@ import {
 	Ability,
 	DOTA_ABILITY_BEHAVIOR,
 	DOTA_UNIT_TARGET_TEAM,
+	DOTA_UNIT_TARGET_TYPE,
 	ImageData,
 	Menu
 } from "github.com/octarine-public/wrapper/index"
@@ -141,6 +142,9 @@ export class MenuManager {
 			return
 		}
 		if (!ability.ShouldBeDrawable || ability.IsPassive) {
+			return
+		}
+		if (!ability.HasTargetType(DOTA_UNIT_TARGET_TYPE.DOTA_UNIT_TARGET_HERO)) {
 			return
 		}
 		const name = ability.Name
