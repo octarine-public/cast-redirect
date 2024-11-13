@@ -108,10 +108,6 @@ new (class CCastRedirector {
 		if (!state) {
 			return false
 		}
-		console.log(
-			this.isAvailableOriginalHero(originalTargetHero, caster, ability),
-			"a"
-		)
 		if (this.isAvailableOriginalHero(originalTargetHero, caster, ability)) {
 			caster.CastTarget(ability, originalTargetHero)
 			return true
@@ -159,16 +155,13 @@ new (class CCastRedirector {
 			DOTA_UNIT_TARGET_FLAGS.DOTA_UNIT_TARGET_FLAG_INVULNERABLE
 		)
 
-		const targetTeams = new Set([
-			DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-			DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_BOTH,
-			DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_CUSTOM
-		])
+		const canUseToFriend = !ability.HasTargetTeam(
+			DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_ENEMY
+		)
 
-		const canUseToFriend = targetTeams.has(ability.TargetTeamMask)
-		const canUseToEnemy =
-			targetTeams.has(ability.TargetTeamMask) &&
-			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_ENEMY)
+		const canUseToEnemy = !ability.HasTargetTeam(
+			DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_FRIENDLY
+		)
 
 		const canUseToBoth = canUseToFriend && canUseToEnemy
 
@@ -194,7 +187,6 @@ new (class CCastRedirector {
 		caster: Unit,
 		ability: Ability
 	): hero is Hero {
-		console.log(this.menu.ToLowHP.value, "m")
 		if (hero === undefined || this.menu.ToLowHP.value) {
 			return false
 		}
