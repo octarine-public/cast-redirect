@@ -84,7 +84,6 @@ new (class CCastRedirector {
 		if (caster === undefined || !this.menu.IsEnabled(ability.Name, ability.IsItem)) {
 			return true
 		}
-		console.log(this.menu.CanFriendCast(ability))
 		if (!this.menu.CanFriendCast(ability) && !target.IsEnemy()) {
 			return true
 		}

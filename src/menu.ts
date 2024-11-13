@@ -123,6 +123,9 @@ export class MenuManager {
 	}
 
 	public CanFriendCast(ability: Ability): boolean {
+		console.log(
+			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_ENEMY)
+		)
 		return (
 			!ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_ENEMY) &&
 			this.ToFriend.value
