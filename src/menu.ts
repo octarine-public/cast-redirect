@@ -124,11 +124,9 @@ export class MenuManager {
 
 	public IsFriendCastEnabled(ability: Ability): boolean {
 		return (
-			(ability.HasTargetTeam(
-				DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_FRIENDLY
-			) ||
-				ability.HasTargetTeam(
-					DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_BOTH
+			(!ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_ENEMY) ||
+				!ability.HasTargetTeam(
+					DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_NONE
 				)) &&
 			this.ToFriend.value
 		)

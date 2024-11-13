@@ -155,17 +155,13 @@ new (class CCastRedirector {
 			DOTA_UNIT_TARGET_FLAGS.DOTA_UNIT_TARGET_FLAG_INVULNERABLE
 		)
 
-		const canUseToFriend =
-			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_FRIENDLY) ||
-			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_BOTH) ||
-			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_CUSTOM)
+		const canUseToFriend = !ability.HasTargetTeam(
+			DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_ENEMY
+		)
 
-		const canUseToEnemy =
-			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_FRIENDLY) ||
-			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_BOTH) ||
-			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_CUSTOM)
-
-		const canUseToBoth = canUseToFriend && canUseToEnemy
+		const canUseToEnemy = !ability.HasTargetTeam(
+			DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_FRIENDLY
+		)
 
 		const isValidHero = (hero: Unit) =>
 			hero !== caster &&
@@ -177,8 +173,7 @@ new (class CCastRedirector {
 			(canUseInInvulnerable || !hero.IsInvulnerable) &&
 			((isToFriend && canUseToFriend && !hero.IsEnemy()) ||
 				(!isToFriend && canUseToEnemy && hero.IsEnemy()) ||
-				(isToFriend && canUseToEnemy && hero.IsEnemy()) ||
-				(isToFriend && canUseToBoth && !hero.IsEnemy())) &&
+				(isToFriend && canUseToEnemy && hero.IsEnemy())) &&
 			hero.Distance2D(caster) <= range
 
 		return heroes.find(x => isValidHero(x))
