@@ -122,7 +122,7 @@ export class MenuManager {
 		return this.itemsState.IsEnabled(temp)
 	}
 
-	public IsFriendCastEnabled(ability: Ability): boolean {
+	public CanFriendCast(ability: Ability): boolean {
 		return (
 			!ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_ENEMY) &&
 			this.ToFriend.value
