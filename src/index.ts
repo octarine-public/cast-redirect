@@ -108,6 +108,10 @@ new (class CCastRedirector {
 		if (!state) {
 			return false
 		}
+		console.log(
+			this.isAvailableOriginalHero(originalTargetHero, caster, ability),
+			"a"
+		)
 		if (this.isAvailableOriginalHero(originalTargetHero, caster, ability)) {
 			caster.CastTarget(ability, originalTargetHero)
 			return true
@@ -190,6 +194,7 @@ new (class CCastRedirector {
 		caster: Unit,
 		ability: Ability
 	): hero is Hero {
+		console.log(this.menu.ToLowHP.value, "m")
 		if (hero === undefined || this.menu.ToLowHP.value) {
 			return false
 		}
