@@ -33,15 +33,15 @@ new (class CCastRedirector {
 	}
 
 	protected EntityCreated(entity: Entity) {
-		if (entity instanceof Hero) {
-			this.heroes.push(entity)
-		}
 		if (!(entity instanceof Ability)) {
 			return
 		}
 		const abilOwner = entity.Owner
 		if (abilOwner === undefined || abilOwner.IsEnemy()) {
 			return
+		}
+		if (entity instanceof Hero) {
+			this.heroes.push(entity)
 		}
 		if (!this.isIllusion(abilOwner) && abilOwner.IsControllable) {
 			this.menu.AddSpellInMenu(entity)
@@ -52,9 +52,7 @@ new (class CCastRedirector {
 		if (!(entity instanceof Hero)) {
 			return
 		}
-		if (entity instanceof Hero) {
-			this.heroes.remove(entity)
-		}
+		this.heroes.remove(entity)
 	}
 
 	protected UnitAbilitiesChanged(unit: Unit) {
@@ -89,26 +87,27 @@ new (class CCastRedirector {
 		}
 		const originalTargetHero = this.getOriginalHero(target)
 
-		const state =
-			(target.IsClone && this.menu.Clones.value) ||
-			(target.IsCreep && this.menu.Creeps.value) ||
-			(this.isIllusion(target) && this.menu.Illusions.value)
-
-		// if UseByState returns false (return is true to skip cast)
-		return !this.UseByState(state, caster, target, ability, originalTargetHero)
+		return !this.UseByState(caster, target, ability, originalTargetHero)
 	}
 
 	protected UseByState(
-		state: boolean,
 		caster: Unit,
 		target: Unit,
 		ability: Ability,
 		originalTargetHero: Nullable<Hero>
 	) {
+		const state =
+			(target.IsClone && this.menu.Clones.value) ||
+			(target.IsCreep && this.menu.Creeps.value) ||
+			(this.isIllusion(target) && this.menu.Illusions.value)
+
 		if (!state) {
 			return false
 		}
-		if (this.isAvailableOriginalHero(originalTargetHero, caster, ability)) {
+		if (
+			this.isAvailableHero(originalTargetHero, caster, ability) &&
+			!this.menu.ToLowHP.value
+		) {
 			caster.CastTarget(ability, originalTargetHero)
 			return true
 		}
@@ -141,14 +140,24 @@ new (class CCastRedirector {
 
 	private getOtherHero(target: Entity, caster: Unit, ability: Ability): Nullable<Unit> {
 		const isLowHP = this.menu.ToLowHP.value
-		const isToFriend = this.menu.ToFriend.value
-		const useCastRange = this.menu.castRange.value
-
-		const range = useCastRange ? ability.CastRange : this.menu.SearchRange.value
 
 		const heroes = isLowHP
 			? this.heroes.orderBy(x => x.HPPercent)
 			: this.heroes.orderBy(x => x.Distance2D(caster))
+
+		return heroes.find(hero => this.isValidHero(hero, target, caster, ability))
+	}
+
+	private isValidHero(
+		hero: Unit,
+		target: Entity,
+		caster: Unit,
+		ability: Ability
+	): boolean {
+		if (hero === caster || hero === target || hero.IsClone || hero.IsIllusion) {
+			return false
+		}
+		const isToFriend = this.menu.ToFriend.value
 
 		// example: item_nullifier
 		const canUseInInvulnerable = ability.HasTargetFlags(
@@ -163,28 +172,20 @@ new (class CCastRedirector {
 			DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_ENEMY
 		)
 
-		const isValidHero = (hero: Unit) =>
-			hero !== caster &&
-			hero !== target &&
-			hero.IsAlive &&
-			hero.IsVisible &&
-			!hero.IsClone &&
-			!hero.IsIllusion &&
+		return (
 			(canUseInInvulnerable || !hero.IsInvulnerable) &&
 			((isToFriend && canUseToFriend && !hero.IsEnemy()) ||
-				(!isToFriend && canUseToEnemy && hero.IsEnemy()) ||
-				(isToFriend && canUseToEnemy && hero.IsEnemy())) &&
-			hero.Distance2D(caster) <= range
-
-		return heroes.find(x => isValidHero(x))
+				((!isToFriend || isToFriend) && canUseToEnemy && hero.IsEnemy())) &&
+			this.isAvailableHero(hero, caster, ability)
+		)
 	}
 
-	protected isAvailableOriginalHero(
-		hero: Nullable<Hero>,
+	protected isAvailableHero(
+		hero: Nullable<Hero | Entity>,
 		caster: Unit,
 		ability: Ability
 	): hero is Hero {
-		if (hero === undefined || this.menu.ToLowHP.value) {
+		if (hero === undefined) {
 			return false
 		}
 
