@@ -109,11 +109,14 @@ new (class CCastRedirector {
 			this.isAvailableHero(originalTargetHero, target, caster, ability) &&
 			!this.menu.ToLowHPMeepo.value
 		) {
+			console.log(3)
 			caster.CastTarget(ability, originalTargetHero)
 			return true
 		}
+		console.log(2)
 		const nearliestHero = this.getOtherHero(target, caster, ability)
 		if (nearliestHero === undefined) {
+			console.log("ubdefibned")
 			return false
 		}
 		caster.CastTarget(ability, nearliestHero)
@@ -140,6 +143,7 @@ new (class CCastRedirector {
 	}
 
 	private getOtherHero(target: Entity, caster: Unit, ability: Ability): Nullable<Unit> {
+		console.log(1)
 		const isToLowMeepo =
 			this.menu.ToLowHPMeepo.value && target instanceof npc_dota_hero_meepo
 		const heroes = isToLowMeepo
