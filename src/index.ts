@@ -102,6 +102,9 @@ new (class CCastRedirector {
 			(this.isIllusion(target) && this.menu.Illusions.value) ||
 			(target instanceof npc_dota_hero_meepo && this.menu.ToLowHPMeepo.value)
 
+		console.log(state)
+		console.log(target instanceof npc_dota_hero_meepo, "i")
+
 		if (!state) {
 			return false
 		}
