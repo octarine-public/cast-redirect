@@ -41,7 +41,7 @@ new (class CCastRedirector {
 		if (abilOwner === undefined || abilOwner.IsEnemy()) {
 			return
 		}
-		if (entity instanceof Hero) {
+		if (entity instanceof Hero || entity instanceof npc_dota_hero_meepo) {
 			this.heroes.push(entity)
 		}
 		if (!this.isIllusion(abilOwner) && abilOwner.IsControllable) {
@@ -50,7 +50,7 @@ new (class CCastRedirector {
 	}
 
 	protected EntityDestroyed(entity: Entity) {
-		if (!(entity instanceof Hero)) {
+		if (!(entity instanceof Hero) || !(entity instanceof npc_dota_hero_meepo)) {
 			return
 		}
 		this.heroes.remove(entity)
@@ -109,14 +109,11 @@ new (class CCastRedirector {
 			this.isAvailableHero(originalTargetHero, target, caster, ability) &&
 			!this.menu.ToLowHPMeepo.value
 		) {
-			console.log(3)
 			caster.CastTarget(ability, originalTargetHero)
 			return true
 		}
-		console.log(2)
 		const nearliestHero = this.getOtherHero(target, caster, ability)
 		if (nearliestHero === undefined) {
-			console.log("ubdefibned")
 			return false
 		}
 		caster.CastTarget(ability, nearliestHero)
@@ -143,12 +140,13 @@ new (class CCastRedirector {
 	}
 
 	private getOtherHero(target: Entity, caster: Unit, ability: Ability): Nullable<Unit> {
-		console.log(1)
 		const isToLowMeepo =
 			this.menu.ToLowHPMeepo.value && target instanceof npc_dota_hero_meepo
 		const heroes = isToLowMeepo
 			? this.heroes.orderBy(x => x.HP)
 			: this.heroes.orderBy(x => x.Distance2D(caster))
+
+		console.log(heroes)
 
 		return heroes.find(hero => this.isValidHero(hero, target, caster, ability))
 	}
@@ -159,9 +157,11 @@ new (class CCastRedirector {
 		caster: Unit,
 		ability: Ability
 	): boolean {
+		console.log(0)
 		if (hero === caster || hero === target || hero.IsIllusion) {
 			return false
 		}
+		console.log(1)
 		const isToFriend = this.menu.ToFriend.value
 		const isToLowMeepo =
 			this.menu.ToLowHPMeepo.value && target instanceof npc_dota_hero_meepo
