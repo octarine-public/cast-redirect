@@ -178,12 +178,14 @@ new (class CCastRedirector {
 		const targetIsMeepo = isToLowMeepo && target instanceof npc_dota_hero_meepo
 		const heroIsMeepo = isToLowMeepo && hero instanceof npc_dota_hero_meepo
 
+		console.log(targetIsMeepo, heroIsMeepo)
+
 		return (
 			(canUseInInvulnerable || !hero.IsInvulnerable) &&
 			((isToFriend && canUseToFriend && !hero.IsEnemy()) ||
 				(canUseToEnemy && hero.IsEnemy())) &&
 			this.isAvailableHero(hero, target, caster, ability) &&
-			((targetIsMeepo && heroIsMeepo) || (!targetIsMeepo && heroIsMeepo))
+			((targetIsMeepo && heroIsMeepo) || (!targetIsMeepo && !heroIsMeepo))
 		)
 	}
 
