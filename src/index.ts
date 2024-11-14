@@ -34,18 +34,16 @@ new (class CCastRedirector {
 	}
 
 	protected EntityCreated(entity: Entity) {
+		if (entity instanceof Hero || entity instanceof npc_dota_hero_meepo) {
+			console.log(entity)
+			this.heroes.push(entity)
+		}
 		if (!(entity instanceof Ability)) {
 			return
 		}
 		const abilOwner = entity.Owner
 		if (abilOwner === undefined || abilOwner.IsEnemy()) {
 			return
-		}
-		console.log(entity)
-		console.log(entity instanceof npc_dota_hero_meepo)
-		if (entity instanceof Hero || entity instanceof npc_dota_hero_meepo) {
-			console.log(entity)
-			this.heroes.push(entity)
 		}
 		if (!this.isIllusion(abilOwner) && abilOwner.IsControllable) {
 			this.menu.AddSpellInMenu(entity)
