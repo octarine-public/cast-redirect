@@ -3,7 +3,6 @@ import {
 	DOTA_ABILITY_BEHAVIOR,
 	DOTA_UNIT_TARGET_TEAM,
 	DOTA_UNIT_TARGET_TYPE,
-	ImageData,
 	Menu
 } from "github.com/octarine-public/wrapper/index"
 
@@ -14,6 +13,7 @@ export class MenuManager {
 	public readonly ToLowHPMeepo: Menu.Toggle
 	public readonly ToFriend: Menu.Toggle
 	public readonly SearchRange: Menu.Slider
+	private readonly baseNode = Menu.AddEntry("Utility")
 
 	private readonly items: string[] = [
 		"item_dagon_5",
@@ -44,9 +44,10 @@ export class MenuManager {
 	]
 
 	private readonly cachedSpellNames = new Set<string>()
-	private readonly tree = Menu.AddEntryDeep(
-		["Utility", "Cast Redirect"],
-		[ImageData.Paths.Icons.magic_resist]
+	private readonly tree = this.baseNode.AddNode(
+		"Cast Redirect",
+		"panorama/images/spellicons/brewmaster_drunken_haze_png.vtex_c",
+		"Redirects single-target abilities to the hero in case of a illusion/creep misclick in a specified range"
 	)
 
 	private readonly fromTree: Menu.Node
@@ -62,14 +63,14 @@ export class MenuManager {
 	constructor() {
 		this.State = this.tree.AddToggle("State")
 		this.fromTree = this.tree.AddNode("Redirection settings from")
-		this.Illusions = this.fromTree.AddToggle("Redirect from Illusions")
+		this.Illusions = this.fromTree.AddToggle("Redirect from Illusions", true)
 
 		this.Creeps = this.fromTree.AddToggle("Redirect from Creeps")
 
 		this.SearchRange = this.tree.AddSlider(
 			"Search range",
+			150,
 			50,
-			10,
 			250,
 			0,
 			"Range of search heroes"

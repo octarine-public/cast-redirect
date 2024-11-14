@@ -17,5 +17,7 @@
 	"Item redirection settings": "Настройки перенаправления предметов",
 	"Redirect to friend": "Перенаправление на союзников",
 	"Use spell cast range": "Использовать дальность применения скилов ",
-	"Consider cast range instead of manual configuration for seacrh": "Учитывать дальность применения скилов вместо ручной настройки для поиска"
+	"Consider cast range instead of manual configuration for seacrh": "Учитывать дальность применения скилов вместо ручной настройки для поиска",
+	"Redirect to low HP meepo": "Перенаправлять на лоу хп мипо",
+	"Redirects single-target abilities to the hero in case of a illusion/creep misclick in a specified range": "Меняет цель направленных способностей в случае мисклика по иллюзии/герою"
 }

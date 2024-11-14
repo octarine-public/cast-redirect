@@ -155,6 +155,8 @@ new (class CCastRedirector {
 			return false
 		}
 		const isToFriend = this.menu.ToFriend.value
+		const isToLowMeepo =
+			this.menu.ToLowHPMeepo.value && target instanceof npc_dota_hero_meepo
 
 		// example: item_nullifier
 		const canUseInInvulnerable = ability.HasTargetFlags(
@@ -173,7 +175,8 @@ new (class CCastRedirector {
 			(canUseInInvulnerable || !hero.IsInvulnerable) &&
 			((isToFriend && canUseToFriend && !hero.IsEnemy()) ||
 				(canUseToEnemy && hero.IsEnemy())) &&
-			this.isAvailableHero(hero, target, caster, ability)
+			this.isAvailableHero(hero, target, caster, ability) &&
+			((isToLowMeepo && target instanceof npc_dota_hero_meepo) || !isToLowMeepo)
 		)
 	}
 
@@ -183,7 +186,7 @@ new (class CCastRedirector {
 		caster: Unit,
 		ability: Ability
 	): hero is Hero {
-		if (hero === undefined || this.menu.ToLowHPMeepo.value) {
+		if (hero === undefined) {
 			return false
 		}
 		const range = this.menu.SearchRange.value
