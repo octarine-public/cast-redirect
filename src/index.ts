@@ -171,6 +171,9 @@ new (class CCastRedirector {
 			DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_ENEMY
 		)
 
+		console.log(isToLowMeepo)
+		console.log(target instanceof npc_dota_hero_meepo)
+
 		return (
 			(canUseInInvulnerable || !hero.IsInvulnerable) &&
 			((isToFriend && canUseToFriend && !hero.IsEnemy()) ||
