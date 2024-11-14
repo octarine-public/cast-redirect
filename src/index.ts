@@ -104,7 +104,10 @@ new (class CCastRedirector {
 		if (!state) {
 			return false
 		}
-		if (this.isAvailableHero(originalTargetHero, target, caster, ability)) {
+		if (
+			this.isAvailableHero(originalTargetHero, target, caster, ability) &&
+			!this.menu.ToLowHPMeepo.value
+		) {
 			caster.CastTarget(ability, originalTargetHero)
 			return true
 		}
