@@ -35,7 +35,6 @@ new (class CCastRedirector {
 
 	protected EntityCreated(entity: Entity) {
 		if (entity instanceof Hero || entity instanceof npc_dota_hero_meepo) {
-			console.log(entity)
 			this.heroes.push(entity)
 		}
 		if (!(entity instanceof Ability)) {
@@ -178,8 +177,6 @@ new (class CCastRedirector {
 
 		const targetIsMeepo = isToLowMeepo && target instanceof npc_dota_hero_meepo
 		const heroIsMeepo = isToLowMeepo && hero instanceof npc_dota_hero_meepo
-
-		console.log(targetIsMeepo, heroIsMeepo)
 
 		return (
 			(canUseInInvulnerable || !hero.IsInvulnerable) &&
