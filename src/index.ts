@@ -146,13 +146,13 @@ new (class CCastRedirector {
 			? this.heroes.orderBy(x => x.HP)
 			: this.heroes.orderBy(x => x.Distance2D(caster))
 
-		console.log(heroes)
+		console.log(this.heroes)
 
 		return heroes.find(hero => this.isValidHero(hero, target, caster, ability))
 	}
 
 	private isValidHero(
-		hero: Unit,
+		hero: Hero,
 		target: Entity,
 		caster: Unit,
 		ability: Ability
