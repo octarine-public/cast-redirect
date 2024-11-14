@@ -41,6 +41,8 @@ new (class CCastRedirector {
 		if (abilOwner === undefined || abilOwner.IsEnemy()) {
 			return
 		}
+		console.log(entity)
+		console.log(entity instanceof npc_dota_hero_meepo)
 		if (entity instanceof Hero || entity instanceof npc_dota_hero_meepo) {
 			console.log(entity)
 			this.heroes.push(entity)
