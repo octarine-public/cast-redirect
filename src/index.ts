@@ -19,7 +19,7 @@ import { MenuManager } from "./menu"
 
 new (class CCastRedirector {
 	private readonly menu = new MenuManager()
-	private readonly heroes: Hero[] = []
+	private readonly heroes: Unit[] = []
 
 	constructor() {
 		EventsSDK.on("GameEnded", this.GameEnded.bind(this))
@@ -42,6 +42,7 @@ new (class CCastRedirector {
 			return
 		}
 		if (entity instanceof Hero || entity instanceof npc_dota_hero_meepo) {
+			console.log(entity)
 			this.heroes.push(entity)
 		}
 		if (!this.isIllusion(abilOwner) && abilOwner.IsControllable) {
@@ -146,22 +147,18 @@ new (class CCastRedirector {
 			? this.heroes.orderBy(x => x.HP)
 			: this.heroes.orderBy(x => x.Distance2D(caster))
 
-		console.log(this.heroes)
-
 		return heroes.find(hero => this.isValidHero(hero, target, caster, ability))
 	}
 
 	private isValidHero(
-		hero: Hero,
+		hero: Unit,
 		target: Entity,
 		caster: Unit,
 		ability: Ability
 	): boolean {
-		console.log(0)
 		if (hero === caster || hero === target || hero.IsIllusion) {
 			return false
 		}
-		console.log(1)
 		const isToFriend = this.menu.ToFriend.value
 		const isToLowMeepo =
 			this.menu.ToLowHPMeepo.value && target instanceof npc_dota_hero_meepo
