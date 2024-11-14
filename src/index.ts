@@ -99,7 +99,8 @@ new (class CCastRedirector {
 	) {
 		const state =
 			(target.IsCreep && this.menu.Creeps.value) ||
-			(this.isIllusion(target) && this.menu.Illusions.value)
+			(this.isIllusion(target) && this.menu.Illusions.value) ||
+			(target instanceof npc_dota_hero_meepo && this.menu.ToLowHPMeepo.value)
 
 		if (!state) {
 			return false
