@@ -102,9 +102,6 @@ new (class CCastRedirector {
 			(this.isIllusion(target) && this.menu.Illusions.value) ||
 			(target instanceof npc_dota_hero_meepo && this.menu.ToLowHPMeepo.value)
 
-		console.log(state)
-		console.log(target instanceof npc_dota_hero_meepo, "i")
-
 		if (!state) {
 			return false
 		}
@@ -158,7 +155,7 @@ new (class CCastRedirector {
 		caster: Unit,
 		ability: Ability
 	): boolean {
-		if (hero === caster || hero === target || hero.IsClone || hero.IsIllusion) {
+		if (hero === caster || hero === target || hero.IsIllusion) {
 			return false
 		}
 		const isToFriend = this.menu.ToFriend.value
@@ -178,15 +175,15 @@ new (class CCastRedirector {
 			DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_ENEMY
 		)
 
-		console.log(isToLowMeepo)
-		console.log(target instanceof npc_dota_hero_meepo)
+		const targetIsMeepo = isToLowMeepo && target instanceof npc_dota_hero_meepo
+		const heroIsMeepo = isToLowMeepo && hero instanceof npc_dota_hero_meepo
 
 		return (
 			(canUseInInvulnerable || !hero.IsInvulnerable) &&
 			((isToFriend && canUseToFriend && !hero.IsEnemy()) ||
 				(canUseToEnemy && hero.IsEnemy())) &&
 			this.isAvailableHero(hero, target, caster, ability) &&
-			((isToLowMeepo && target instanceof npc_dota_hero_meepo) || !isToLowMeepo)
+			((targetIsMeepo && heroIsMeepo) || (!targetIsMeepo && heroIsMeepo))
 		)
 	}
 
