@@ -10,6 +10,7 @@ import {
 	ExecuteOrder,
 	Hero,
 	InputManager,
+	npc_dota_hero_meepo,
 	Player,
 	Unit
 } from "github.com/octarine-public/wrapper/index"
@@ -97,17 +98,13 @@ new (class CCastRedirector {
 		originalTargetHero: Nullable<Hero>
 	) {
 		const state =
-			(target.IsClone && this.menu.Clones.value) ||
 			(target.IsCreep && this.menu.Creeps.value) ||
 			(this.isIllusion(target) && this.menu.Illusions.value)
 
 		if (!state) {
 			return false
 		}
-		if (
-			this.isAvailableHero(originalTargetHero, caster, ability) &&
-			!this.menu.ToLowHP.value
-		) {
+		if (this.isAvailableHero(originalTargetHero, target, caster, ability)) {
 			caster.CastTarget(ability, originalTargetHero)
 			return true
 		}
@@ -139,10 +136,10 @@ new (class CCastRedirector {
 	}
 
 	private getOtherHero(target: Entity, caster: Unit, ability: Ability): Nullable<Unit> {
-		const isLowHP = this.menu.ToLowHP.value
-
-		const heroes = isLowHP
-			? this.heroes.orderBy(x => x.HPPercent)
+		const isToLowMeepo =
+			this.menu.ToLowHPMeepo.value && target instanceof npc_dota_hero_meepo
+		const heroes = isToLowMeepo
+			? this.heroes.orderBy(x => x.HP)
 			: this.heroes.orderBy(x => x.Distance2D(caster))
 
 		return heroes.find(hero => this.isValidHero(hero, target, caster, ability))
@@ -175,24 +172,26 @@ new (class CCastRedirector {
 		return (
 			(canUseInInvulnerable || !hero.IsInvulnerable) &&
 			((isToFriend && canUseToFriend && !hero.IsEnemy()) ||
-				((!isToFriend || isToFriend) && canUseToEnemy && hero.IsEnemy())) &&
-			this.isAvailableHero(hero, caster, ability)
+				(canUseToEnemy && hero.IsEnemy())) &&
+			this.isAvailableHero(hero, target, caster, ability)
 		)
 	}
 
 	protected isAvailableHero(
 		hero: Nullable<Hero | Entity>,
+		target: Entity,
 		caster: Unit,
 		ability: Ability
 	): hero is Hero {
-		if (hero === undefined) {
+		if (hero === undefined || this.menu.ToLowHPMeepo.value) {
 			return false
 		}
-
-		const range = this.menu.castRange.value
-			? ability.CastRange
-			: this.menu.SearchRange.value
-
-		return hero.IsVisible && hero.IsAlive && hero.Distance2D(caster) < range
+		const range = this.menu.SearchRange.value
+		return (
+			hero.IsVisible &&
+			hero.IsAlive &&
+			hero.Distance2D(target) < range &&
+			hero.Distance2D(caster) < ability.CastRange
+		)
 	}
 })()

@@ -10,11 +10,9 @@ import {
 export class MenuManager {
 	public readonly State: Menu.Toggle
 	public readonly Creeps: Menu.Toggle
-	public readonly Clones: Menu.Toggle
 	public readonly Illusions: Menu.Toggle
-	public readonly ToLowHP: Menu.Toggle
+	public readonly ToLowHPMeepo: Menu.Toggle
 	public readonly ToFriend: Menu.Toggle
-	public readonly castRange: Menu.Toggle
 	public readonly SearchRange: Menu.Slider
 
 	private readonly items: string[] = [
@@ -67,25 +65,14 @@ export class MenuManager {
 		this.Illusions = this.fromTree.AddToggle("Redirect from Illusions")
 
 		this.Creeps = this.fromTree.AddToggle("Redirect from Creeps")
-		this.Clones = this.fromTree.AddToggle(
-			"Redirect from Clones",
-			true,
-			"Redirect from Clones (e.x Meepo, Vengeful spirit)"
-		)
 
 		this.SearchRange = this.tree.AddSlider(
 			"Search range",
-			900,
-			200,
-			2200,
+			50,
+			10,
+			250,
 			0,
 			"Range of search heroes"
-		)
-
-		this.castRange = this.tree.AddToggle(
-			"Use spell cast range",
-			false,
-			"Consider cast range instead of manual configuration for seacrh"
 		)
 
 		this.itemsTree = this.tree.AddNode("Item redirection settings")
@@ -98,12 +85,10 @@ export class MenuManager {
 		)
 
 		this.abilitiesTree = this.tree.AddNode("Ability redirection settings")
-		this.ToLowHP = this.tree.AddToggle("Redirect to low HP hero")
+
 		this.ToFriend = this.tree.AddToggle("Redirect to friend")
-
+		this.ToLowHPMeepo = this.tree.AddToggle("Redirect to low HP meepo")
 		this.redirectAbility = this.abilitiesTree.AddToggle("Redirect abilities cast")
-
-		// TODO: fix abilities showing bug
 		this.abilitiesState = this.abilitiesTree.AddImageSelector("Spells", [])
 		this.abilitiesState.IsHidden = true
 	}
