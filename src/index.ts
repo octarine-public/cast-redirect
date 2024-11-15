@@ -162,7 +162,6 @@ new (class CCastRedirector {
 		const isToLowMeepo =
 			this.menu.ToLowHPMeepo.value && target instanceof npc_dota_hero_meepo
 
-		// example: item_nullifier
 		const canUseInInvulnerable = ability.HasTargetFlags(
 			DOTA_UNIT_TARGET_FLAGS.DOTA_UNIT_TARGET_FLAG_INVULNERABLE
 		)

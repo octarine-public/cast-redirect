@@ -3,7 +3,6 @@ import {
 	DOTA_ABILITY_BEHAVIOR,
 	DOTA_UNIT_TARGET_TEAM,
 	DOTA_UNIT_TARGET_TYPE,
-	ExecuteOrder,
 	Menu
 } from "github.com/octarine-public/wrapper/index"
 
@@ -63,11 +62,6 @@ export class MenuManager {
 	private readonly abilitiesState: Menu.ImageSelector
 
 	constructor() {
-		console.log(ExecuteOrder.DisableHumanizer)
-		if (ExecuteOrder.DisableHumanizer) {
-			this.tree.Tooltip = "to work required\nEnable (settings -> humanizer)"
-		}
-
 		this.State = this.tree.AddToggle("State")
 		this.fromTree = this.tree.AddNode("Redirection settings from")
 		this.Illusions = this.fromTree.AddToggle("Redirect from Illusions", true)
