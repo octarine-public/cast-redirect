@@ -126,7 +126,10 @@ export class MenuManager {
 		if (!ability.ShouldBeDrawable || ability.IsPassive) {
 			return
 		}
-		if (!ability.HasTargetType(DOTA_UNIT_TARGET_TYPE.DOTA_UNIT_TARGET_HERO)) {
+		if (
+			!ability.HasTargetType(DOTA_UNIT_TARGET_TYPE.DOTA_UNIT_TARGET_HERO) &&
+			!ability.HasTargetType(DOTA_UNIT_TARGET_TYPE.DOTA_UNIT_TARGET_CUSTOM)
+		) {
 			return
 		}
 		const name = ability.Name
