@@ -53,54 +53,57 @@ export class MenuManager {
 
 	private readonly fromTree: Menu.Node
 
-	private readonly itemsTree: Menu.Node
-	private readonly abilitiesTree: Menu.Node
-
-	private readonly redirectItems: Menu.Toggle
-	private readonly redirectAbility: Menu.Toggle
 	private readonly itemsState: Menu.ImageSelector
 	private readonly abilitiesState: Menu.ImageSelector
 
 	constructor() {
+		this.tree.SortNodes = false
+
 		this.State = this.tree.AddToggle("State")
-		this.fromTree = this.tree.AddNode("Redirection settings from")
+		//this.fromTree = this.tree.AddNode("Redirection settings from")
+		this.fromTree = this.tree
 		this.Illusions = this.fromTree.AddToggle("Redirect from Illusions", true)
 
-		this.Creeps = this.fromTree.AddToggle("Redirect from Creeps")
+		this.Creeps = this.fromTree.AddToggle(
+			"Redirect from Creeps",
+			false,
+			undefined,
+			undefined,
+			"panorama/images/emoticons/creepdance_png.vtex_c"
+		)
 
 		this.SearchRange = this.tree.AddSlider(
-			"Search range",
-			150,
+			"Radius",
 			50,
+			10,
 			250,
 			0,
 			"Range of search heroes"
 		)
 
-		this.itemsTree = this.tree.AddNode("Item redirection settings")
-		this.redirectItems = this.itemsTree.AddToggle("Redirect item casts")
-
-		this.itemsState = this.itemsTree.AddImageSelector(
-			"Items",
-			this.items,
-			new Map(this.items.map(item => [item, true]))
-		)
-
-		this.abilitiesTree = this.tree.AddNode("Ability redirection settings")
-
 		this.ToFriend = this.tree.AddToggle("Redirect to friend")
-		this.ToLowHPMeepo = this.tree.AddToggle("Redirect to low HP meepo")
-		this.redirectAbility = this.abilitiesTree.AddToggle("Redirect abilities cast")
-		this.abilitiesState = this.abilitiesTree.AddImageSelector("Spells", [])
-		this.abilitiesState.IsHidden = true
+		this.ToLowHPMeepo = this.tree.AddToggle(
+			"Redirect to low HP Meepo",
+			true,
+			undefined,
+			undefined,
+			"panorama/images/emoticons/surprise_png.vtex_c"
+		)
+		this.abilitiesState = this.tree.AddImageSelector(
+			"Spells",
+			[],
+			undefined,
+			undefined,
+			true
+		)
+		//this.abilitiesState.IsHidden = true
+
+		this.itemsState = this.tree.AddImageSelector("Items", this.items)
 	}
 
 	public IsEnabled(name: string, isItem: boolean): boolean {
 		if (!isItem) {
-			return this.redirectAbility.value && this.abilitiesState.IsEnabled(name)
-		}
-		if (!this.redirectItems.value) {
-			return false
+			return this.abilitiesState.IsEnabled(name)
 		}
 		let temp = name
 		if (name.startsWith("item_dagon_")) {
@@ -121,7 +124,7 @@ export class MenuManager {
 		)
 	}
 
-	public AddSpellInMenu(ability: Nullable<Ability>, defualtState: boolean = true) {
+	public AddSpellInMenu(ability: Nullable<Ability>, defaultState: boolean = true) {
 		if (ability === undefined || !ability.IsValid) {
 			return
 		}
@@ -145,7 +148,7 @@ export class MenuManager {
 			return
 		}
 		if (!this.abilitiesState.defaultValues.has(name)) {
-			this.abilitiesState.defaultValues.set(name, defualtState)
+			this.abilitiesState.defaultValues.set(name, defaultState)
 		}
 
 		this.cachedSpellNames.add(name)
@@ -156,14 +159,12 @@ export class MenuManager {
 	}
 
 	public ResetSkills() {
-		const arr = this.abilitiesState.values
-		for (let i = arr.length - 1; i > -1; i--) {
-			const spellName = arr[i]
-			this.cachedSpellNames.delete(spellName)
-			this.abilitiesState.values.remove(spellName)
+		for (let i = this.abilitiesState.values.length; i--; ) {
+			const n = this.abilitiesState.values[i]
+			this.cachedSpellNames.delete(n)
+			this.abilitiesState.values.remove(n)
 		}
-		this.abilitiesState.IsHidden = arr.length === 0
-		this.abilitiesState.Update()
-		this.tree.Update()
+		//this.abilitiesState.IsHidden = arr.length === 0
+		this.tree.Update(true)
 	}
 }
