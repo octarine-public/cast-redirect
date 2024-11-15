@@ -63,6 +63,7 @@ export class MenuManager {
 	private readonly abilitiesState: Menu.ImageSelector
 
 	constructor() {
+		console.log(ExecuteOrder.DisableHumanizer)
 		if (ExecuteOrder.DisableHumanizer) {
 			this.tree.Tooltip = "to work required\nEnable (settings -> humanizer)"
 		}
