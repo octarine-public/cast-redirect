@@ -195,11 +195,10 @@ new (class CCastRedirector {
 		if (hero === undefined) {
 			return false
 		}
-		const range = this.menu.SearchRange.value
 		return (
 			hero.IsVisible &&
 			hero.IsAlive &&
-			hero.Distance2D(target) < range &&
+			hero.Distance2D(target) < this.menu.SearchRange.value &&
 			hero.Distance2D(caster) < ability.CastRange
 		)
 	}
