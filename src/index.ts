@@ -69,7 +69,12 @@ new (class CCastRedirector {
 	protected PrepareUnitOrders(order: ExecuteOrder): boolean {
 		const isCastTarget =
 			order.OrderType === dotaunitorder_t.DOTA_UNIT_ORDER_CAST_TARGET
-		if (!order.IsPlayerInput || !isCastTarget || !this.menu.State.value) {
+		if (
+			!order.IsPlayerInput ||
+			!isCastTarget ||
+			!this.menu.State.value ||
+			ExecuteOrder.DisableHumanizer
+		) {
 			return true
 		}
 		const target = order.Target,
