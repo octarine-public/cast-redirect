@@ -1,0 +1,3 @@
+// AUTO-GENERATED - do not edit.
+declare class modifier_aghsfort_wave_blast_knockback extends Modifier {
+}

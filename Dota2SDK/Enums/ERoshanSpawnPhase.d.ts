@@ -1,0 +1,6 @@
+// AUTO-GENERATED - do not edit.
+declare const enum ERoshanSpawnPhase {
+	ROSHAN_SPAWN_PHASE_ALIVE = 0,
+	ROSHAN_SPAWN_PHASE_BASE_TIMER = 1,
+	ROSHAN_SPAWN_PHASE_VARIABLE_TIMER = 2
+}

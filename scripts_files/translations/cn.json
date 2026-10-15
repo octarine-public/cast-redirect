@@ -1,1 +1,19 @@
-{}
+{
+	"Cast Redirect": "施法重定向",
+	"Redirects single-target abilities to the hero in case of a illusion/creep misclick in a specified range": "误点幻象/小兵时，将单体技能重定向到指定范围内的英雄",
+	"Redirect from": "重定向来源",
+	"Redirect to": "重定向目标",
+	"Illusions": "幻象",
+	"Creeps": "小兵",
+	"Allies": "友方",
+	"Redirect casts on allied illusions and creeps as well": "同样重定向对友方幻象和小兵的施法",
+	"Low HP Meepo": "低血量米波",
+	"A cast on a Meepo goes to the Meepo with the least health": "对米波的施法将转向血量最低的米波",
+	"Search range": "搜索范围",
+	"How far from the clicked unit a hero is searched": "在点击单位周围多远范围内搜索英雄",
+	"Items": "物品",
+	"Redirect items": "重定向物品",
+	"Abilities": "技能",
+	"Redirect abilities": "重定向技能",
+	"Abilities of your heroes appear here once they are learned": "学会技能后，你的英雄技能会显示在这里"
+}

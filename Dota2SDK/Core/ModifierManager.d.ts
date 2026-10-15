@@ -1,0 +1,55 @@
+// AUTO-GENERATED - do not edit.
+declare class IModifier {
+	public readonly kv: RecursiveProtobuf
+	public readonly InternalName: string
+	public readonly InternalDDAbilityName: string
+	public IsFake: boolean
+	constructor(kv: RecursiveProtobuf)
+	public get EntryType(): Nullable<DOTA_MODIFIER_ENTRY_TYPE>
+	public get Parent(): Nullable<number>
+	public get Index(): Nullable<number>
+	public get SerialNum(): Nullable<number>
+	public get ModifierClass(): number
+	public get AbilityLevel(): Nullable<number>
+	public get AuraWithInRange(): Nullable<boolean>
+	public get StackCount(): Nullable<number>
+	public get CreationTime(): number
+	public get Duration(): number
+	public get Caster(): Nullable<number>
+	public get Ability(): Nullable<number>
+	public get Armor(): Nullable<number>
+	public get FadeTime(): Nullable<number>
+	public get Subtle(): Nullable<boolean>
+	public get ChannelTime(): Nullable<number>
+	public get vStart(): Nullable<Vector4>
+	public get vEnd(): Nullable<Vector4>
+	public get PortalLoopAppear(): Nullable<string>
+	public get PortalLoopDisappear(): Nullable<string>
+	public get HeroLoopAppear(): Nullable<string>
+	public get HeroLoopDisappear(): Nullable<string>
+	public get MovementSpeed(): Nullable<number>
+	public get IsAura(): Nullable<boolean>
+	public get Activity(): Nullable<number>
+	public get Damage(): Nullable<number>
+	public get Range(): Nullable<number>
+	public get DDModifierID(): Nullable<number>
+	public get DDAbilityID(): Nullable<number>
+	public get IllusionLevel(): Nullable<number>
+	public get IsActive(): Nullable<boolean>
+	public get PlayerIDs(): Nullable<string>
+	public get LuaName(): Nullable<string>
+	public get AttackSpeed(): Nullable<number>
+	public get AuraOwner(): Nullable<number>
+	public get BonusAllStats(): Nullable<number>
+	public get BonusHealth(): Nullable<number>
+	public get BonusMana(): Nullable<number>
+	public get CustomEntity(): Nullable<number>
+	public get IllusionLabel(): Nullable<string>
+	public get MoveSlow(): Nullable<number>
+	public get HasShard(): Nullable<boolean>
+	public get HasScepter(): Nullable<boolean>
+	public GetProperty<T>(name: string): Nullable<T>
+	public GetVector(name: string): Nullable<Vector4>
+	public AddInternalModifier(modifier: Modifier): void
+	public RemoveInternalModifier(modifier: Modifier): void
+}

@@ -1,0 +1,33 @@
+// AUTO-GENERATED - do not edit.
+declare class PlayerData {
+	public readonly properties: EntityPropertiesNode
+	public get IsValid(): boolean
+	public get Name(): string
+	public get IsBot(): boolean
+	public get Team(): Team
+	public get Slot(): number
+	public get FullyJoinedServer(): boolean
+	public get IsFakeClient(): boolean
+	public get IsBroadcaster(): boolean
+	public get BroadcasterChannel(): number
+	public get BroadcasterChannelSlot(): number
+	public get IsBroadcasterChannelCameraman(): boolean
+	public get ConnectionState(): ConnectionState
+	public get SteamID(): bigint
+	public get CoachTeam(): Team
+	public get CoachRating(): number
+	public get LiveSpectatorTeam(): Team
+	public get IsPlusSubscriber(): boolean
+	public get WasMVPLastGame(): boolean
+	public get AccoladeType(): number[]
+	public get AccoladeData(): bigint[]
+	public get RankTier(): number
+	public get Title(): number
+	public get FavTeamPacked(): bigint
+	public get HasNeutralTier(): boolean[]
+	public get HasRedeemedNeutralTier(): boolean[]
+	public get CavernCrawlMapVariant(): bigint
+	public get LiveSpectatorSpectatedHeroIndex(): number
+	public get LeaderboardRank(): number
+	public get EMmrBoostType(): number
+}

@@ -1,0 +1,3 @@
+// AUTO-GENERATED - do not edit.
+declare class modifier_primal_beast_trample_haste_aura extends Modifier {
+}

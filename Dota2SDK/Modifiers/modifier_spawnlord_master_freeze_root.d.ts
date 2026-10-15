@@ -1,0 +1,3 @@
+// AUTO-GENERATED - do not edit.
+declare class modifier_spawnlord_master_freeze_root extends Modifier {
+}

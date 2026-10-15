@@ -1,0 +1,45 @@
+// AUTO-GENERATED - do not edit.
+declare class PlayerTeamData {
+	public readonly properties: EntityPropertiesNode
+	public PlayerEventsData: PlayerEventData[]
+	public get SelectedHeroID(): number
+	public get SelectedHeroVariant(): bigint
+	public get Kills(): number
+	public get Assists(): number
+	public get Deaths(): number
+	public get Streak(): number
+	public get Level(): number
+	public get RespawnSeconds(): number
+	public get LastBuybackTime(): number
+	public get SelectedHeroIndex(): number
+	public get IsAFK(): boolean
+	public get SuggestedHeroes(): number[]
+	public get BanSuggestedHeroes(): boolean[]
+	public get VoiceChatBanned(): boolean
+	public get CompendiumLevel(): number
+	public get CanRepick(): boolean
+	public get CanEarnRewards(): boolean
+	public get HasRandomed(): boolean
+	public get RandomedHeroID(): number
+	public get BattleBonusActive(): boolean
+	public get BattleBonusRate(): number
+	public get CustomBuybackCost(): number
+	public get HasPredictedVictory(): boolean
+	public get UnitShareMasks(): number
+	public get TeamSlot(): number
+	public get BattleCupWinStreak(): number
+	public get BattleCupWinDate(): bigint
+	public get BattleCupSkillLevel(): number
+	public get BattleCupTeamID(): number
+	public get BattleCupTournamentID(): number
+	public get BattleCupDivision(): number
+	public get TeamFightParticipation(): number
+	public get FirstBloodClaimed(): number
+	public get FirstBloodGiven(): number
+	public get PickOrder(): number
+	public get TimeOfLastSaluteSent(): number
+	public get SelectedHeroBadgeXP(): number
+	public get LaneSelectionFlags(): LaneSelectionFlags
+	public get PlayerDraftPreferredRoles(): LaneSelectionFlags
+	public get PlayerDraftPreferredTeam(): number
+}

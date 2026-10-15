@@ -1,75 +1,47 @@
 import "./translations"
 
-import {
-	Ability,
-	DOTA_UNIT_TARGET_FLAGS,
-	DOTA_UNIT_TARGET_TEAM,
-	dotaunitorder_t,
-	Entity,
-	EventsSDK,
-	ExecuteOrder,
-	Hero,
-	InputManager,
-	npc_dota_hero_meepo,
-	Player,
-	Unit
-} from "github.com/octarine-public/wrapper/index"
-
 import { MenuManager } from "./menu"
 
-new (class CCastRedirector {
+new (class CCastRedirect {
 	private readonly menu = new MenuManager()
-	private readonly heroes: Unit[] = []
 
 	constructor() {
 		EventsSDK.on("GameEnded", this.GameEnded.bind(this))
 		EventsSDK.on("EntityCreated", this.EntityCreated.bind(this))
-		EventsSDK.on("EntityDestroyed", this.EntityDestroyed.bind(this))
-		EventsSDK.on("PrepareUnitOrders", this.PrepareUnitOrders.bind(this))
 		EventsSDK.on("UnitAbilitiesChanged", this.UnitAbilitiesChanged.bind(this))
+		EventsSDK.on("PrepareUnitOrders", this.PrepareUnitOrders.bind(this))
 	}
 
-	public GameEnded() {
-		this.menu.ResetSkills()
+	protected GameEnded() {
+		this.menu.ResetAbilities()
 	}
 
 	protected EntityCreated(entity: Entity) {
-		if (entity instanceof Hero || entity instanceof npc_dota_hero_meepo) {
-			this.heroes.push(entity)
-		}
 		if (!(entity instanceof Ability)) {
 			return
 		}
-		const abilOwner = entity.Owner
-		if (abilOwner === undefined || abilOwner.IsEnemy()) {
-			return
+		const owner = entity.Owner
+		if (owner !== undefined && this.isOwnUnit(owner)) {
+			this.menu.AddAbility(entity)
 		}
-		if (!this.isIllusion(abilOwner) && abilOwner.IsControllable) {
-			this.menu.AddSpellInMenu(entity)
-		}
-	}
-
-	protected EntityDestroyed(entity: Entity) {
-		if (!(entity instanceof Hero) || !(entity instanceof npc_dota_hero_meepo)) {
-			return
-		}
-		this.heroes.remove(entity)
 	}
 
 	protected UnitAbilitiesChanged(unit: Unit) {
-		if (unit.IsEnemy() || this.isIllusion(unit) || !unit.IsControllable) {
+		if (!this.isOwnUnit(unit)) {
 			return
 		}
-		const arr = unit.Spells
-		for (let i = arr.length - 1; i > -1; i--) {
-			this.menu.AddSpellInMenu(arr[i])
+		const spells = unit.Spells
+		for (let i = spells.length - 1; i > -1; i--) {
+			this.menu.AddAbility(spells[i])
 		}
 	}
 
+	/** Swaps the target of the player's own cast; `false` drops the order that was clicked. */
 	protected PrepareUnitOrders(order: ExecuteOrder): boolean {
-		const isCastTarget =
-			order.OrderType === dotaunitorder_t.DOTA_UNIT_ORDER_CAST_TARGET
-		if (!order.IsPlayerInput || !isCastTarget || !this.menu.State.value) {
+		if (!this.menu.State.value || !order.IsPlayerInput) {
+			return true
+		}
+		if (order.OrderType !== dotaunitorder_t.DOTA_UNIT_ORDER_CAST_TARGET) {
 			return true
 		}
 		const target = order.Target,
@@ -77,130 +49,135 @@ new (class CCastRedirector {
 		if (!(target instanceof Unit) || !(ability instanceof Ability)) {
 			return true
 		}
+		if (!this.menu.IsEnabled(ability)) {
+			return true
+		}
+		if (!target.IsEnemy() && !this.canTargetAllies(ability)) {
+			return true
+		}
 		const caster = order.Issuers.find(
-			x => x.IsControllable && x.IsAlive && x === InputManager.SelectedUnit
+			unit =>
+				unit === InputManager.SelectedUnit && unit.IsControllable && unit.IsAlive
 		)
-		if (caster === undefined || !this.menu.IsEnabled(ability.Name, ability.IsItem)) {
+		if (caster === undefined) {
 			return true
 		}
-		if (!this.menu.CanFriendCast(ability) && !target.IsEnemy()) {
+		const redirect = this.findRedirect(caster, target, ability)
+		if (redirect === undefined || redirect === target) {
 			return true
 		}
-		const originalTargetHero = this.getOriginalHero(target)
-
-		return !this.UseByState(caster, target, ability, originalTargetHero)
+		caster.CastTarget(ability, redirect)
+		return false
 	}
 
-	protected UseByState(
-		caster: Unit,
-		target: Unit,
-		ability: Ability,
-		originalTargetHero: Nullable<Hero>
-	) {
-		const state =
-			(target.IsCreep && this.menu.Creeps.value) ||
-			(this.isIllusion(target) && this.menu.Illusions.value) ||
-			(target instanceof npc_dota_hero_meepo && this.menu.ToLowHPMeepo.value)
+	private findRedirect(caster: Unit, target: Unit, ability: Ability): Nullable<Unit> {
+		const menu = this.menu
+		if (this.isIllusion(target)) {
+			if (!menu.Illusions.value) {
+				return undefined
+			}
+			const original = this.originalHero(target)
+			if (original !== undefined && this.canCast(original, caster, ability)) {
+				return original
+			}
+			return this.nearestHero(caster, target, ability)
+		}
+		if (target instanceof npc_dota_hero_meepo && menu.ToLowHPMeepo.value) {
+			return this.lowestMeepo(caster, target, ability)
+		}
+		if (target.IsCreep && menu.Creeps.value) {
+			return this.nearestHero(caster, target, ability)
+		}
+		return undefined
+	}
 
-		if (!state) {
+	/** The hero an illusion is a copy of. */
+	private originalHero(illusion: Unit): Nullable<Unit> {
+		const replicated = illusion.ReplicatingOtherHeroModel
+		if (
+			replicated !== undefined &&
+			replicated !== illusion &&
+			!replicated.IsIllusion
+		) {
+			return replicated
+		}
+		const owner = illusion.OwnerEntity
+		return owner instanceof Player ? owner.Hero : undefined
+	}
+
+	/** The real hero closest to the clicked unit, within the search range of it. */
+	private nearestHero(caster: Unit, target: Unit, ability: Ability): Nullable<Unit> {
+		const range = this.menu.SearchRange.value
+		return EntityManager.GetEntitiesByClass(Hero)
+			.filter(
+				hero =>
+					hero !== target &&
+					hero.Distance2D(target) <= range &&
+					this.canCast(hero, caster, ability)
+			)
+			.orderByFirst(hero => hero.Distance2D(target))
+	}
+
+	/** The Meepo with the least health around the clicked one, the clicked one included. */
+	private lowestMeepo(
+		caster: Unit,
+		target: npc_dota_hero_meepo,
+		ability: Ability
+	): Nullable<Unit> {
+		const range = this.menu.SearchRange.value
+		return EntityManager.GetEntitiesByClass(npc_dota_hero_meepo)
+			.filter(
+				meepo =>
+					meepo === target ||
+					(meepo.Team === target.Team &&
+						meepo.Distance2D(target) <= range &&
+						this.canCast(meepo, caster, ability))
+			)
+			.orderByFirst(meepo => meepo.HP)
+	}
+
+	private canCast(hero: Unit, caster: Unit, ability: Ability): boolean {
+		if (hero === caster || !hero.IsValid || !hero.IsVisible || !hero.IsAlive) {
+			return false
+		}
+		if (hero.IsIllusion || hero.Distance2D(caster) > ability.CastRange) {
 			return false
 		}
 		if (
-			this.isAvailableHero(originalTargetHero, target, caster, ability) &&
-			!this.menu.ToLowHPMeepo.value
+			hero.IsInvulnerable &&
+			!ability.HasTargetFlags(
+				DOTA_UNIT_TARGET_FLAGS.DOTA_UNIT_TARGET_FLAG_INVULNERABLE
+			)
 		) {
-			caster.CastTarget(ability, originalTargetHero)
-			return true
-		}
-		const nearliestHero = this.getOtherHero(target, caster, ability)
-		if (nearliestHero === undefined) {
 			return false
 		}
-		caster.CastTarget(ability, nearliestHero)
-		return true
+		return hero.IsEnemy()
+			? this.canTargetEnemies(ability)
+			: this.canTargetAllies(ability)
 	}
 
-	private isIllusion(target: Unit): boolean {
-		return target.IsIllusion && !target.IsStrongIllusion
-	}
-
-	private getOriginalHero(target: Unit): Nullable<Hero> {
-		if (!(target instanceof Hero)) {
-			return undefined
-		}
-		const targetOwner = target.OwnerEntity
-		if (!(targetOwner instanceof Player)) {
-			return undefined
-		}
-		if (!(targetOwner.Hero instanceof Hero) || !targetOwner.Hero.IsAlive) {
-			return undefined
-		}
-
-		return targetOwner.Hero
-	}
-
-	private getOtherHero(target: Entity, caster: Unit, ability: Ability): Nullable<Unit> {
-		const isToLowMeepo =
-			this.menu.ToLowHPMeepo.value && target instanceof npc_dota_hero_meepo
-		const heroes = isToLowMeepo
-			? this.heroes.orderBy(x => x.HP)
-			: this.heroes.orderBy(x => x.Distance2D(caster))
-
-		return heroes.find(hero => this.isValidHero(hero, target, caster, ability))
-	}
-
-	private isValidHero(
-		hero: Unit,
-		target: Entity,
-		caster: Unit,
-		ability: Ability
-	): boolean {
-		if (hero === caster || hero === target || hero.IsIllusion) {
-			return false
-		}
-		const isToFriend = this.menu.ToFriend.value
-		const isToLowMeepo =
-			this.menu.ToLowHPMeepo.value && target instanceof npc_dota_hero_meepo
-
-		const canUseInInvulnerable = ability.HasTargetFlags(
-			DOTA_UNIT_TARGET_FLAGS.DOTA_UNIT_TARGET_FLAG_INVULNERABLE
+	private canTargetAllies(ability: Ability): boolean {
+		return (
+			this.menu.ToFriend.value &&
+			(ability.HasTargetTeam(
+				DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_FRIENDLY
+			) ||
+				ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_CUSTOM))
 		)
+	}
 
-		const canUseToFriend =
-			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_FRIENDLY) ||
-			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_CUSTOM)
-
-		const canUseToEnemy =
+	private canTargetEnemies(ability: Ability): boolean {
+		return (
 			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_ENEMY) ||
 			ability.HasTargetTeam(DOTA_UNIT_TARGET_TEAM.DOTA_UNIT_TARGET_TEAM_CUSTOM)
-
-		const targetIsMeepo = isToLowMeepo && target instanceof npc_dota_hero_meepo
-		const heroIsMeepo = isToLowMeepo && hero instanceof npc_dota_hero_meepo
-
-		return (
-			(canUseInInvulnerable || !hero.IsInvulnerable) &&
-			((isToFriend && canUseToFriend && !hero.IsEnemy()) ||
-				(canUseToEnemy && hero.IsEnemy())) &&
-			this.isAvailableHero(hero, target, caster, ability) &&
-			((targetIsMeepo && heroIsMeepo) || (!targetIsMeepo && !heroIsMeepo))
 		)
 	}
 
-	protected isAvailableHero(
-		hero: Nullable<Hero | Entity>,
-		target: Entity,
-		caster: Unit,
-		ability: Ability
-	): hero is Hero {
-		if (hero === undefined) {
-			return false
-		}
-		const range = this.menu.SearchRange.value
-		return (
-			hero.IsVisible &&
-			hero.IsAlive &&
-			hero.Distance2D(target) < range &&
-			hero.Distance2D(caster) < ability.CastRange
-		)
+	private isOwnUnit(unit: Unit): boolean {
+		return !unit.IsEnemy() && unit.IsControllable && !this.isIllusion(unit)
+	}
+
+	private isIllusion(unit: Unit): boolean {
+		return unit.IsIllusion && !unit.IsStrongIllusion
 	}
 })()

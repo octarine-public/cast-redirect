@@ -1,0 +1,3 @@
+// AUTO-GENERATED - do not edit.
+declare class modifier_kobold_taskmaster_speed_aura extends Modifier {
+}

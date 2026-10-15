@@ -1,0 +1,10 @@
+// AUTO-GENERATED - do not edit.
+declare class modifier_polar_furbolg_ursa_warrior_thunder_clap extends Modifier implements IDebuff {
+	public readonly IsHidden = false
+	public readonly DebuffModifierName: string
+	protected readonly DeclaredFunction: Map<EModifierfunction, () => [number, boolean]>
+	public IsDebuff(): this is IDebuff
+	protected GetMoveSpeedBonusPercentage(): [number, boolean]
+	protected GetAttackSpeedBonusConstant(): [number, boolean]
+	protected UpdateSpecialValues(): void
+}

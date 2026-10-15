@@ -1,0 +1,3 @@
+// AUTO-GENERATED - do not edit.
+declare class modifier_item_angels_demise_internal_cd extends Modifier {
+}
