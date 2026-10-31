@@ -9,6 +9,9 @@ export class MenuManager {
 	public readonly SearchRange: Menu.Slider
 
 	private readonly tree: Menu.Node
+	private readonly info: Menu.ShortDescription
+	private readonly fromHeader: Menu.ShortDescription
+	private readonly toHeader: Menu.ShortDescription
 	private readonly items: Menu.ImageSelector
 	private readonly abilities: Menu.ImageSelector
 	/** The switches on the titles of the two selectors, which turn the whole row on and off. */
@@ -52,6 +55,9 @@ export class MenuManager {
 			"Redirects single-target abilities to the hero in case of a illusion/creep misclick in a specified range"
 		)
 		this.tree.SortNodes = false
+		this.info = this.tree
+			.AddShortDescription("Required humanizer")
+			.SetAction("Enable", () => Humanizer.RequestEnable())
 
 		// the script's own switch rides the header of the page and gates it
 		this.State = this.tree.AddToggle("State", false)
@@ -59,13 +65,13 @@ export class MenuManager {
 		this.tree.HeaderControl = this.State
 		this.tree.Gate = this.State
 
-		this.tree.AddSectionHeader("Redirect from")
+		this.fromHeader = this.tree.AddSectionHeader("Redirect from")
 		this.Illusions = this.tree.AddToggle("Illusions", true)
 		this.Illusions.IconPath = CastRedirectIcons.Illusions
 		this.Creeps = this.tree.AddToggle("Creeps", false)
 		this.Creeps.IconPath = CastRedirectIcons.Creeps
 
-		this.tree.AddSectionHeader("Redirect to")
+		this.toHeader = this.tree.AddSectionHeader("Redirect to")
 		this.ToFriend = this.tree.AddToggle(
 			"Allies",
 			false,
@@ -106,7 +112,29 @@ export class MenuManager {
 		this.abilities.IconPath = CastRedirectIcons.Abilities
 		this.abilitiesState = this.tree.AddToggle("Redirect abilities", true)
 		this.abilities.HeaderControl = this.abilitiesState
-		this.abilities.IsHidden = true
+		this.HumanizerStateChanged()
+	}
+
+	/** Whether casts are redirected: the switch is on and the humanizer the redirect needs is on. */
+	public get IsActive(): boolean {
+		return this.State.value && !ExecuteOrder.DisableHumanizer
+	}
+
+	/** Hides every row behind the note that asks for the humanizer while it is off. */
+	public HumanizerStateChanged() {
+		const disabled = ExecuteOrder.DisableHumanizer
+		this.State.IsHidden = disabled
+		this.fromHeader.IsHidden = disabled
+		this.Illusions.IsHidden = disabled
+		this.Creeps.IsHidden = disabled
+		this.toHeader.IsHidden = disabled
+		this.ToFriend.IsHidden = disabled
+		this.ToLowHPMeepo.IsHidden = disabled
+		this.SearchRange.IsHidden = disabled
+		this.items.IsHidden = disabled
+		this.abilities.IsHidden = disabled || this.abilities.values.length === 0
+		this.info.IsHidden = !disabled
+		this.tree.IconColor = disabled ? Color.Gray : Color.White
 	}
 
 	public IsEnabled(ability: Ability): boolean {
@@ -130,7 +158,7 @@ export class MenuManager {
 			return
 		}
 		this.abilities.AddImage(name, true)
-		this.abilities.IsHidden = false
+		this.abilities.IsHidden = ExecuteOrder.DisableHumanizer
 	}
 
 	/** Forgets the abilities of the match that has ended. */

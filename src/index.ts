@@ -10,6 +10,7 @@ new (class CCastRedirect {
 		EventsSDK.on("EntityCreated", this.EntityCreated.bind(this))
 		EventsSDK.on("UnitAbilitiesChanged", this.UnitAbilitiesChanged.bind(this))
 		EventsSDK.on("PrepareUnitOrders", this.PrepareUnitOrders.bind(this))
+		EventsSDK.on("HumanizerStateChanged", () => this.menu.HumanizerStateChanged())
 	}
 
 	protected GameEnded() {
@@ -38,7 +39,7 @@ new (class CCastRedirect {
 
 	/** Swaps the target of the player's own cast; `false` drops the order that was clicked. */
 	protected PrepareUnitOrders(order: ExecuteOrder): boolean {
-		if (!this.menu.State.value || !order.IsPlayerInput) {
+		if (!this.menu.IsActive || !order.IsPlayerInput) {
 			return true
 		}
 		if (order.OrderType !== dotaunitorder_t.DOTA_UNIT_ORDER_CAST_TARGET) {

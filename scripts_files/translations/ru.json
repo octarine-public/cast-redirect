@@ -1,5 +1,6 @@
 {
 	"Cast Redirect": "Перенаправление каста",
+	"Required humanizer": "Требуется хуманайзер",
 	"Redirects single-target abilities to the hero in case of a illusion/creep misclick in a specified range": "Меняет цель направленных способностей на героя в случае мисклика по иллюзии/крипу",
 	"Redirect from": "Перенаправлять с",
 	"Redirect to": "Перенаправлять на",

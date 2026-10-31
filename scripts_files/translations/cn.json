@@ -1,5 +1,6 @@
 {
 	"Cast Redirect": "施法重定向",
+	"Required humanizer": "需要拟人化",
 	"Redirects single-target abilities to the hero in case of a illusion/creep misclick in a specified range": "误点幻象/小兵时，将单体技能重定向到指定范围内的英雄",
 	"Redirect from": "重定向来源",
 	"Redirect to": "重定向目标",
